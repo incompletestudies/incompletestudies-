@@ -38,10 +38,13 @@ plugins:
 collections:
   people:
     output: true
+    permalink: /authors/:slug/
   projects:
     output: true
+    permalink: /projects/:slug/
   seasons:
     output: true
+    permalink: /seasons/:slug/
 
 # Exclude from processing.
 # The following items will not be processed, by default.
