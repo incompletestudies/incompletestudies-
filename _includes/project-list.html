@@ -1,0 +1,33 @@
+<div class="proj-list-view" id="proj-list">
+  {% assign sorted_projects = site.projects | sort: "order" %}
+  {% for project in sorted_projects %}
+    {% assign author = site.people | where: "slug", project.author | first %}
+    <div class="proj-card" data-slug="{{ project.slug }}" onclick="showProjectDetailBySlug(this.dataset.slug)">
+      <div>
+        <div class="proj-card-top">
+          <span class="proj-card-id">{{ project.id }}</span>
+          <span class="pill {{ project.status_class }}">
+            {{ project.status }}
+          </span>
+        </div>
+        <div class="proj-card-title">{{ project.title }}</div>
+        <div class="proj-card-contrib">— {% if author %}{{ author.title }} · {{ author.role }}, {{ author.discipline | downcase }}{% endif %}</div>
+        <div class="proj-card-abstract">{{ project.abstract }}</div>
+      </div>
+      <div class="proj-card-right">
+        <div class="proj-card-cycle">
+          Inst. {{ project.installments }} of {{ project.total_installments }}<br>
+          {{ project.last_updated }}<br>
+          {{ project.id }} · {{ project.season }}
+        </div>
+        <div class="prog-dots">
+          {% assign completed = project.installments %}
+          {% assign total = project.total_installments %}
+          {% for i in (1..total) %}
+            <div class="prog-dot {% if i < completed %}done{% elsif i == completed %}now{% endif %}"></div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

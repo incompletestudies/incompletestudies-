@@ -1,34 +1,19 @@
 ---
 layout: default
-title: Our Authors
+title: Authors
 permalink: /authors/
 ---
-
-All authors on this research project:
-
-{% for person in site.people %}
-  * <a href="{{ site.baseurl }}{{ person.url }}">{{ person.name }}</a>
-  {% assign author_posts = site.posts | where: "author", person.name %}
-  ({{ author_posts | size }} installments)
-{% endfor %}
-
----
-
-## Posts by Author
-
-{% for person in site.people %}
-### {{ person.name }}
-
-{{ person.content | markdownify }}
-
-**Installments by {{ person.name }}:**
-<ul>
-{% for post in site.posts %}
-  {% if post.author == person.name %}
-    <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a> ({{ post.date | date: "%B %d, %Y" }})</li>
-  {% endif %}
-{% endfor %}
-</ul>
-
----
-{% endfor %}
+<div class="section-wrap">
+  <div class="col-head">
+    <span class="col-head-title">Authors</span>
+    <span class="col-head-meta">Contributors to the archive · {{ site.people | size }} total</span>
+  </div>
+  <div class="cr-body">
+    <ul class="cr-list">
+      {% for person in site.people %}
+        {% assign author_posts = site.posts | where: "author", person.slug %}
+        <li><a href="{{ site.baseurl }}{{ person.url }}" style="color:inherit">{{ person.title }}</a> — {{ person.role }}, {{ person.discipline | downcase }} ({{ author_posts.size }} installments)</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<aside class="proj-sidebar">
+  <div class="proj-sidebar-label">Project index</div>
+  <ul style="list-style:none">
+    {% assign sorted_projects = site.projects | sort: "order" %}
+    {% for project in sorted_projects %}
+      <li class="proj-sidebar-item {% if forloop.first %}active{% endif %}" 
+          data-slug="{{ project.slug }}"
+          onclick="showProjectDetailBySlug(this.dataset.slug)">
+        <div class="proj-sidebar-id">{{ project.id }} <span>{{ project.installments }} inst.</span></div>
+        <div class="proj-sidebar-name">{{ project.title }}</div>
+      </li>
+    {% endfor %}
+  </ul>
+</aside>

@@ -3,7 +3,10 @@ layout: project
 title: Trace and Legibility
 id: P–01
 slug: trace-and-legibility
-author: E. Marchetti
+order: 1
+author: e-marchetti
+contributors:
+  - e-marchetti
 status: Ongoing
 status_class: live
 season: S01

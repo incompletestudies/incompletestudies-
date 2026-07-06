@@ -1,12 +1,14 @@
 ---
-layout: default
+layout: post
 title: "Towards a grammar of the unresolved"
 date: 2025-11-03
-author: E. Marchetti
-author_slug: e-marchetti          # ← Links to _people/e-marchetti.md
-project: P–01
-project_slug: trace-and-legibility # ← Links to _projects/trace-and-legibility.md
+author: e-marchetti
+project: trace-and-legibility
+installment: 7
+season: S01
 excerpt: "Attempting to name what this project has been doing all along — aware that naming may close it prematurely."
+badge: Ongoing
+badge_class: live
 categories: [trace-and-legibility, season-01]
 tags: [grammar, unresolved, methodology]
 ---
@@ -47,18 +49,3 @@ The archive is the accumulation of traces. But it is also the condition of legib
 ## The Unfinished
 
 The project remains unfinished not because of failure, but because of fidelity — to the questions that cannot be closed, to the traces that resist legibility, to the interval that is the condition of thought.
-
----
-
-## 🗂️ How This Connects Everything
-
-### 1. Links to Author
-
-The `author: E. Marchetti` field connects this post to `_people/marchetti.md`:
-
-```yaml
----
-name: E. Marchetti
----
-
-E. Marchetti is a doctoral candidate in visual epistemology...

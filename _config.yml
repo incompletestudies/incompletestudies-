@@ -38,6 +38,10 @@ plugins:
 collections:
   people:
     output: true
+  projects:
+    output: true
+  seasons:
+    output: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -67,68 +71,13 @@ version: "v2.1.4"
 footer_left: "The Unfinished Archive · Serial Research Publication · Est. 2024"
 footer_right: "v2.1.4 · 2025-11-03 · Season 01 ongoing"
 
-# Projects data
-projects:
-  - id: P–01
-    slug: trace-and-legibility
-    title: Trace and Legibility
-    contributor: E. Marchetti · Doctoral candidate, visual epistemology
-    status: Live
-    abstract: An inquiry into what it means for a mark to become readable.
-    stamp: v1.7 · 7 installments · Nov 2025
-    progress: 7
-    total: 8
-    published: 2025-11-03
-
-  - id: P–02
-    slug: interval-as-form
-    title: The Interval as Form
-    contributor: A. Sørensen · Independent scholar, music and duration
-    status: Live
-    abstract: What happens in the silence between movements?
-    stamp: v0.4 · 4 installments · Oct 2025
-    progress: 4
-    total: 6
-
-  - id: P–03
-    slug: seriality-and-return
-    title: Seriality and Return
-    contributor: R. Okonkwo · Research fellow, narrative theory
-    status: Early
-    abstract: On the difference between repetition and return.
-    stamp: v0.2 · 2 installments · Sep 2025
-    progress: 2
-    total: 6
-
-  - id: P–04
-    slug: what-incompletion-does
-    title: What Incompletion Does
-    contributor: T. Lindqvist · Postdoctoral researcher, philosophy of knowledge
-    status: New
-    abstract: A polemical project against the ideology of completion.
-    stamp: v0.1 · 1 installment · Nov 2025
-    progress: 1
-    total: 6
+# Project data now lives in the `_projects` collection (see /_projects/*.md)
+# and is resolved via Liquid wherever it is needed, instead of being
+# duplicated here.
 
 # Navigation
-navigation:
-  - title: Overview
-    url: /
-  - title: Projects
-    url: /projects/
-  - title: Installments
-    url: /installments/
-  - title: How It Works
-    url: /how/
-  - title: For Contributors
-    url: /contributors/
-  - title: For Readers
-    url: /readers/
-  - title: Second Form
-    url: /editions/
-  - title: Seasons
-    url: /seasons/
-  - title: About
-    url: /about/
-  - title: Authors
-    url: /authors/
+# Canonical navigation lives in _data/navigation.yml (used by _includes/navigation.html
+# via site.data.navigation). This duplicate site.navigation key previously drifted out
+# of sync with it (e.g. "Authors" was listed here but missing from _data/navigation.yml,
+# leaving /authors/ unreachable from the nav) and was never read by any template, so it
+# has been removed to keep a single source of truth for the top nav.
