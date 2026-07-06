@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title:  "Welcome to Jekyll!"
 date:   2026-07-04 17:44:23 +0200
 author: Max Eyschen

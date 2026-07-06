@@ -1,0 +1,8 @@
+<nav class="topbar-nav">
+  {% for item in site.data.navigation %}
+    <button class="nav-tab {% if page.url == item.url %}active{% endif %}" 
+            onclick="location.href='{{ site.baseurl }}{{ item.url }}'">
+      {{ item.title }}
+    </button>
+  {% endfor %}
+</nav>

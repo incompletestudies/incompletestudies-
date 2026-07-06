@@ -2,24 +2,48 @@
 layout: default
 ---
 
-<div class="home">
-  <h1 class="page-heading">{{ page.name }}</h1>
+<div class="author-page">
+  <div class="author-header">
+    <h1>{{ page.name }}</h1>
+  </div>
 
-  <div class="post-content">
+  <div class="author-bio">
     {{ content }}
   </div>
 
-  <h2>Posts by {{ page.name }}</h2>
-  <ul class="post-list">
-    {% for post in site.posts %}
-      {% if post.author == page.name %}
-        <li>
-          <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-          <h3>
-            <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-          </h3>
-        </li>
-      {% endif %}
-    {% endfor %}
-  </ul>
+  <!-- PROJECTS -->
+  <div class="author-projects">
+    <h2>Projects</h2>
+    {% assign author_projects = site.projects | where: "author_slug", page.slug %}
+    {% if author_projects.size > 0 %}
+      <ul>
+        {% for project in author_projects %}
+          <li>
+            <a href="{{ site.baseurl }}{{ project.url }}">{{ project.title }}</a>
+            <span class="project-role">{{ project.role | default: "Lead contributor" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No projects yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- INSTALLMENTS -->
+  <div class="author-installments">
+    <h2>Installments</h2>
+    {% assign author_posts = site.posts | where: "author_slug", page.slug | sort: "date" | reverse %}
+    {% if author_posts.size > 0 %}
+      <ul>
+        {% for post in author_posts %}
+          <li>
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+            <span class="post-date">{{ post.date | date: "%B %d, %Y" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No installments yet.</p>
+    {% endif %}
+  </div>
 </div>

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Your Post Title"
 date: YYYY-MM-DD
 author: Author Name
