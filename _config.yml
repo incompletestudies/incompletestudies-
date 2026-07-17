@@ -72,7 +72,7 @@ collections:
 current_season: "01"
 version: "v2.1.4"
 footer_left: "The Unfinished Archive · Serial Research Publication · Est. 2024"
-footer_right: "v2.1.4 · 2025-11-03 · Season 01 ongoing"
+footer_right: "v2.1.4 · 2026-07-16 · Season 01 ongoing"
 
 # Project data now lives in the `_projects` collection (see /_projects/*.md)
 # and is resolved via Liquid wherever it is needed, instead of being
