@@ -105,7 +105,7 @@ for line in paragraphs:
 #create the Dictionary
 metadata = {}
 
-
+#metadata extraction loop
 for line in metadata_lines:
 
     #Split at the first colon
@@ -124,12 +124,31 @@ for line in metadata_lines:
 
 #     print(f"{key}: {value}")
 
+# # Convert relationship fields to slugs
+
+if "authors" in metadata:
+
+    metadata["authors"] = [
+        make_slug(item)
+        for item in metadata["authors"].split(";")
+    ]
+
+
+if "projects" in metadata:
+
+    metadata["projects"] = [
+        make_slug(item)
+        for item in metadata["projects"].split(";")
+    ]
+
+
+
 #############################################
 #Create a required list
 required = [
     "title",
-    "author",
-    "project",
+    "authors",
+    "projects",
     "date"
 ]
 # Define where people/projects live
@@ -158,114 +177,115 @@ for field in required:
 print("\n✓ Metadata validation passed\n")
 
 
+#############################################
+# Normalize relationships
 
-# Convert author name to slug
-author_slug = make_slug(
-    metadata["author"]
-)
-
-#print(f"author_slug: {author_slug}")
-
-# Check person exists
-author_file = (
-    people_dir
-    / f"{author_slug}.md"
-)
+authors = [
+    make_slug(item)
+    for item in metadata["authors"]
+]
 
 
-if not author_file.exists():
+projects = [
+    make_slug(item)
+    for item in metadata["projects"]
+]
 
-    raise Exception(
-        f"Missing author: {author_file}"
+
+# Validate people
+
+for author in authors:
+
+    author_file = (
+        people_dir
+        / f"{author}.md"
     )
 
-#Convert project name to slug
-project_slug = make_slug(
-    metadata["project"]
-)
+    if not author_file.exists():
 
-#print(f"project_slug: {project_slug}")
-
-#Check project exists
-project_file = (
-    projects_dir
-    / f"{project_slug}.md"
-)
+        raise Exception(
+            f"Missing author: {author_file}"
+        )
 
 
-if not project_file.exists():
+# Validate projects
 
-    raise Exception(
-        f"Missing project: {project_file}"
+for project in projects:
+
+    project_file = (
+        projects_dir
+        / f"{project}.md"
     )
+
+    if not project_file.exists():
+
+        raise Exception(
+            f"Missing project: {project_file}"
+        )
+
+
+# Store normalized values
+
+metadata["authors"] = authors
+metadata["projects"] = projects
 
 
 print("✓ Relationships validated")
 
-#output directory
-posts_dir = Path("_posts")
 
-# Convert title to slug
+
+#############################################
+# Create processed directory
+
 post_slug = make_slug(
     metadata["title"]
 )
 
-#Create filename
-output_file = (
-    posts_dir
-    / f"{metadata['date']}-{post_slug}.md"
+processed_dir = (
+    Path("drafts/processed/posts")
+    / post_slug
 )
 
-print(f"\noutput_file: {output_file}")
-
-
-#Build front matter
-front_matter = "---\n"
-
-front_matter += (
-    "layout: post\n"
+processed_dir.mkdir(
+    parents=True,
+    exist_ok=True
 )
 
-front_matter += (
-    f"title: {metadata['title']}\n"
+
+# Save metadata
+
+metadata_file = (
+    processed_dir
+    / "metadata.yml"
 )
 
-front_matter += (
-    f"author: {author_slug}\n"
-)
 
-front_matter += (
-    f"project: {project_slug}\n"
-)
+import yaml
 
-front_matter += (
-    f"date: {metadata['date']}\n"
-)
-
-front_matter += "---\n\n"
-
-#Build Body
-body = "\n\n".join(body_lines)
-
-#Combine
-markdown = (
-    front_matter
-    + body
-)
-
-#Prevent overwriting
-if output_file.exists():
-
-    raise Exception(
-        f"Already exists: {output_file}"
-    )
-
-#Write the post
-output_file.write_text(
-    markdown,
+metadata_file.write_text(
+    yaml.dump(
+        metadata,
+        sort_keys=False
+    ),
     encoding="utf-8"
 )
 
+
+# Save body
+
+content_file = (
+    processed_dir
+    / "content.md"
+)
+
+body = "\n\n".join(body_lines)
+
+content_file.write_text(
+    body,
+    encoding="utf-8"
+)
+
+
 print(
-    f"Created: {output_file}"
+    f"Created processed post: {processed_dir}"
 )
