@@ -104,7 +104,7 @@ def validate_metadata(metadata, content_type):
         metadata,
         content_type
     )
-
+    print("✓ Required metadata")
 
     if content_type == "posts":
 
@@ -114,14 +114,14 @@ def validate_metadata(metadata, content_type):
             "people",
             "authors"
         )
-
+        print("✓ Authors exist")
 
         validate_collection_items(
             metadata.get("projects", []),
             "projects",
             "projects"
         )
-
+        print("✓ Projects exist")
 
 
     elif content_type == "people":
@@ -192,24 +192,22 @@ if __name__ == "__main__":
             f"Unknown content type: {content_type}"
         )
 
-
-
-    incoming_dir = (
-        CONTENT_TYPES[content_type]["incoming"]
+    processed_dir = (
+        CONTENT_TYPES[content_type]["processed"]
+        / content_name
     )
 
 
     metadata_file = (
-        incoming_dir
-        / f"{content_name}.yml"
+        processed_dir
+        / "metadata.yml"
     )
 
-
-
+    print("")
     print("Checking metadata:")
     print(f"  Path: {metadata_file.resolve()}")
     print(f"  Exists: {metadata_file.exists()}")
-
+    print("")
 
     if not metadata_file.exists():
 
@@ -250,3 +248,4 @@ if __name__ == "__main__":
 
     print("")
     print("✓ Validation passed")
+    print("")
