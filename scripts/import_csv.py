@@ -10,7 +10,7 @@ import yaml
 from pathlib import Path
 from config import CONTENT_TYPES
 from lib.slug import make_slug
-from lib.relations import convert_relationship
+from lib.relations import relationship_to_slugs
 
 
 #Input Arguments
@@ -133,7 +133,7 @@ with open(csv_file, newline="", encoding="utf-8") as f:
             if key in list_fields:
 
                 metadata[yaml_key] = (
-                    convert_relationship(value)
+                    relationship_to_slugs(value)
                 )
 
             else:

@@ -59,7 +59,7 @@ processed_dir = (
 
 processed_md = (
     processed_dir
-    / f"{content_name}.md"
+    / "content.md"
 )
 
 
@@ -74,8 +74,8 @@ if not processed_md.exists():
 # Metadata
 
 metadata_file = (
-    CONTENT_TYPES[content_type]["incoming"]
-    / f"{content_name}.yml"
+    processed_dir
+    / "metadata.yml"
 )
 
 
@@ -207,7 +207,7 @@ output_file.write_text(
 )
 
 
-
+print("")
 print(
     f"Created: {output_file}"
 )

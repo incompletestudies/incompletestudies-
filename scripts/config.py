@@ -22,7 +22,12 @@ CONTENT_TYPES = {
             "title",
             "authors",
             "projects"
-        ]
+        ],
+
+        "relationships": {
+            "authors": "people",
+            "projects": "projects"
+        }
 
     },
 
@@ -48,7 +53,7 @@ CONTENT_TYPES = {
 
         "relationships": {
 
-            "Projects": "projects"
+            "projects": "projects"
 
         },
 
@@ -79,7 +84,7 @@ CONTENT_TYPES = {
         ],
         
         "relationships": {
-            "People": "people"
+            "people": "people"
         },
 
         "identifier": "Title",

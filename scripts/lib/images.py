@@ -1,6 +1,9 @@
+# images.py       → Image path handling
+
+#Import
 from pathlib import Path
 
-
+#Function
 def convert_image_paths(text, image_base):
 
     replacements = []

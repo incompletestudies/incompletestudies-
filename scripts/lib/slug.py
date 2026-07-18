@@ -1,3 +1,4 @@
+#slug.py         → Text → slug
 # Create URL-friendly names
 
 import re
