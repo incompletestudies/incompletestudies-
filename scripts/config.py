@@ -27,8 +27,9 @@ CONTENT_TYPES = {
         "relationships": {
             "authors": "people",
             "projects": "projects"
-        }
+        },
 
+        "identifier": "title"
     },
 
 
@@ -47,17 +48,15 @@ CONTENT_TYPES = {
         ],
 
         "required_columns": [
-            "Name",
-            "Biography"
+            "name"
         ],
 
         "relationships": {
-
             "projects": "projects"
 
         },
 
-        "identifier": "Name",
+        "identifier": "name",
         "body_field": "Biography"
     },
 
@@ -78,16 +77,15 @@ CONTENT_TYPES = {
         ],
 
         "required_columns": [
-            "Title",
-            "Description",
-            "People"
+            "title",
+            "people"
         ],
         
         "relationships": {
             "people": "people"
         },
 
-        "identifier": "Title",
+        "identifier": "title",
         "body_field": "Description"
     }
 

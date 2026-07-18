@@ -127,22 +127,31 @@ markdown = processed_md.read_text(
 
 # Build filename
 
-title = metadata["title"]
+identifier = CONTENT_TYPES[content_type]["identifier"]
 
+record_name = metadata[identifier]
 
 publish_date = metadata.get(
     "date",
     str(date.today())
 )
 
+slug = make_slug(record_name)
 
-slug = make_slug(title)
 
+if content_type == "posts":
 
-output_file = (
-    output_dir
-    / f"{publish_date}-{slug}.md"
-)
+    output_file = (
+        output_dir
+        / f"{publish_date}-{slug}.md"
+    )
+
+else:
+
+    output_file = (
+        output_dir
+        / f"{slug}.md"
+    )
 
 
 
@@ -199,13 +208,20 @@ front_matter += "---\n\n"
 
 
 
+
 # Publish
+
+if content_type == "posts" and output_file.exists():
+
+    raise Exception(
+        f"Post already exists: {output_file}"
+    )
+
 
 output_file.write_text(
     front_matter + markdown,
     encoding="utf-8"
 )
-
 
 print("")
 print(
