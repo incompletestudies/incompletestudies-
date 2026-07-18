@@ -1,21 +1,45 @@
 ---
 layout: project
 title: Digital Archives Initiative
-short_title: Digital Archives
 status: Active
-start_date: '2024-01-01'
 people:
 - alice-smith
 - bob-jones
-institution: University of Amsterdam
 website: https://example.org
-repository: https://github.com/example/digital-archives
-tags:
-- archives
-- digitization
-- history
-featured_image: digital-archives.jpg
-active_: 'TRUE '
+keywords: archive;digitisation
+image: project.jpg
+date: '2026-07-18'
 ---
 
-Research initiative exploring digital archival practices.
+# Overview
+
+The Digital Archives Initiative investigates long-term preservation of incomplete archival collections.
+
+## Objectives
+
+- Improve metadata quality
+
+- Develop open workflows
+
+- Study archival incompletion
+
+## Methodology
+
+The project combines archival research, software development, and public engagement.
+
+## Timeline
+
+|          |               |
+|----------|---------------|
+| **Year** | **Milestone** |
+| 2025     | Planning      |
+| 2026     | Prototype     |
+| 2027     | Publication   |
+
+Insert project image here.
+
+<img src="{{ '/assets/images/projects/digital-archives-initiative/image1.png' | relative_url }}" style="width:1.04167in;height:1.04167in" />
+
+## Notes
+
+This template intentionally contains headings, tables, lists, images, and quotes to test Pandoc conversion.
