@@ -9,7 +9,6 @@ season: S01
 excerpt: "Attempting to name what this project has been doing all along — aware that naming may close it prematurely."
 badge: Ongoing
 badge_class: live
-categories: [trace-and-legibility, season-01]
 tags: [grammar, unresolved, methodology]
 ---
 

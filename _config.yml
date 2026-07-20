@@ -54,7 +54,20 @@ collections:
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
 #
-# exclude:
+
+exclude:
+  - drafts/
+  - metadata/
+  - scripts/
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - node_modules/
+  - .git/
+  - .gitignore
+  - _site/
+
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/

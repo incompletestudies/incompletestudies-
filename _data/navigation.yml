@@ -1,20 +1,21 @@
-- title: Overview
-  url: /
+# - title: Overview
+#   url: /
 - title: Projects
   url: /projects/
 - title: Installments
   url: /installments/
-- title: How It Works
-  url: /how/
-- title: For Contributors
-  url: /contributors/
-- title: For Readers
-  url: /readers/
-- title: Second Form
-  url: /editions/
-- title: Seasons
-  url: /seasons/
 - title: Authors
   url: /authors/
+- title: How It Works
+  url: /how/
+# - title: For Contributors
+#   url: /contributors/
+# - title: For Readers
+#   url: /readers/
+# - title: Second Form
+#   url: /editions/
+- title: Seasons
+  url: /seasons/
 - title: About
   url: /about/
+
