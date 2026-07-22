@@ -1,6 +1,7 @@
 ---
 layout: post
 title: The Long Form Test
+installment: 3
 authors:
 - alice-smith
 - bob-jones
@@ -8,7 +9,7 @@ projects:
 - digital-archives-initiative
 keywords: archive;memory;pandoc;testing
 created: '2026-07-18'
-updated: '2026-07-18'
+updated: '2026-07-22'
 image: image1.png
 ---
 

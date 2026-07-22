@@ -54,33 +54,53 @@ layout: default
   {% include breadcrumb.html %}
 
   <div class="col-head">
-    <span class="col-head-title">{{ page.title }}</span>
-    <span class="col-head-meta">
-      {% if project %}{{ project.id }} · {% endif %}Inst. {{ page.installment }} · {{ page.date | date: "%B %d, %Y" }}
-    </span>
+    <div>
+      <span class="col-head-title">{{ page.title }}</span>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.3rem 0.75rem;margin-top:0.3rem;">
+        {% if author %}
+          <span class="feed-author" style="margin:0;">
+            <a href="{{ site.baseurl }}/authors/{{ author.slug }}/"> — {{ author.name | default: author.title }}</a>
+          </span>
+        {% endif %}
+      </div>
+
+
+  </div>
+    <span class="col-head-meta" style="align-self:flex-start;text-align:right;line-height:1.6;">
+      {% if season %}
+        <span class="feed-author" style="margin:0;">
+          <a href="{{ site.baseurl }}/seasons/{{ season.slug }}/">{{ season.title }}</a>
+        </span>
+        <span style="color:var(--ash);">·</span>
+      {% endif %}
+      Inst. {{ page.installment }}
+      <br>
+      {% if project %}
+        <span class="feed-proj-tag" style="margin:0;">
+          <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
+        </span>
+      {% endif %}
+      
+      
+      <br>
+      <span style="font-size:7px;color:var(--ash);letter-spacing:0.04em;line-height:1.8;">
+        <span style="color:var(--muted);">Created:</span>
+        {{ page.created | date: "%B %d, %Y" }}
+        {% if page.updated and page.updated != '' %}
+          <br>
+          <span style="color:var(--muted);">Updated:</span>
+          {{ page.updated | date: "%B %d, %Y" }}
+        {% endif %}
+        <br>
+        {% if page.badge %}
+          <span class="pill {{ page.badge_class }}" style="font-size:7px;padding:2px 8px;margin-top:0.2rem;display:inline-block;">{{ page.badge }}</span>
+        {% endif %}
+      </span>
+    
   </div>
 
+  {% comment %}─── CONTENT WRAPPER ───{% endcomment %}
   <div class="feed-wrap">
-    <div class="feed-proj-tag">
-      {% if project %}
-        <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
-      {% endif %}
-    </div>
-    <div class="feed-author">
-      {% if author %}
-        <a href="{{ site.baseurl }}/authors/{{ author.slug }}/">{{ author.name | default: author.title }}</a>
-      {% endif %}
-      {% if season %}
-        · <a href="{{ site.baseurl }}/seasons/{{ season.slug }}/">{{ season.title }}</a>
-      {% endif %}
-    </div>
-
-    {% if page.badge %}
-      <div class="post-badge-wrapper">
-        <span class="pill {{ page.badge_class }}">{{ page.badge }}</span>
-      </div>
-    {% endif %}
-
     <div class="post-content">
       {{ content }}
     </div>

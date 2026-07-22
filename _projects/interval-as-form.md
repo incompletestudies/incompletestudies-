@@ -1,17 +1,14 @@
 ---
 layout: project
 title: The Interval as Form
-id: P–02
-slug: interval-as-form
-order: 2
 people: 
 - a-sorensen
-status: Ongoing
-status_class: live
-season: S01
 installments: 4
 total_installments: 6
-last_updated: Oct 2025
+start_date: '2025-10-10'
+id: P–02
+status: Ongoing
+status_class: live
 abstract: |
   What happens in the silence between movements, between arguments, between
   publications? A sustained examination of the interval not as absence but

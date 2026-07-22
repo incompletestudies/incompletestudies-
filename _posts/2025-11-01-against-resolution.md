@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Against resolution"
-date: 2025-11-01
+created: 2025-11-01
 authors: 
 - t-lindqvist
 projects: 

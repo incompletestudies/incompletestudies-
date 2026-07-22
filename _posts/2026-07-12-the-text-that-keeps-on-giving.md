@@ -1,6 +1,7 @@
 ---
 layout: post
 title: The Text that keeps on giving
+installment: 2
 authors:
 - bob-jones
 projects:

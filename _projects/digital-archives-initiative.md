@@ -8,7 +8,7 @@ people:
 website: https://example.org
 keywords: archive;digitisation
 image: project.jpg
-date: '2026-07-18'
+start_date: '2026-07-18'
 ---
 
 # Overview

@@ -126,7 +126,7 @@ permalink: /installments/
               </div>
             {% endif %}
             
-            {% if project and project.total_installments %}
+            <!-- {% if project and project.total_installments %}
               <div style="margin-top: 0.6rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 7px; color: var(--ash); letter-spacing: 0.05em; text-transform: uppercase;">
                 <span>Progress:</span>
                 <div style="display: flex; gap: 2px; flex-wrap: wrap;">
@@ -135,7 +135,7 @@ permalink: /installments/
                   {% endfor %}
                 </div>
               </div>
-            {% endif %}
+            {% endif %} -->
             
           </div>
         </div>

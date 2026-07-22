@@ -1,8 +1,6 @@
 ---
-title: R. Okonkwo
-slug: r-okonkwo
 layout: person
-permalink: /authors/r-okonkwo/
+name: R. Okonkwo
 role: Research fellow
 discipline: Narrative theory
 ---

@@ -37,6 +37,12 @@ layout: default
 
   <div class="proj-main" style="padding:2rem var(--gutter) 4rem">
     
+    {% comment %}─── Stats Bar ───{% endcomment %}
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.04em;">
+      <div><strong style="color:var(--muted);">Projects:</strong> {{ authored_projects.size }}</div>
+      <div><strong style="color:var(--muted);">Installments:</strong> {{ author_posts.size }}</div>
+    </div>
+    
     {% comment %}─── Bio ───{% endcomment %}
     {% if content and content != "" %}
       <div class="about-body-text" style="max-width:720px;margin-bottom:2rem">
@@ -44,11 +50,7 @@ layout: default
       </div>
     {% endif %}
 
-    {% comment %}─── Stats Bar ───{% endcomment %}
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.04em;">
-      <div><strong style="color:var(--muted);">Projects:</strong> {{ authored_projects.size }}</div>
-      <div><strong style="color:var(--muted);">Installments:</strong> {{ author_posts.size }}</div>
-    </div>
+    
 
     {% comment %}─── PROJECTS ───{% endcomment %}
     {% if authored_projects.size > 0 %}

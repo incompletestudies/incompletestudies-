@@ -36,11 +36,13 @@ permalink: /authors/
             <a href="{{ site.baseurl }}{{ person.url }}" class="author-card-link">
               <div class="author-card-avatar">
                 {% if person.avatar %}
-                  <img src="{{ person.avatar }}" alt="{{ person.name | default: person.title }}">
+                  {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.avatar %}
+                  <img src="{{ avatar_path | relative_url }}" alt="{{ person.name | default: person.title }}">
                 {% else %}
                   <div class="avatar-placeholder">{{ person.name | default: person.title | slice: 0 }}</div>
                 {% endif %}
               </div>
+              
               <div class="author-card-info">
                 <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                   <h3 class="author-card-name">{{ person.name | default: person.title }}</h3>

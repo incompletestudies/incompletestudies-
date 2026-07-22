@@ -459,7 +459,7 @@ a:focus {
 }
 .col-head-meta{
   font-family:var(--mono);
-  font-size:9px;
+  font-size:10px;
   color:var(--mid);
   letter-spacing:0.12em;
   text-transform:uppercase;
