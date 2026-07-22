@@ -8,13 +8,13 @@ projects:
 - digital-archives-initiative
 keywords: archive;memory;pandoc;testing
 created: '2026-07-18'
-updated: ''
+updated: '2026-07-18'
 image: image1.png
 ---
 
 # Heading 1
 
-This paragraph contains **bold**, *italic*, ***bold italic***, \`inline code\`, and a [<u>Brokeback Mountain - Wikipedia</u>]({{ '/assets/images/posts/the-long-form-test/Brokeback_Mountain' | relative_url }}) .
+This paragraph contains **bold**, *italic*, ***bold italic***, \`inline code\`, and a [<u>Brokeback Mountain - Wikipedia</u>] .
 
 ## Heading 2
 
@@ -62,7 +62,9 @@ Insert a picture here.<img src="{{ '/assets/images/posts/the-long-form-test/imag
 
 ### Mixed formatting
 
-Text with \*\*bold\*\*, \*italic\*, superscript, subscript, quotation marks, parentheses, and em-dashes.
+Text with **bold**, *italic*, superscript, subscript, quotation marks, parentheses, and em-dashes.
+
+
 
 The project lead—**Dr. Elena Vasquez**—insisted that the archive wasn't "unfinished" so much as perpetually evolving (a distinction her funding committee found less than comforting). She pointed to the metadata logs (which had grown to over 4.9 MB[^2] in raw text alone) as proof of active curation. "The work," she said, "is never truly done—it just reaches a point where we call it version 1.0 and move on."
 
@@ -89,3 +91,5 @@ print("Hello world")</td>
 [^2]: Example footnote. - 2
 
 [^3]: Example footnote. - 3
+
+  [<u>Brokeback Mountain - Wikipedia</u>]: https://en.wikipedia.org/wiki/Brokeback_Mountain

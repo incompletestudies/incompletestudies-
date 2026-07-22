@@ -2,8 +2,10 @@
 layout: post
 title: "Towards a grammar of the unresolved"
 date: 2025-11-03
-author: e-marchetti
-project: trace-and-legibility
+authors: 
+- e-marchetti
+projects: 
+- trace-and-legibility
 installment: 7
 season: S01
 excerpt: "Attempting to name what this project has been doing all along — aware that naming may close it prematurely."

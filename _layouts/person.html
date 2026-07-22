@@ -1,53 +1,237 @@
 ---
 layout: default
 ---
-{% assign as_contributor = site.projects | where_exp: "p", "p.contributors contains page.slug" %}
-{% assign as_legacy_author = site.projects | where: "author", page.slug %}
-{% assign authored_projects = as_contributor | concat: as_legacy_author | uniq %}
-{% assign author_posts = site.posts | where: "author", page.slug | sort: "date" | reverse %}
+
+{% comment %}─── Projects authored (using people array) ───{% endcomment %}
+{% assign authored_projects = site.projects | where_exp: "project", "project.people contains page.slug" %}
+
+{% comment %}─── Get posts where this person is in the authors array ───{% endcomment %}
+{% assign author_posts = "" | split: "" %}
+{% for post in site.posts %}
+  {% if post.authors %}
+    {% if post.authors contains page.slug %}
+      {% assign author_posts = author_posts | push: post %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% assign author_posts = author_posts | sort: "date" | reverse %}
 
 <div class="section-wrap">
+
+  {% comment %}─── Breadcrumbs ───{% endcomment %}
+  {% include breadcrumb.html %}
+
+  {% comment %}─── Header ───{% endcomment %}
   <div class="col-head">
-    <span class="col-head-title">{{ page.title }}</span>
-    <span class="col-head-meta">{{ page.role }} · {{ page.discipline }}</span>
+    <span class="col-head-title">{{ page.name | default: page.title | default: "Untitled Author" }}</span>
+    <span class="col-head-meta">
+      {{ page.role | default: "Contributor" }}
+      {% if page.discipline %}
+        · {{ page.discipline | downcase }}
+      {% endif %}
+      {% if page.institution %}
+        · {{ page.institution }}
+      {% endif %}
+    </span>
   </div>
 
-  <div class="proj-main" style="padding:2.5rem var(--gutter) 4rem">
-    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.04em;margin-bottom:2rem">
-      {{ page.role }}{% if page.institution %}, {{ page.institution }}{% endif %} · {{ page.discipline | downcase }}
+  <div class="proj-main" style="padding:2rem var(--gutter) 4rem">
+    
+    {% comment %}─── Bio ───{% endcomment %}
+    {% if content and content != "" %}
+      <div class="about-body-text" style="max-width:720px;margin-bottom:2rem">
+        {{ content }}
+      </div>
+    {% endif %}
+
+    {% comment %}─── Stats Bar ───{% endcomment %}
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.04em;">
+      <div><strong style="color:var(--muted);">Projects:</strong> {{ authored_projects.size }}</div>
+      <div><strong style="color:var(--muted);">Installments:</strong> {{ author_posts.size }}</div>
     </div>
 
-    <div class="about-body-text" style="max-width:720px;margin-bottom:2rem">
-      {{ content }}
-    </div>
-
+    {% comment %}─── PROJECTS ───{% endcomment %}
     {% if authored_projects.size > 0 %}
-      <div class="cr-block-title" style="margin-top:2.5rem">Projects</div>
-      <ul class="cr-list">
+      <div style="background:rgba(255,255,255,0.01);padding:0 0 0.5rem 0;border-radius:8px;">
+        <div class="cr-block-title" style="margin-top:0;border-bottom:2px solid var(--rule-mid);">
+          <span style="color: var(--gold-dim); font-size: 1rem; margin-right: 0.5rem;">◇</span>
+          Projects
+          <span style="font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted);margin-left:0.5rem;">
+            ({{ authored_projects.size }})
+          </span>
+        </div>
+        
         {% for project in authored_projects %}
           {% assign proj_season = site.seasons | where: "code", project.season | first %}
-          <li><a href="{{ site.baseurl }}/projects/{{ project.slug }}/" style="color:inherit">{{ project.title }}</a> — {{ project.id }}{% if proj_season %} · <a href="{{ site.baseurl }}/seasons/{{ proj_season.slug }}/" style="color:inherit">{{ project.season }}</a>{% endif %}</li>
+          
+          {% comment %}─── Get all people for this project ───{% endcomment %}
+          {% assign people_names = "" | split: "" %}
+          {% if project.people %}
+            {% for slug in project.people %}
+              {% assign person = site.people | where: "slug", slug | first %}
+              {% if person %}
+                {% assign name = person.name | default: person.title %}
+                {% if person.role %}
+                  {% assign name = name | append: " · " | append: person.role %}
+                {% endif %}
+                {% if person.discipline %}
+                  {% assign name = name | append: ", " | append: person.discipline | downcase %}
+                {% endif %}
+                {% assign people_names = people_names | push: name %}
+              {% else %}
+                {% assign people_names = people_names | push: slug %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% assign people_string = people_names | join: " + " %}
+          
+          {% assign proj_posts = site.posts | where_exp: "post", "post.projects contains project.slug" | sort: "date" %}
+          {% assign proj_first_post = proj_posts | first %}
+          {% assign proj_last_post = proj_posts | last %}
+          
+          {% comment %}─── CTA logic ───{% endcomment %}
+          {% assign completed = proj_posts.size %}
+          {% assign total = project.total_installments | default: 0 %}
+          {% if completed >= total and total > 0 %}
+            {% assign cta_post = proj_first_post %}
+            {% assign cta_label = "Start Reading →" %}
+          {% elsif proj_last_post %}
+            {% assign cta_post = proj_last_post %}
+            {% assign cta_label = "Continue Reading →" %}
+          {% else %}
+            {% assign cta_post = nil %}
+            {% assign cta_label = "View Project →" %}
+          {% endif %}
+          
+          <a href="{{ site.baseurl }}/projects/{{ project.slug }}/" class="proj-card" style="text-decoration:none;color:inherit;display:grid;grid-template-columns:1fr 200px;gap:2rem;padding:2rem 0;border-bottom:1px solid var(--rule);transition:opacity 0.12s,background 0.2s;cursor:pointer;">
+            <div>
+              <div class="proj-card-top" style="display:flex;align-items:center;gap:1rem;margin-bottom:0.6rem;flex-wrap:wrap;">
+                <span class="proj-card-id" style="font-family:var(--mono);font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-dim);">
+                  {{ project.id | default: "P–?" }}
+                </span>
+                <span class="pill 
+                  {% if project.status == 'Ongoing' %}live
+                  {% elsif project.status == 'New' %}new-p
+                  {% else %}upcoming{% endif %}" 
+                  style="display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--ash);border-radius:1px;color:var(--muted);">
+                  {{ project.status | default: "Active" }}
+                </span>
+              </div>
+              <div class="proj-card-title" style="font-family:var(--display);font-size:clamp(18px,2.5vw,28px);font-style:italic;font-weight:700;color:var(--bright);margin-bottom:0.3rem;letter-spacing:-0.01em;line-height:1.15;">
+                {{ project.title }}
+              </div>
+              <div class="proj-card-contrib" style="font-family:var(--mono);font-size:9.5px;color:var(--muted);letter-spacing:0.04em;margin-bottom:0.8rem;">
+                — {% if people_string != "" %}{{ people_string }}{% else %}No contributors listed{% endif %}
+              </div>
+              <div class="proj-card-abstract" style="font-family:var(--text);font-size:13.5px;color:var(--pale);line-height:1.8;font-style:italic;max-width:65ch;">
+                {{ project.abstract | default: "No abstract available." }}
+              </div>
+              {% if cta_post %}
+                <div style="margin-top:0.8rem">
+                  <span class="jump-link" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold-dim);padding-bottom:2px;display:inline-block;transition:opacity 0.12s;">
+                    {{ cta_label }}
+                  </span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="proj-card-right" style="text-align:right;">
+              <div class="proj-card-cycle" style="font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.08em;line-height:1.9;margin-bottom:0.8rem;">
+                Inst. {{ proj_posts.size }} of {{ project.total_installments | default: "?" }}<br>
+                {{ project.last_updated | default: "Upcoming" }}<br>
+                {{ project.id | default: "P–?" }}{% if proj_season %} · {{ proj_season.title }}{% endif %}
+              </div>
+              <div class="prog-dots" style="display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap;margin-bottom:0.8rem;">
+                {% assign completed = proj_posts.size %}
+                {% assign total = project.total_installments | default: 5 %}
+                {% for i in (1..total) %}
+                  {% if i <= completed %}
+                    {% assign dot_class = "done" %}
+                  {% elsif i == completed and i < total %}
+                    {% assign dot_class = "now" %}
+                  {% else %}
+                    {% assign dot_class = "upcoming" %}
+                  {% endif %}
+                  <div class="prog-dot {{ dot_class }}"></div>
+                {% endfor %}
+              </div>
+            </div>
+          </a>
         {% endfor %}
-      </ul>
+      </div>
     {% endif %}
 
+    {% comment %}─── INSTALLMENTS ───{% endcomment %}
     {% if author_posts.size > 0 %}
-      <div class="cr-block-title" style="margin-top:2.5rem">Installments</div>
-      {% for post in author_posts %}
-        {% assign post_project = site.projects | where: "slug", post.project | first %}
-        <div class="detail-inst-row">
-          <div class="detail-inst-num">Inst. {{ post.installment }}<span class="detail-inst-date">{{ post.date | date: "%Y-%m-%d" }}</span></div>
-          <div>
-            <div class="detail-inst-title"><a href="{{ site.baseurl }}{{ post.url }}" style="color:inherit">{{ post.title }}</a></div>
-            <div class="detail-inst-excerpt">{% if post_project %}{{ post_project.title }} · {% endif %}{{ post.excerpt | strip_html }}</div>
-          </div>
-          <div>{% if post.badge %}<span class="pill {{ post.badge_class }}">{{ post.badge }}</span>{% endif %}</div>
+      <div style="padding:0 0 0.5rem 0;border-radius:8px;margin-top:3rem;">
+        <div class="cr-block-title" style="margin-top:0;border-bottom:2px solid var(--rule-mid);">
+          <span style="color: var(--gold-dim); font-size: 1rem; margin-right: 0.5rem;">◇</span>
+          Installments
+          <span style="font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted);margin-left:0.5rem;">
+            ({{ author_posts.size }})
+          </span>
         </div>
-      {% endfor %}
+        {% for post in author_posts %}
+          {% comment %}─── Get the project for this post ───{% endcomment %}
+          {% assign post_project = nil %}
+          {% if post.projects %}
+            {% assign project_slug = post.projects | first %}
+            {% assign post_project = site.projects | where: "slug", project_slug | first %}
+          {% endif %}
+          
+          <div class="detail-inst-row" style="display:grid;grid-template-columns:100px 1fr auto;gap:1.5rem;padding:1.2rem 0;border-bottom:1px solid var(--rule);align-items:start;">
+            <div class="detail-inst-num" style="font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.06em;line-height:1.6;">
+              Inst. {{ post.installment | default: "?" }}
+              <span class="detail-inst-date" style="display:block;font-size:8.5px;color:var(--ash);margin-top:3px;">
+                {{ post.date | date: "%b %d, %Y" }}
+              </span>
+            </div>
+            <div>
+              {% if post_project %}
+                {% assign project_index = 0 %}
+                {% for project in site.projects %}
+                  {% if project.slug == post_project.slug %}
+                    {% assign project_index = forloop.index %}
+                  {% endif %}
+                {% endfor %}
+                {% assign color_class = "project-" | append: project_index %}
+                <span class="project-badge {{ color_class }}">
+                  <a href="{{ site.baseurl }}/projects/{{ post_project.slug }}/">{{ post_project.title }}</a>
+                </span>
+              {% endif %}
+              <div class="detail-inst-title" style="font-family:var(--display);font-size:18px;font-style:italic;font-weight:700;color:var(--bright);margin-bottom:0.25rem;line-height:1.25;">
+                <a href="{{ site.baseurl }}{{ post.url }}" style="color:inherit;text-decoration:none;transition:color 0.2s;">
+                  {{ post.title }}
+                </a>
+              </div>
+              <div class="detail-inst-excerpt" style="font-family:var(--text);font-size:12.5px;font-style:italic;color:var(--muted);line-height:1.7;">
+                {% if post.excerpt %}
+                  {{ post.excerpt | strip_html | truncatewords: 15 }}
+                {% endif %}
+              </div>
+            </div>
+            <div>
+              {% if post.badge %}
+                <span class="pill {{ post.badge_class }}">{{ post.badge }}</span>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="cr-block-title" style="margin-top:3rem;">
+        Installments
+      </div>
+      <div style="padding:2rem 0;font-family:var(--text);font-size:13px;font-style:italic;color:var(--mid);line-height:1.8;text-align:center;">
+        No installments yet for this author.
+      </div>
     {% endif %}
 
-    <div style="margin-top:2.5rem">
-      <a href="{{ site.baseurl }}/authors/" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);border-bottom:1px solid var(--ash);padding-bottom:2px">← Back to all authors</a>
+    {% comment %}─── Back Link ───{% endcomment %}
+    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--rule);">
+      <a href="{{ site.baseurl }}/authors/" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--ash);padding-bottom:2px;transition:color 0.2s,border-color 0.2s;">
+        ← Back to all authors
+      </a>
     </div>
+    
   </div>
 </div>

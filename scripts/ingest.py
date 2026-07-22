@@ -320,6 +320,8 @@ subprocess.run(
         "--wrap=none",
         "--extract-media",
         str(image_dir),
+        "--reference-links",
+        "--markdown-headings=atx",
         "-o",
         str(content_file)
     ],

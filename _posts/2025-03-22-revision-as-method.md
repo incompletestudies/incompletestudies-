@@ -2,8 +2,10 @@
 layout: post
 title: "Revision as method, not failure"
 date: 2025-03-22
-author: e-marchetti
-project: trace-and-legibility
+authors: 
+- e-marchetti
+projects: 
+- trace-and-legibility
 installment: 5
 season: S01
 excerpt: "Returning to Inst. 01 with different hands. <span class=\"struck\">The original argument stands.</span> It does not."

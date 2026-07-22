@@ -1,0 +1,64 @@
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="{{ site.baseurl }}/">Home</a>
+
+  {% comment %}─── AUTHORS INDEX ───{% endcomment %}
+  {% if page.permalink == '/authors/' %}
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">Authors</span>
+
+  {% comment %}─── INDIVIDUAL AUTHOR ───{% endcomment %}
+  {% elsif page.layout == 'person' %}
+    <span class="crumb-sep">›</span>
+    <a href="{{ site.baseurl }}/authors/">Authors</a>
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">{{ page.title }}</span>
+
+  {% comment %}─── PROJECTS INDEX ───{% endcomment %}
+  {% elsif page.permalink == '/projects/' %}
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">Projects</span>
+
+  {% comment %}─── INDIVIDUAL PROJECT ───{% endcomment %}
+  {% elsif page.layout == 'project' %}
+    <span class="crumb-sep">›</span>
+    <a href="{{ site.baseurl }}/projects/">Projects</a>
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">{{ page.title }}</span>
+
+  {% comment %}─── INSTALLMENTS INDEX ───{% endcomment %}
+  {% elsif page.permalink == '/installments/' %}
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">Installments</span>
+
+  {% comment %}─── INDIVIDUAL POST (installment) ───{% endcomment %}
+  {% elsif page.layout == 'post' %}
+    <span class="crumb-sep">›</span>
+    <a href="{{ site.baseurl }}/installments/">Installments</a>
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">{{ page.title }}</span>
+
+  {% comment %}─── SEASONS INDEX ───{% endcomment %}
+  {% elsif page.permalink == '/seasons/' %}
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">Seasons</span>
+
+  {% comment %}─── INDIVIDUAL SEASON ───{% endcomment %}
+  {% elsif page.layout == 'season' %}
+    <span class="crumb-sep">›</span>
+    <a href="{{ site.baseurl }}/seasons/">Seasons</a>
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">{{ page.title }}</span>
+
+  {% comment %}─── ABOUT PAGE ───{% endcomment %}
+  {% elsif page.permalink == '/about/' %}
+    <span class="crumb-sep">›</span>
+    <span class="crumb-current">About</span>
+
+  {% comment %}─── FALLBACK ───{% endcomment %}
+  {% else %}
+    {% if page.title %}
+      <span class="crumb-sep">›</span>
+      <span class="crumb-current">{{ page.title }}</span>
+    {% endif %}
+  {% endif %}
+</nav>

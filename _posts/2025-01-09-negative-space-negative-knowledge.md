@@ -2,8 +2,10 @@
 layout: post
 title: "Negative space, negative knowledge"
 date: 2025-01-09
-author: e-marchetti
-project: trace-and-legibility
+authors: 
+- e-marchetti
+projects: 
+- trace-and-legibility
 installment: 4
 season: S01
 excerpt: "What cannot be archived and whether that absence is itself a form of trace."

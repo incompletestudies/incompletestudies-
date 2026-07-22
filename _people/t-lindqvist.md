@@ -1,7 +1,7 @@
 ---
-title: T. Lindqvist
-slug: t-lindqvist
 layout: person
+name: T. Lindqvist
+slug: t-lindqvist
 permalink: /authors/t-lindqvist/
 role: Postdoctoral researcher
 discipline: Philosophy of knowledge

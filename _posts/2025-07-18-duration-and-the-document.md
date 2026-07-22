@@ -2,8 +2,10 @@
 layout: post
 title: "Duration and the document"
 date: 2025-07-18
-author: e-marchetti
-project: trace-and-legibility
+authors: 
+- e-marchetti
+projects: 
+- trace-and-legibility
 installment: 6
 season: S01
 excerpt: "Time as something the document accumulates rather than records."

@@ -5,7 +5,7 @@ layout: default
 {% assign season_posts = site.posts | where: "season", page.code | sort: "date" | reverse %}
 {% assign author_slugs = "" | split: "" %}
 {% for post in season_posts %}
-  {% assign author_slugs = author_slugs | push: post.author %}
+  {% assign author_slugs = author_slugs | push: post.authors %}
 {% endfor %}
 {% assign unique_author_slugs = author_slugs | uniq %}
 
@@ -26,7 +26,7 @@ layout: default
       <div class="cr-block-title" style="margin-top:2rem">Projects this season</div>
       <ul class="cr-list">
         {% for project in season_projects %}
-          {% assign project_author = site.people | where: "slug", project.author | first %}
+          {% assign project_author = site.people | where: "slug", project.people | first %}
           <li><a href="{{ site.baseurl }}/projects/{{ project.slug }}/" style="color:inherit">{{ project.title }}</a> — {{ project.id }}{% if project_author %} · <a href="{{ site.baseurl }}/authors/{{ project_author.slug }}/" style="color:inherit">{{ project_author.title }}</a>{% endif %}</li>
         {% endfor %}
       </ul>

@@ -2,8 +2,10 @@
 layout: post
 title: "Silence as structural element"
 date: 2025-10-15
-author: a-sorensen
-project: interval-as-form
+authors: 
+- a-sorensen
+projects: 
+- interval-as-form
 installment: 4
 season: S01
 excerpt: "The pause that is not empty — how intervals carry weight without content."

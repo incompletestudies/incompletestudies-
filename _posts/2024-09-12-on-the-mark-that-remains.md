@@ -2,8 +2,10 @@
 layout: post
 title: "On the mark that remains after the hand"
 date: 2024-09-12
-author: e-marchetti
-project: trace-and-legibility
+authors: 
+- e-marchetti
+projects: 
+- trace-and-legibility
 installment: 1
 season: S01
 excerpt: "Opening the question of what traces actually are — not as metaphor, but as epistemological category."

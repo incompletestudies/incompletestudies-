@@ -2,8 +2,10 @@
 layout: post
 title: "Legibility against the grain"
 date: 2024-10-01
-author: e-marchetti
-project: trace-and-legibility
+authors: 
+- e-marchetti
+projects: 
+- trace-and-legibility
 installment: 2
 season: S01
 excerpt: "When does a trace become readable, and what is surrendered in that passage to meaning?"

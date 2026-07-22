@@ -1,30 +1,70 @@
 <div class="proj-list-view" id="proj-list">
   {% assign sorted_projects = site.projects | sort: "order" %}
   {% for project in sorted_projects %}
-    {% assign author = site.people | where: "slug", project.author | first %}
-    <div class="proj-card" data-slug="{{ project.slug }}" onclick="showProjectDetailBySlug(this.dataset.slug)">
+    
+    {% comment %}─── Get all posts for this project (using the same logic as project.html) ───{% endcomment %}
+    {% assign post_count = 0 %}
+    {% for post in site.posts %}
+      {% if post.projects %}
+        {% if post.projects contains project.slug %}
+          {% assign post_count = post_count | plus: 1 %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    
+    {% comment %}─── Get all people for this project ───{% endcomment %}
+    {% assign people_names = "" | split: "" %}
+    {% if project.people %}
+      {% for slug in project.people %}
+        {% assign person = site.people | where: "slug", slug | first %}
+        {% if person %}
+          {% assign name = person.name | default: person.title %}
+          {% if person.role %}
+            {% assign name = name | append: " · " | append: person.role %}
+          {% endif %}
+          {% assign people_names = people_names | push: name %}
+        {% else %}
+          {% assign people_names = people_names | push: slug %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% assign people_string = people_names | join: " + " %}
+    
+    <div class="proj-card" data-slug="{{ project.slug }}" onclick="showProjectDetailBySlug(this.dataset.slug)" role="link" tabindex="0">
       <div>
         <div class="proj-card-top">
-          <span class="proj-card-id">{{ project.id }}</span>
-          <span class="pill {{ project.status_class }}">
-            {{ project.status }}
+          <span class="home-index-num">P–{{ forloop.index }}</span>
+          <span class="pill 
+            {% if project.status == 'Ongoing' %}live
+            {% elsif project.status == 'New' %}new-p
+            {% else %}upcoming{% endif %}">
+            {{ project.status | default: "Active" }}
           </span>
         </div>
         <div class="proj-card-title">{{ project.title }}</div>
-        <div class="proj-card-contrib">— {% if author %}{{ author.title }} · {{ author.role }}, {{ author.discipline | downcase }}{% endif %}</div>
-        <div class="proj-card-abstract">{{ project.abstract }}</div>
+        <div class="proj-card-contrib">
+          — {% if people_string != "" %}{{ people_string }}{% else %}No contributors listed{% endif %}
+        </div>
+        <div class="proj-card-abstract">{{ project.abstract | default: "No abstract yet." }}</div>
       </div>
       <div class="proj-card-right">
         <div class="proj-card-cycle">
-          Inst. {{ project.installments }} of {{ project.total_installments }}<br>
-          {{ project.last_updated }}<br>
-          {{ project.id }} · {{ project.season }}
+          {% assign total_count = project.total_installments | default: "?" %}
+          Now at {{ post_count }} Inst.
+          <br>
+          {{ project.last_updated | default: "Upcoming" }}
+          <br>
+          {{ project.season | default: "Season 01" }}
         </div>
         <div class="prog-dots">
-          {% assign completed = project.installments %}
-          {% assign total = project.total_installments %}
+          {% assign completed = post_count %}
+          {% assign total = project.total_installments | default: 5 %}
           {% for i in (1..total) %}
-            <div class="prog-dot {% if i < completed %}done{% elsif i == completed %}now{% endif %}"></div>
+            <div class="prog-dot 
+              {% if i <= completed %}done
+              {% elsif i == completed and i < total %}now
+              {% endif %}">
+            </div>
           {% endfor %}
         </div>
       </div>

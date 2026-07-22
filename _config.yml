@@ -34,6 +34,26 @@ theme: minima
 plugins:
   - jekyll-feed
 
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: true
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  parse_block_html: false      # ← CHANGE to false
+  parse_span_html: false       # ← CHANGE to false
+  footnotes: true
+  enable_coderay: false
+  syntax_highlighter: none
+  transliterated_header_ids: true
+  html_to_native: false        # ← ADD THIS
+
+
 # ... other settings ...
 collections:
   people:
@@ -84,7 +104,7 @@ exclude:
 # New design settings
 current_season: "01"
 version: "v2.1.4"
-footer_left: "The Unfinished Archive · Serial Research Publication · Est. 2024"
+footer_left: "The Unfinished Archive · Serial Research Publication · Est. 2026"
 footer_right: "v2.1.4 · 2026-07-16 · Season 01 ongoing"
 
 # Project data now lives in the `_projects` collection (see /_projects/*.md)

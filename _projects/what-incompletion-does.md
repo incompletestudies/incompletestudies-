@@ -2,11 +2,9 @@
 layout: project
 title: What Incompletion Does
 id: P–04
-slug: what-incompletion-does
 order: 4
-author: t-lindqvist
-contributors:
-  - t-lindqvist
+people:
+- t-lindqvist
 status: New
 status_class: new-p
 season: S01

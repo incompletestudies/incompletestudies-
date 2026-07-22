@@ -2,11 +2,9 @@
 layout: project
 title: Seriality and Return
 id: P–03
-slug: seriality-and-return
 order: 3
-author: r-okonkwo
-contributors:
-  - r-okonkwo
+people:
+- r-okonkwo
 status: Early
 status_class: ""
 season: S01

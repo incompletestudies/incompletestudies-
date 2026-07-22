@@ -4,9 +4,8 @@ title: The Interval as Form
 id: P–02
 slug: interval-as-form
 order: 2
-author: a-sorensen
-contributors:
-  - a-sorensen
+people: 
+- a-sorensen
 status: Ongoing
 status_class: live
 season: S01

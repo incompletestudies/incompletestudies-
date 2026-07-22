@@ -2,8 +2,10 @@
 layout: post
 title: "Between installments"
 date: 2025-08-01
-author: a-sorensen
-project: interval-as-form
+authors: 
+- a-sorensen
+projects: 
+- interval-as-form
 installment: 2
 season: S01
 excerpt: "What happens to a project in the month before the next installment appears?"
