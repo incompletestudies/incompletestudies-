@@ -1,0 +1,9 @@
+<nav class="topbar-nav" aria-label="Primary">
+  {% for item in site.data.navigation %}
+    <button class="nav-tab {% if page.url == item.url %}active{% endif %}"
+            {% if page.url == item.url %}aria-current="page"{% endif %}
+            onclick="location.href='{{ site.baseurl }}{{ item.url }}'">
+      {{ item.title }}
+    </button>
+  {% endfor %}
+</nav>

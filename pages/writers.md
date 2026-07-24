@@ -46,9 +46,22 @@ permalink: /authors/
               <div class="author-card-info">
                 <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                   <h3 class="author-card-name">{{ person.name | default: person.title }}</h3>
-                  {% if person.slug == newest_author.slug %}
+
+                  <!-- {% if person.slug == newest_author.slug %}
                     <span class="new-badge">✦ New</span>
+                  {% endif %} -->
+                  
+                  {% if person.status %}
+                    {% assign status_class = person.status | downcase | replace: ' ', '-' %}
+                    <span class="researcher-status {{ status_class }}">
+                      {{ person.status }}
+                    </span>
+                  {% else %}
+                    <span class="researcher-status active">
+                      Active
+                    </span>
                   {% endif %}
+
                 </div>
                 <p class="author-card-role">{{ person.role }}</p>
                 <p class="author-card-discipline">{{ person.discipline | downcase }}</p>
@@ -85,6 +98,49 @@ permalink: /authors/
 </div>
 
 <style>
+  /* ─── Researcher Status ─── */
+  .researcher-status {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.6rem;
+    border-radius: 2px;
+    border: 1px solid;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+
+  /* ─── Active ─── */
+  .researcher-status.active {
+    color: #4CAF50;
+    border-color: rgba(76, 175, 80, 0.3);
+    background: rgba(76, 175, 80, 0.05);
+  }
+
+  /* ─── On Leave ─── */
+  .researcher-status.on-leave {
+    color: #FFB74D;
+    border-color: rgba(255, 183, 77, 0.3);
+    background: rgba(255, 183, 77, 0.05);
+  }
+
+  /* ─── Alumni ─── */
+  .researcher-status.alumni {
+    color: #9E9E9E;
+    border-color: rgba(158, 158, 158, 0.2);
+    background: rgba(158, 158, 158, 0.05);
+    opacity: 0.7;
+  }
+
+  /* ─── New ─── */
+  .researcher-status.new {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+  }
+  
+  
   /* ─── AUTHORS PAGE ─── */
 
   .col-head {

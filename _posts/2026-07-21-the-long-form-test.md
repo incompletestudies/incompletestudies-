@@ -8,6 +8,7 @@ authors:
 projects:
 - digital-archives-initiative
 keywords: archive;memory;pandoc;testing
+badge: First Inst.
 created: '2026-07-18'
 updated: '2026-07-22'
 image: image1.png

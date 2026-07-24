@@ -11,8 +11,8 @@ orcid: 0000-0000-0000-0001
 github: bob-jones
 linkedin: https://linkedin.com/in/bobjones
 email: bob@example.com
+status: On Leave
 profile_image: bob-jones.jpg
-status: Member
 active_: true
 ---
 

@@ -11,7 +11,7 @@ permalink: /installments/
   <div class="col-head">
     <span class="col-head-title">Installments</span>
     <span class="col-head-meta">
-      {{ site.posts | size }} total · Season {{ site.current_season | default: "01" }}
+      All published · Reverse-chronological · {{ site.posts | size }} total 
     </span>
   </div>
 
@@ -27,6 +27,7 @@ permalink: /installments/
       {% assign current_month = "" %}
       
       {% for post in sorted_posts %}
+
         {% assign post_month = post.date | date: "%B %Y" %}
         
         {% comment %}─── Get project from post.projects array ───{% endcomment %}
@@ -86,25 +87,8 @@ permalink: /installments/
             
             <!-- ─── AUTHOR + PROJECT (with clickable authors) ─── -->
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
-              {% if post.authors and post.authors.size > 0 %}
-                <span class="feed-author" style="margin-bottom: 0;">
-                  {% for slug in post.authors %}
-                    {% assign person = site.people | where: "slug", slug | first %}
-                    {% if person %}
-                      <a href="{{ site.baseurl }}/authors/{{ person.slug }}/" style="color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s;">
-                        {{ person.name | default: person.title }}
-                      </a>{% unless forloop.last %}, {% endunless %}
-                    {% else %}
-                      <span style="color: var(--muted);">{{ slug }}</span>{% unless forloop.last %}, {% endunless %}
-                    {% endif %}
-                  {% endfor %}
-                </span>
-              {% else %}
-                <span class="feed-author" style="margin-bottom: 0; color: var(--ash);">Anonymous</span>
-              {% endif %}
               
-              <span style="color: var(--ash);">·</span>
-              
+
               {% if project %}
                 <span class="feed-proj-tag" style="margin-top: 0; margin-bottom: 0;">
                   <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
@@ -114,6 +98,27 @@ permalink: /installments/
                   {% if post.projects %}{{ post.projects | first }}{% else %}Uncategorized{% endif %}
                 </span>
               {% endif %}
+
+              <span style="color: var(--ash);">·</span>
+              
+              {% if post.authors and post.authors.size > 0 %}
+                <span class="feed-author" style="margin-bottom: 0;">
+                  {% for slug in post.authors %}
+                    {% assign person = site.people | where: "slug", slug | first %}
+                    {% if person %}
+                      <a href="{{ site.baseurl }}/authors/{{ person.slug }}/" style="color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s;">
+                        {{ person.name | default: person.title }}
+                      </a>{% unless forloop.last %}+ {% endunless %}
+                    {% else %}
+                      <span style="color: var(--muted);">{{ slug }}</span>{% unless forloop.last %}, {% endunless %}
+                    {% endif %}
+                  {% endfor %}
+                </span>
+              {% else %}
+                <span class="feed-author" style="margin-bottom: 0; color: var(--ash);">Anonymous</span>
+              {% endif %}
+
+
             </div>
             
             <div class="feed-excerpt">
@@ -121,21 +126,24 @@ permalink: /installments/
             </div>
             
             {% if post.badge %}
-              <div style="margin-top: 0.8rem;">
-                <span class="pill {{ post.badge_class }}">{{ post.badge }}</span>
-              </div>
+              {% assign badge_class = post.badge | downcase | replace: ' ', '-' %}
+          
+              {% comment %}─── Fix for "First Inst." and "Last Inst." ───{% endcomment %}
+
+              {% if badge_class == "first-inst." %}  <!-- Note the period -->
+                {% assign badge_class = "first" %}
+              {% elsif badge_class == "last-inst." %}  <!-- Note the period -->
+                {% assign badge_class = "last" %}
+              {% endif %}
+
+              
+              <span class="installment-badge {{ badge_class }}">
+                {{ post.badge }}
+              </span>
+              
             {% endif %}
+
             
-            <!-- {% if project and project.total_installments %}
-              <div style="margin-top: 0.6rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 7px; color: var(--ash); letter-spacing: 0.05em; text-transform: uppercase;">
-                <span>Progress:</span>
-                <div style="display: flex; gap: 2px; flex-wrap: wrap;">
-                  {% for i in (1..project.total_installments) %}
-                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: {% if i <= project.installments %}var(--mid){% else %}var(--ash){% endif %};"></span>
-                  {% endfor %}
-                </div>
-              </div>
-            {% endif %} -->
             
           </div>
         </div>
@@ -143,3 +151,42 @@ permalink: /installments/
     {% endif %}
   </div>
 </div>
+
+
+
+
+
+<style>
+  /* ─── Installment Status ─── */
+  .installment-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  /* ─── First Inst. ─── */
+  .installment-badge.first {
+    color: #64B5F6;
+    background: rgba(100, 181, 246, 0.08);
+    border: 1px solid rgba(100, 181, 246, 0.2);
+  }
+
+  /* ─── Revised ─── */
+  .installment-badge.revised {
+    color: #CE93D8;
+    background: rgba(206, 147, 216, 0.08);
+    border: 1px solid rgba(206, 147, 216, 0.2);
+  }
+
+  /* ─── Last Inst. ─── */
+  .installment-badge.last {
+    color: #FF8A65;
+    background: rgba(255, 138, 101, 0.08);
+    border: 1px solid rgba(255, 138, 101, 0.2);
+  }
+
+</style>

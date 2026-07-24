@@ -1,0 +1,26 @@
+/* ─── main.css ─── */
+/* Import all files */
+
+/* ───1. Variables & Design Tokens─── */
+/* All CSS custom properties (colors, fonts, spacing) */
+@import "variables.css"; 
+
+/* ───2. Base Styles─── */
+/* Reset, body, links, grain overlay */
+@import "base.css";
+
+/* ───3. Layout─── */
+/* Topbar, footer, section wrap, containers */
+@import "layout.css";
+
+/* ───4. Reusable Components─── */
+/* Cards, badges, pills, tags, links, breadcrumbs */
+@import "components.css";
+
+/* ───5. Utilities─── */
+/* Spacing, text, display, responsive utilities */
+@import "utilities.css";
+
+/* ───6. Page-Specific Styles─── */
+/* All page-specific styles (home, projects, feed, seasons, etc.) */
+@import "pages.css";

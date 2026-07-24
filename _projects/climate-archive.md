@@ -2,7 +2,7 @@
 layout: project
 title: Climate Archive
 short_title: Climate Archive
-status: Active
+status: New
 start_date: '2025-01-01'
 people:
 - alice-smith

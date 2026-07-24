@@ -1,0 +1,51 @@
+/* ─── variables.css ─── */
+
+/* ─── variables.css ─── */
+
+:root {
+  /* ─── Backgrounds (more depth) ─── */
+  --void: #0c0b09;
+  --void2: #1a1714;
+  --void3: #28231e;
+  --surface: #342e28;
+  --surface2: #403a32;
+
+  /* ─── Grays (more contrast) ─── */
+  --ash: #5a4f44;
+  --mid: #7a6e60;
+  --muted: #9e9282;
+  --pale: #c8bfae;
+  --cream: #e8dfd0;
+  --paper: #f2ede4;
+  --bright: #faf6ef;
+
+  /* ─── Accents ─── */
+  --gold: #d4b87a;
+  --gold-dim: #a68b5c;
+  --sage: #8aaa7a;
+  --sage-dim: #5a7a4a;
+  --rust: #c06a4a;
+
+  /* ─── Rules/borders ─── */
+  --rule: rgba(200, 194, 182, 0.15);
+  --rule-mid: rgba(200, 194, 182, 0.28);
+  --rule-bright: rgba(200, 194, 182, 0.45);
+
+  /* ─── Typography ─── */
+  --display: 'Fraunces', Georgia, serif;
+  --text: 'Literata', Georgia, serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --script: 'Caveat', cursive;
+
+  /* ─── Semantic roles ─── */
+  --ink: var(--void);
+  --bone: var(--cream);
+  --graphite: var(--mid);
+  --moss: var(--sage);
+  --moss-dim: var(--sage-dim);
+  --redaction: var(--muted);
+
+  /* ─── Layout ─── */
+  --gutter: 2.5rem;
+  --max: 1320px;
+}

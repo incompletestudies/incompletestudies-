@@ -1,0 +1,126 @@
+/* ─── utilities.css ─── */
+
+/* ─── Spacing ─── */
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+.mt-md {
+  margin-top: var(--space-md);
+}
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+.mt-xl {
+  margin-top: var(--space-xl);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+.p-sm {
+  padding: var(--space-sm);
+}
+.p-md {
+  padding: var(--space-md);
+}
+.p-lg {
+  padding: var(--space-lg);
+}
+.p-xl {
+  padding: var(--space-xl);
+}
+
+/* ─── Text ─── */
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.text-mono {
+  font-family: var(--mono);
+}
+.text-display {
+  font-family: var(--display);
+}
+.text-script {
+  font-family: var(--script);
+}
+
+/* ─── Colors ─── */
+.color-gold {
+  color: var(--gold);
+}
+.color-muted {
+  color: var(--muted);
+}
+.color-ash {
+  color: var(--ash);
+}
+.color-cream {
+  color: var(--cream);
+}
+.color-bright {
+  color: var(--bright);
+}
+
+/* ─── Borders ─── */
+.border-bottom {
+  border-bottom: 1px solid var(--rule);
+}
+.border-top {
+  border-top: 1px solid var(--rule);
+}
+.border-left {
+  border-left: 1px solid var(--rule);
+}
+.border-right {
+  border-right: 1px solid var(--rule);
+}
+
+/* ─── Display ─── */
+.hidden {
+  display: none !important;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+
+/* ─── Responsive Utilities ─── */
+@media (max-width: 640px) {
+  .crumb-collapse {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

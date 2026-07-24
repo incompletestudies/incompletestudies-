@@ -21,27 +21,49 @@ layout: default
   {% comment %}─── Breadcrumbs ───{% endcomment %}
   {% include breadcrumb.html %}
 
-  {% comment %}─── Header ───{% endcomment %}
+  {% comment %}─── HEADER ───{% endcomment %}
   <div class="col-head">
-    <span class="col-head-title">{{ page.name | default: page.title | default: "Untitled Author" }}</span>
-    <span class="col-head-meta">
-      {{ page.role | default: "Contributor" }}
-      {% if page.discipline %}
-        · {{ page.discipline | downcase }}
-      {% endif %}
-      {% if page.institution %}
-        · {{ page.institution }}
-      {% endif %}
+    <div>
+      <span class="col-head-title">{{ page.name | default: page.title | default: "Untitled Author" }}</span>
+      
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.3rem 0.75rem;margin-top:0.3rem;">
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.04em;">
+          {{ page.role | default: "Contributor" }}
+          {% if page.discipline %}
+            · {{ page.discipline | downcase }}
+          {% endif %}
+          {% if page.institution %}
+            · {{ page.institution }}
+          {% endif %}
+        </span>
+      </div>
+    </div>
+    
+    <span class="col-head-meta" style="align-self:flex-start;text-align:right;line-height:1.6;">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.04em;">
+        <span style="color:var(--cream);font-weight:700;">{{ authored_projects.size }}</span> projects
+        <span style="color:var(--ash);">·</span>
+        <span style="color:var(--cream);font-weight:700;">{{ author_posts.size }}</span> installments
+      </div>
+      
+      <span style="font-size:7px;color:var(--ash);letter-spacing:0.04em;line-height:1.8;">
+        <span style="color:var(--muted);">Joined:</span>
+        {% if page.join_date %}
+          {{ page.join_date | date: "%B %d, %Y" }}
+        {% else %}
+          {{ page.date | date: "%B %d, %Y" }}
+        {% endif %}
+        {% if page.last_updated and page.last_updated != '' %}
+          <br>
+          <span style="color:var(--muted);">Updated:</span>
+          {{ page.last_updated | date: "%B %d, %Y" }}
+        {% endif %}
+      </span>
     </span>
   </div>
 
+
   <div class="proj-main" style="padding:2rem var(--gutter) 4rem">
-    
-    {% comment %}─── Stats Bar ───{% endcomment %}
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.04em;">
-      <div><strong style="color:var(--muted);">Projects:</strong> {{ authored_projects.size }}</div>
-      <div><strong style="color:var(--muted);">Installments:</strong> {{ author_posts.size }}</div>
-    </div>
     
     {% comment %}─── Bio ───{% endcomment %}
     {% if content and content != "" %}
@@ -73,12 +95,7 @@ layout: default
               {% assign person = site.people | where: "slug", slug | first %}
               {% if person %}
                 {% assign name = person.name | default: person.title %}
-                {% if person.role %}
-                  {% assign name = name | append: " · " | append: person.role %}
-                {% endif %}
-                {% if person.discipline %}
-                  {% assign name = name | append: ", " | append: person.discipline | downcase %}
-                {% endif %}
+                
                 {% assign people_names = people_names | push: name %}
               {% else %}
                 {% assign people_names = people_names | push: slug %}
@@ -138,11 +155,11 @@ layout: default
             </div>
             <div class="proj-card-right" style="text-align:right;">
               <div class="proj-card-cycle" style="font-family:var(--mono);font-size:9px;color:var(--mid);letter-spacing:0.08em;line-height:1.9;margin-bottom:0.8rem;">
-                Inst. {{ proj_posts.size }} of {{ project.total_installments | default: "?" }}<br>
+                Now at {{ proj_posts.size }} Inst. <br>
                 {{ project.last_updated | default: "Upcoming" }}<br>
                 {{ project.id | default: "P–?" }}{% if proj_season %} · {{ proj_season.title }}{% endif %}
               </div>
-              <div class="prog-dots" style="display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap;margin-bottom:0.8rem;">
+              <!-- <div class="prog-dots" style="display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap;margin-bottom:0.8rem;">
                 {% assign completed = proj_posts.size %}
                 {% assign total = project.total_installments | default: 5 %}
                 {% for i in (1..total) %}
@@ -155,7 +172,7 @@ layout: default
                   {% endif %}
                   <div class="prog-dot {{ dot_class }}"></div>
                 {% endfor %}
-              </div>
+              </div> -->
             </div>
           </a>
         {% endfor %}

@@ -4,7 +4,6 @@ title: What Incompletion Does
 people:
 - t-lindqvist
 status: New
-status_class: new-p
 season: S01
 installments: 1
 total_installments: 6

@@ -9,10 +9,11 @@ orcid: 0000-0000-0000-0000
 projects:
 - digital-archives-initiative
 - climate-archive
+status: Active
 avatar: avatar-alice.jpg
 keywords: archives;memory
-created: '2026-07-18'
-updated: ''
+join_date: '2026-01-01'
+last_updated: '2026-07-18'
 ---
 
 # Biography

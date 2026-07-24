@@ -1,0 +1,698 @@
+---
+layout: default
+title: The Unfinished Archive
+permalink: /
+---
+
+<div class="home-hero">
+  <div class="home-left">
+    <div>
+      <div class="home-eyebrow">The Unfinished Archive</div>
+      <h1 class="home-title">
+        Journal of Incomplete Studies
+      </h1>
+      <div class="home-season-badge">
+        Season {{ site.current_season | default: "1" }} · {{ site.current_period | default: "Autumn 2026" }} → ongoing
+      </div>
+
+      {% comment %}─── Tagline ───{% endcomment %}
+      <div class="home-tagline">
+        A serial research publication for thought still in motion
+      </div>
+
+      {% comment %}─── Search ───{% endcomment %}
+      <div class="home-search">
+        <label for="archive-search" class="visually-hidden">Search authors, projects, and installments</label>
+        <input type="text" id="archive-search" class="home-search-input"
+               placeholder="Search authors, projects, installments..."
+               autocomplete="off">
+        <div id="archive-search-empty" class="home-search-empty" hidden>
+          No matches — try a different name or title.
+        </div>
+      </div>
+    </div>
+
+    {% comment %}─── THIS MONTH ───{% endcomment %}
+    <div>
+      <h2 class="visually-hidden">This Month</h2>
+      <div class="home-section-label">
+        <span>This month</span>
+        <span class="home-section-count">{{ site.time | date: "%B %Y" }}</span>
+      </div>
+
+      {% assign this_month = site.time | date: "%m" %}
+      {% assign this_year = site.time | date: "%Y" %}
+      {% assign month_posts = "" | split: "" %}
+
+      {% for post in site.posts %}
+        {% assign post_month = post.date | date: "%m" %}
+        {% assign post_year = post.date | date: "%Y" %}
+        {% if post_month == this_month and post_year == this_year %}
+          {% assign month_posts = month_posts | push: post %}
+        {% endif %}
+      {% endfor %}
+
+      {% if month_posts.size > 0 %}
+        <div class="home-month-grid">
+          {% for post in month_posts %}
+            {% assign post_project = site.projects | where: "slug", post.project_slug | first %}
+            {% assign post_author = site.people | where: "slug", post.author_slug | first %}
+            <a href="{{ post.url | relative_url }}" class="home-month-card" data-search="{{ post.title | downcase }}">
+              <div class="home-month-meta">
+                <span class="home-month-inst">Inst. {{ post.installment | default: "?" }}</span>
+                {% if post_project %}
+                  <span class="home-month-project">{{ post_project.title }}</span>
+                {% endif %}
+              </div>
+              <h3 class="home-month-title">{{ post.title }}</h3>
+              <div class="home-month-author">
+                {% if post_author %}
+                  {{ post_author.title }}
+                {% elsif post.author %}
+                  {{ post.author }}
+                {% else %}
+                  Anonymous
+                {% endif %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="home-month-empty">
+          <span>No installments published this month yet.</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <h2 class="visually-hidden">Active Projects</h2>
+      <div class="home-section-label">
+        <span>Active projects</span>
+        <span class="home-section-count">{{ site.projects | size }} total</span>
+      </div>
+
+      {% comment %}─── PROJECT GRID ───{% endcomment %}
+      <div class="home-project-grid" id="project-grid">
+        {% if site.projects and site.projects.size > 0 %}
+          {% for project in site.projects %}
+            {% assign status_class = "" %}
+            {% if project.status == "Ongoing" %}
+              {% assign status_class = "live" %}
+            {% elsif project.status == "New" %}
+              {% assign status_class = "new" %}
+            {% endif %}
+            <a href="{{ project.url | relative_url }}"
+               class="home-project-card"
+               data-search="{{ project.title | downcase }}">
+              <span class="home-project-id">{{ project.id | default: "P" }}{{ forloop.index }}</span>
+              <h3 class="home-project-title">{{ project.title }}</h3>
+              <span class="home-project-status {{ status_class }}">
+                {{ project.status | default: "Active" }}
+              </span>
+            </a>
+          {% endfor %}
+        {% else %}
+          <div class="home-project-card home-empty-card">
+            <span class="home-empty-text">No projects yet — check back soon</span>
+          </div>
+        {% endif %}
+      </div>
+      <div id="project-grid-empty" class="home-search-empty" hidden>
+        No projects match your search.
+      </div>
+    </div>
+  </div>
+
+  <div class="home-right">
+    <div class="home-temporal">
+      <div class="home-bg-year" aria-hidden="true">{{ site.time | date: "%Y" }}</div>
+
+      <h2 class="visually-hidden">Latest Installment</h2>
+      <div class="home-latest">
+        {% assign latest_post = site.posts | first %}
+        {% if latest_post %}
+          {% assign latest_project = site.projects | where: "slug", latest_post.project_slug | first %}
+          {% assign latest_author = site.people | where: "slug", latest_post.author_slug | first %}
+
+          <div class="home-latest-eyebrow">
+            <span class="home-latest-star">✦</span> Latest installment ·
+            {{ latest_post.date | date: "%b %Y" }} ·
+            {% if latest_project.id %}
+              {{ latest_project.id }}
+            {% else %}
+              {{ latest_post.project_slug | default: "P–?" }}
+            {% endif %}
+            Inst. {{ latest_post.installment | default: "?" }}
+          </div>
+
+          <div class="home-latest-title">
+            <a href="{{ latest_post.url | relative_url }}" class="home-latest-title-link">
+              {{ latest_post.title }}
+            </a>
+          </div>
+
+          <div class="home-latest-meta">
+            {% if latest_author %}
+              {{ latest_author.title }}
+            {% elsif latest_post.author %}
+              {{ latest_post.author }}
+            {% else %}
+              {{ latest_post.author_slug | default: "Anonymous" }}
+            {% endif %}
+            ·
+            {% if latest_project %}
+              {{ latest_project.title }}
+            {% elsif latest_post.project %}
+              {{ latest_post.project }}
+            {% else %}
+              {{ latest_post.project_slug | default: "Uncategorized" }}
+            {% endif %}
+          </div>
+
+          <div class="home-latest-excerpt">
+            <a href="{{ latest_post.url | relative_url }}" class="home-latest-excerpt-link">
+              {{ latest_post.excerpt | strip_html | truncatewords: 30 }}
+            </a>
+          </div>
+
+          {% comment %}─── CONTINUE READING CTA ───{% endcomment %}
+          <div class="home-latest-cta">
+            <a href="{{ latest_post.url | relative_url }}" class="jump-link home-continue-link">
+              Continue Reading →
+            </a>
+          </div>
+        {% else %}
+          <div class="home-latest-eyebrow">No installments yet</div>
+          <div class="home-latest-title">Check back soon</div>
+          <div class="home-latest-excerpt home-empty-text">
+            The first installment will appear here.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <h2 class="visually-hidden">Recent Installments</h2>
+    <div class="home-timeline" id="timeline">
+      {% if site.posts and site.posts.size > 0 %}
+        {% assign total_posts = site.posts.size %}
+
+        {% for post in site.posts limit:3 %}
+          <a href="{{ post.url | relative_url }}"
+             class="timeline-inst {% if forloop.first %}current{% else %}done{% endif %}"
+             data-search="{{ post.title | downcase }}">
+            <div class="timeline-inst-num">
+              I·{% if post.installment < 10 %}0{% endif %}{{ post.installment | default: "?" }}
+              {{ post.date | date: "%b'%y" }}
+            </div>
+            <div class="timeline-inst-title">{{ post.title }}</div>
+          </a>
+        {% endfor %}
+
+        {% if total_posts > 3 %}
+          <a href="{{ "/installments/" | relative_url }}" class="timeline-inst view-all">
+            <div class="timeline-inst-num timeline-view-all-num">+{{ total_posts | minus: 3 }}</div>
+            <div class="timeline-inst-title timeline-view-all-title">View all →</div>
+          </a>
+        {% endif %}
+      {% else %}
+        <div class="timeline-inst home-empty-card">
+          <div class="timeline-inst-num">—</div>
+          <div class="timeline-inst-title home-empty-text">No installments yet</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ─── Accessibility helpers ─── */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .home-hero a:focus-visible,
+  .home-search-input:focus-visible {
+    outline: 2px solid var(--gold, #c9a84c);
+    outline-offset: 2px;
+  }
+
+  /* ─── Tagline ─── */
+  .home-tagline {
+    font-family: var(--text);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+  }
+
+  /* ─── Section Labels ─── */
+  .home-section-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .home-section-count {
+    color: var(--muted);
+    font-size: 7px;
+  }
+
+  /* ─── Empty States ─── */
+  .home-empty-card {
+    opacity: 0.5;
+    cursor: default;
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .home-empty-text {
+    color: var(--mid);
+    font-style: normal;
+    font-family: var(--text);
+    font-size: 13px;
+  }
+
+  .home-month-empty {
+    padding: 1.5rem 0;
+    font-family: var(--text);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--mid);
+    text-align: center;
+  }
+
+  /* ─── THIS MONTH ─── */
+  .home-month-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .home-month-card {
+    display: block;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.01);
+    text-decoration: none;
+  }
+
+  .home-month-card:hover {
+    border-color: var(--gold-dim);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+  }
+
+  .home-month-meta {
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--ash);
+    letter-spacing: 0.05em;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.2rem;
+  }
+
+  .home-month-inst {
+    color: var(--gold-dim);
+  }
+
+  .home-month-project {
+    color: var(--muted);
+  }
+
+  .home-month-title {
+    font-family: var(--display);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .home-month-author {
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ─── Latest ─── */
+  .home-latest-star {
+    color: var(--gold);
+  }
+
+  .home-latest-title-link,
+  .home-latest-excerpt-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .home-latest-cta {
+    margin-top: 1rem;
+  }
+
+  .home-continue-link {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 2px;
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity 0.12s;
+  }
+
+  .timeline-view-all-num,
+  .timeline-view-all-title {
+    color: var(--gold);
+  }
+
+  /* ─── Project Grid ─── */
+  .home-project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .home-project-card {
+    display: block;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.01);
+    text-decoration: none;
+  }
+
+  .home-project-card:hover {
+    border-color: var(--gold-dim);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+  }
+
+  .home-project-id {
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--ash);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .home-project-title {
+    font-family: var(--display);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .home-project-status {
+    font-family: var(--mono);
+    font-size: 6px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-top: 0.3rem;
+    border: 1px solid var(--rule);
+    padding: 0.05rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  .home-project-status.live {
+    color: var(--sage);
+    border-color: var(--sage-dim);
+  }
+
+  .home-project-status.new {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+  }
+
+  /* ─── Search ─── */
+  .home-search {
+    margin-bottom: 1.5rem;
+  }
+
+  .home-search-input {
+    width: 100%;
+    background: var(--void2);
+    border: 1px solid var(--rule);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: var(--cream);
+    font-family: var(--text);
+    font-size: 13px;
+    font-style: italic;
+    transition: border-color 0.2s;
+  }
+
+  .home-search-input::placeholder {
+    color: var(--ash);
+  }
+
+  .home-search-input:focus {
+    border-color: var(--gold-dim);
+    outline: none;
+  }
+
+  .home-search-empty {
+    font-family: var(--text);
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    padding: 0.5rem 0.2rem;
+  }
+
+  .timeline-inst {
+    text-decoration: none;
+    display: block;
+  }
+
+  /* ─── Timeline View All ─── */
+  .timeline-inst.view-all {
+    border: 1px dashed var(--rule);
+    background: transparent;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .timeline-inst.view-all:hover {
+    border-color: var(--gold-dim);
+    background: rgba(201, 168, 76, 0.03);
+  }
+
+  /* ─── Reduced motion ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .home-project-card,
+    .home-month-card,
+    .timeline-inst.view-all,
+    .home-continue-link {
+      transition: none !important;
+    }
+    .home-project-card:hover,
+    .home-month-card:hover {
+      transform: none !important;
+    }
+  }
+
+  /* ─── Mobile ─── */
+  @media (max-width: 768px) {
+    .home-hero {
+      grid-template-columns: 1fr !important;
+      min-height: auto !important;
+      display: flex !important;
+      flex-direction: column-reverse !important;
+    }
+
+    .home-left {
+      border-right: none !important;
+      padding: 1.5rem 1.5rem 2rem !important;
+      order: 2 !important;
+    }
+
+    .home-right {
+      display: block !important;
+      order: 1 !important;
+    }
+
+    .home-temporal {
+      padding: 1.5rem !important;
+    }
+
+    .home-bg-year {
+      font-size: clamp(120px, 25vw, 180px) !important;
+      top: -0.1em !important;
+      right: -0.05em !important;
+    }
+
+    .home-title {
+      font-size: clamp(36px, 8vw, 52px) !important;
+    }
+
+    .home-season-badge {
+      font-size: 8px !important;
+      padding: 4px 10px !important;
+      margin-bottom: 1rem !important;
+      display: inline-flex !important;
+    }
+
+    .home-month-grid,
+    .home-project-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .home-month-title,
+    .home-project-title {
+      font-size: 12px !important;
+    }
+
+    .home-latest-title {
+      font-size: clamp(18px, 4vw, 24px) !important;
+    }
+
+    .home-latest-excerpt {
+      font-size: 12px !important;
+      max-width: 100% !important;
+    }
+
+    .home-timeline {
+      padding: 0.8rem 1rem !important;
+      flex-wrap: wrap !important;
+      gap: 0.5rem !important;
+    }
+
+    .timeline-inst {
+      flex: 1 1 calc(50% - 0.5rem) !important;
+      padding: 0.4rem 0.6rem !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--rule) !important;
+      text-align: center !important;
+    }
+
+    .timeline-inst:last-child {
+      border-bottom: none !important;
+    }
+
+    .timeline-inst-num {
+      font-size: 7px !important;
+    }
+
+    .timeline-inst-title {
+      font-size: 10px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .home-left {
+      padding: 1rem 1rem 1.5rem !important;
+    }
+
+    .home-temporal {
+      padding: 1rem !important;
+    }
+
+    .home-title {
+      font-size: clamp(28px, 7vw, 36px) !important;
+    }
+
+    .home-season-badge {
+      font-size: 7px !important;
+      padding: 3px 8px !important;
+    }
+
+    .home-month-grid,
+    .home-project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-latest-eyebrow {
+      font-size: 7px !important;
+    }
+
+    .home-latest-meta {
+      font-size: 8px !important;
+    }
+
+    .home-latest-excerpt {
+      font-size: 11px !important;
+    }
+
+    .timeline-inst {
+      flex: 1 1 100% !important;
+    }
+  }
+</style>
+
+<script>
+  // Lightweight client-side filter — no plugin or build step required,
+  // so it works on a stock GitHub Pages build. Filters the project grid
+  // and recent-installments timeline by title as the user types.
+  (function () {
+    var input = document.getElementById('archive-search');
+    if (!input) return;
+
+    var grid = document.getElementById('project-grid');
+    var timeline = document.getElementById('timeline');
+    var gridEmptyMsg = document.getElementById('project-grid-empty');
+
+    function filterList(container, query) {
+      if (!container) return true;
+      var items = container.querySelectorAll('[data-search]');
+      var anyVisible = false;
+      items.forEach(function (item) {
+        var match = item.getAttribute('data-search').indexOf(query) !== -1;
+        item.style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      return anyVisible || items.length === 0;
+    }
+
+    input.addEventListener('input', function () {
+      var query = input.value.trim().toLowerCase();
+      var gridHasResults = filterList(grid, query);
+      filterList(timeline, query);
+
+      if (gridEmptyMsg) {
+        gridEmptyMsg.hidden = gridHasResults || query === '';
+      }
+    });
+  })();
+</script>

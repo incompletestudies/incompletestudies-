@@ -1,7 +1,7 @@
 ---
 layout: project
 title: Digital Archives Initiative
-status: Active
+status: On Hold
 people:
 - alice-smith
 - bob-jones

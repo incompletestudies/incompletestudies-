@@ -8,8 +8,7 @@ season: S01
 installments: 2
 total_installments: 6
 start_date: '2025-09-09'
-status: Early
-status_class: ""
+status: Archived
 abstract: |
   On the difference between repetition and return — how serial form creates
   conditions for thinking that loop without closing.

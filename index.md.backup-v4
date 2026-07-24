@@ -1,0 +1,987 @@
+---
+layout: default
+title: The Unfinished Archive
+permalink: /
+---
+
+{% comment %}─── CUT OUT from latest version ───{% endcomment %}
+
+
+
+/* ─── Manifesto Divider ─── */
+
+<!-- {% comment %}─── Completion Line ───{% endcomment %}
+    <div class="home-manifesto">
+      <span class="home-manifesto-text">
+        Completion is not a prerequisite for
+        <span class="home-manifesto-word">
+          <span class="home-manifesto-complete">publication.</span>
+          <span class="home-manifesto-incomplete">pub_</span>
+        </span>
+      </span>
+    </div> -->
+
+<style>  
+  .home-manifesto {
+    font-family: var(--text);
+    font-size: clamp(14px, 1.6vw, 18px);
+    font-style: bold;
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem 0;
+    margin: 0.5rem 0 1.5rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.8;
+  }
+
+  .home-manifesto-text {
+    display: inline-block;
+    max-width: 600px;
+  }
+
+  .home-manifesto-word {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* ─── Complete: "publication." ─── */
+  .home-manifesto-complete {
+    display: inline;
+    transition: opacity 0.8s ease;
+    animation: manifestoFade 8s ease-in-out infinite;
+  }
+
+  @keyframes manifestoFade {
+    0%, 45% { opacity: 1; }    /* ← Complete visible */
+    48%, 82% { opacity: 0; }   /* ← Complete hidden (incomplete visible) */
+    85%, 100% { opacity: 1; }  /* ← Complete restores */
+  }
+
+  /* ─── Incomplete: "pub…" ─── */
+  .home-manifesto-incomplete {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: opacity 0.8s ease;
+    animation: manifestoIncomplete 8s ease-in-out infinite;
+  }
+
+  @keyframes manifestoIncomplete {
+    0%, 45% { opacity: 0; }    /* ← Incomplete hidden */
+    48%, 82% { opacity: 1; }   /* ← Incomplete visible */
+    85%, 100% { opacity: 0; }  /* ← Incomplete hidden */
+  }
+
+  /* ─── Pause on hover ─── */
+  .home-manifesto:hover .home-manifesto-complete,
+  .home-manifesto:hover .home-manifesto-incomplete {
+    animation-play-state: paused;
+  }
+
+
+
+{% comment %}─── Beginning of V4 ───{% endcomment %}
+<div class="home-hero">
+  <div class="home-left">
+    <div>
+      <div class="home-eyebrow">The Unfinished Archive</div>
+      <h1 class="home-title">
+        Journal of Incomplete Studies
+      </h1>
+
+      {% comment %}─── MANIFESTO — Incompletion as Method ───{% endcomment %}
+      <div class="home-tagline">
+        <span class="home-tagline-text">
+          A serial research publication 
+          <span class="fade-out">for thought</span>
+          <span class="cut-off">still in mot</span>
+          <span class="continue">ion.</span>
+        </span>
+        
+        <span class="home-tagline-highlight">
+          <span class="incomplete-start">Incomple</span>
+          <span class="incomplete-end">tion as method</span>
+          <span class="home-tagline-cursor">⏎</span>
+        </span>
+
+        <span class="home-tagline-line">
+          <span class="line-fragment"></span>
+          <span class="line-dot">●</span>
+          <span class="line-dot fading">●</span>
+          <span class="line-dot fading-more">●</span>
+        </span>
+      </div>
+
+
+      {% comment %}─── PRIMARY CTAs ───{% endcomment %}
+      <div class="home-ctas">
+        {% assign latest_post = site.posts | first %}
+        <a href="{% if latest_post %}{{ latest_post.url | relative_url }}{% else %}/installments/{% endif %}" class="home-cta primary">
+          Read Latest
+        </a>
+        <a href="{{ "/projects/" | relative_url }}" class="home-cta secondary">
+          Browse Projects
+        </a>
+      </div>
+    </div>
+
+    {% comment %}─── THIS MONTH — TABLE OF CONTENTS ───{% endcomment %}
+    <div>
+      <div class="home-toc-header">
+        <span class="home-section-title">This Month</span>
+        <span class="home-toc-month">{{ site.time | date: "%B %Y" }}</span>
+      </div>
+
+      {% assign this_month = site.time | date: "%m" %}
+      {% assign this_year = site.time | date: "%Y" %}
+      {% assign month_posts = "" | split: "" %}
+
+      {% for post in site.posts %}
+        {% assign post_month = post.date | date: "%m" %}
+        {% assign post_year = post.date | date: "%Y" %}
+        {% if post_month == this_month and post_year == this_year %}
+          {% assign month_posts = month_posts | push: post %}
+        {% endif %}
+      {% endfor %}
+
+      {% if month_posts.size > 0 %}
+        <div class="home-toc">
+          {% for post in month_posts %}
+            {% assign project_slug = post.projects | first %}
+            {% assign post_project = site.projects | where: "slug", project_slug | first %}
+            {% assign author_slug = post.authors | first %}
+            {% assign post_author = site.people | where: "slug", author_slug | first %}
+            
+            {% comment %}─── Word count and reading time ───{% endcomment %}
+            {% assign word_count = post.content | strip_html | number_of_words %}
+            {% assign reading_time = word_count | divided_by: 200 | default: 1 %}
+            
+            <a href="{{ post.url | relative_url }}" class="home-toc-item">
+              <span class="home-toc-number">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+              <div class="home-toc-content">
+                <span class="home-toc-title">{{ post.title }}</span>
+                <span class="home-toc-meta">
+                  {% if post_project %}
+                    {{ post_project.title }}
+                  {% else %}
+                    {{ post.projects | first | default: "Uncategorized" }}
+                  {% endif %}
+                  ·
+                  {% if post_author %}
+                    {{ post_author.name | default: post_author.title }}
+                  {% elsif post.authors %}
+                    {{ post.authors | first }}
+                  {% else %}
+                    Anonymous
+                  {% endif %}
+                </span>
+              </div>
+              <div class="home-toc-metrics">
+                <span class="home-toc-words">{{ word_count }} words</span>
+                <span class="home-toc-time">~{{ reading_time }} min</span>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+
+        <div class="home-toc-footer">
+          <a href="{{ "/installments/" | relative_url }}" class="home-toc-view-all">
+            View all installments →
+          </a>
+        </div>
+      {% else %}
+        <div class="home-month-empty">
+          No installments published this month yet.
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %}─── PROJECTS ───{% endcomment %}
+    <div>
+      <h2 class="home-section-title">Current Projects</h2>
+      <div class="home-project-grid">
+        {% if site.projects and site.projects.size > 0 %}
+          {% for project in site.projects %}
+            {% assign status_class = "" %}
+            {% if project.status == "Ongoing" %}
+              {% assign status_class = "live" %}
+            {% elsif project.status == "New" %}
+              {% assign status_class = "new" %}
+            {% endif %}
+            <a href="{{ project.url | relative_url }}" class="home-project-card">
+              <span class="home-project-id">{{ project.id | default: "P" }}{{ forloop.index }}</span>
+              <h3 class="home-project-title">{{ project.title }}</h3>
+              <span class="home-project-status {{ status_class }}">
+                {{ project.status | default: "Active" }}
+              </span>
+            </a>
+          {% endfor %}
+        {% else %}
+          <div class="home-empty-card">
+            <span class="home-empty-text">No projects yet — check back soon</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% comment %}─── CONTRIBUTORS ───{% endcomment %}
+    {% if site.people and site.people.size > 0 %}
+      <div>
+        <h2 class="home-section-title">Contributors</h2>
+        <div class="home-contributors-scroll">
+          {% for person in site.people %}
+            <a href="{{ person.url | relative_url }}" class="home-contributor-card">
+              <div class="home-contributor-avatar">
+                {% if person.avatar %}
+                  <img src="{{ person.avatar | relative_url }}" alt="{{ person.name | default: person.title }}">
+                {% else %}
+                  <span class="home-contributor-initial">{{ person.name | default: person.title | slice: 0 }}</span>
+                {% endif %}
+              </div>
+              <span class="home-contributor-name">{{ person.name | default: person.title }}</span>
+              <span class="home-contributor-role">{{ person.role }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% comment %}─── ARCHIVE STATISTICS ───{% endcomment %}
+    <div class="home-stats">
+      <h2 class="home-section-title">Archive Statistics</h2>
+      <div class="home-stats-grid">
+        <div class="home-stat">
+          <span class="home-stat-number">{{ site.posts | size }}</span>
+          <span class="home-stat-label">Installments</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-number">{{ site.projects | size }}</span>
+          <span class="home-stat-label">Projects</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-number">{{ site.people | size }}</span>
+          <span class="home-stat-label">Contributors</span>
+        </div>
+      </div>
+    </div>
+
+    {% comment %}─── ABOUT THE ARCHIVE ───{% endcomment %}
+    <div class="home-about">
+      <h2 class="home-section-title">About the Archive</h2>
+      <p class="home-about-text">
+        The Journal of Incomplete Studies is a serial research publication
+        dedicated to thought still in motion. It embraces the unfinished,
+        the provisional, and the ongoing — publishing installments across
+        disciplines without requiring closure.
+      </p>
+      <a href="{{ "/about/" | relative_url }}" class="home-about-link">
+        Read more about the archive →
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ─── Homepage — Editorial Table of Contents ─── */
+
+  /* ─── Manifesto — Incompletion as Method ─── */
+
+  .home-tagline {
+    font-family: var(--text);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: -0.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 520px;
+    line-height: 2;
+    position: relative;
+    padding: 0.5rem 0 1.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  }
+
+  /* ─── Text fragments ─── */
+
+  .home-tagline-text {
+    display: block;
+    letter-spacing: 0.01em;
+  }
+
+  .fade-out {
+    animation: fadeOut 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes fadeOut {
+    0%, 70% { opacity: 1; }
+    100% { opacity: 0.15; }
+  }
+
+  .cut-off {
+    display: inline-block;
+    animation: cutOff 2s ease-in-out infinite alternate;
+    color: var(--pale);
+  }
+
+  @keyframes cutOff {
+    0%, 60% { opacity: 1; }
+    80% { opacity: 0.3; letter-spacing: 0.1em; }
+    100% { opacity: 0.6; letter-spacing: 0.05em; }
+  }
+
+  .continue {
+    display: inline-block;
+    animation: continueFade 3s ease-in-out infinite alternate;
+    color: var(--cream);
+    font-weight: 700;
+  }
+
+  @keyframes continueFade {
+    0%, 50% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  /* ─── Highlight — Incompletion as method ─── */
+
+  .home-tagline-highlight {
+    font-family: var(--mono);
+    font-size: clamp(20px, 3.5vw, 32px);
+    font-style: italic;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+    margin-top: 0.5rem;
+    letter-spacing: -0.02em;
+    position: relative;
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  .incomplete-start {
+    display: inline-block;
+    color: var(--gold-dim);
+    animation: incompletePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes incompletePulse {
+    0%, 100% { opacity: 0.6; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  .incomplete-end {
+    display: inline-block;
+    color: var(--gold);
+  }
+
+  .home-tagline-cursor {
+    display: inline-block;
+    font-family: var(--mono);
+    font-weight: 300;
+    color: var(--gold);
+    font-size: 0.7em;
+    margin-left: 0.1rem;
+    animation: cursorPulse 1.4s step-end infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes cursorPulse {
+    0%, 100% { opacity: 0.2; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* ─── Breathing ─── */
+  @keyframes breathe {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.005); }
+  }
+
+  /* ─── Unfinished line ─── */
+
+  .home-tagline-line {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.8rem;
+    opacity: 0.3;
+    transition: opacity 0.6s ease;
+  }
+
+  .home-tagline:hover .home-tagline-line {
+    opacity: 0.6;
+  }
+
+  .line-fragment {
+    display: inline-block;
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-dim), transparent);
+    position: relative;
+    animation: lineMove 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes lineMove {
+    0% { width: 60px; opacity: 0.3; }
+    50% { width: 180px; opacity: 0.8; }
+    100% { width: 80px; opacity: 0.4; }
+  }
+
+  .line-dot {
+    display: inline-block;
+    font-size: 6px;
+    color: var(--gold-dim);
+    animation: dotWander 4s ease-in-out infinite;
+  }
+
+  .line-dot.fading {
+    animation-delay: 0.5s;
+    opacity: 0.4;
+  }
+
+  .line-dot.fading-more {
+    animation-delay: 1s;
+    opacity: 0.15;
+    font-size: 4px;
+  }
+
+  @keyframes dotWander {
+    0%, 100% { transform: translateX(0); opacity: 0.8; }
+    50% { transform: translateX(8px); opacity: 0.2; }
+  }
+
+  .home-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .home-cta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .home-cta.primary {
+    background: var(--gold);
+    color: var(--void);
+    border: 1px solid var(--gold);
+  }
+
+  .home-cta.primary:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .home-cta.secondary {
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    background: transparent;
+  }
+
+  .home-cta.secondary:hover {
+    border-color: var(--gold-dim);
+    color: var(--cream);
+  }
+
+  .home-section-title {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .home-toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .home-toc-header .home-section-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .home-toc-month {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .home-toc {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .home-toc-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .home-toc-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .home-toc-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold-dim);
+    flex-shrink: 0;
+    min-width: 32px;
+  }
+
+  .home-toc-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .home-toc-title {
+    font-family: var(--display);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .home-toc-meta {
+    font-family: var(--mono);
+    font-size: 7.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-top: 0.1rem;
+  }
+
+  .home-toc-footer {
+    margin-top: 0.8rem;
+    text-align: right;
+  }
+
+  .home-toc-view-all {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .home-toc-view-all:hover {
+    border-color: var(--gold);
+  }
+
+  .home-month-empty {
+    padding: 1.5rem 0;
+    font-family: var(--text);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--mid);
+    text-align: center;
+  }
+
+  .home-project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .home-project-card {
+    display: block;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.01);
+    text-decoration: none;
+  }
+
+  .home-project-card:hover {
+    border-color: var(--gold-dim);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+  }
+
+  .home-project-id {
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--ash);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .home-project-title {
+    font-family: var(--display);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .home-project-status {
+    font-family: var(--mono);
+    font-size: 6px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-top: 0.3rem;
+    border: 1px solid var(--rule);
+    padding: 0.05rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  .home-project-status.live {
+    color: var(--sage);
+    border-color: var(--sage-dim);
+  }
+
+  .home-project-status.new {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+  }
+
+  .home-contributors-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem 0 1rem 0;
+    scrollbar-width: thin;
+  }
+
+  .home-contributors-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .home-contributors-scroll::-webkit-scrollbar-track {
+    background: var(--void2);
+  }
+
+  .home-contributors-scroll::-webkit-scrollbar-thumb {
+    background: var(--ash);
+    border-radius: 2px;
+  }
+
+  .home-contributor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    min-width: 64px;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+
+  .home-contributor-card:hover {
+    opacity: 0.7;
+  }
+
+  .home-contributor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--void2);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+  }
+
+  .home-contributor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .home-contributor-initial {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .home-contributor-name {
+    font-family: var(--text);
+    font-size: 9px;
+    font-style: italic;
+    color: var(--pale);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .home-contributor-role {
+    font-family: var(--mono);
+    font-size: 6px;
+    color: var(--ash);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .home-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  .home-stat {
+    text-align: center;
+    padding: 0.75rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+
+  .home-stat-number {
+    display: block;
+    font-family: var(--display);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .home-stat-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .home-about-text {
+    font-family: var(--text);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--pale);
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 0.8rem;
+  }
+
+  .home-about-link {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .home-about-link:hover {
+    border-color: var(--gold);
+  }
+
+  .home-empty-card {
+    opacity: 0.5;
+    cursor: default;
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .home-empty-text {
+    color: var(--mid);
+    font-style: normal;
+    font-family: var(--text);
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    .home-hero {
+      padding: 0 1.5rem;
+    }
+
+    .home-left {
+      padding: 1.5rem 0 2rem !important;
+    }
+
+    .home-title {
+      font-size: clamp(32px, 6vw, 48px) !important;
+    }
+
+    .home-manifesto {
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    .home-cta {
+      font-size: 8px;
+      padding: 0.4rem 1rem;
+    }
+
+    .home-toc-item {
+      padding: 0.5rem 0.6rem;
+      gap: 0.75rem;
+    }
+
+    .home-toc-number {
+      font-size: 10px;
+      min-width: 28px;
+    }
+
+    .home-toc-title {
+      font-size: 13px;
+    }
+
+    .home-project-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .home-stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .home-stat-number {
+      font-size: clamp(20px, 4vw, 28px);
+    }
+
+    .home-stat {
+      padding: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .home-hero {
+      padding: 0 1rem;
+    }
+
+    .home-left {
+      padding: 1rem 0 1.5rem !important;
+    }
+
+    .home-title {
+      font-size: clamp(24px, 5vw, 32px) !important;
+    }
+
+    .home-toc-item {
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .home-toc-number {
+      font-size: 9px;
+      min-width: 24px;
+    }
+
+    .home-toc-title {
+      font-size: 12px;
+    }
+
+    .home-toc-meta {
+      font-size: 7px;
+    }
+
+    .home-project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-stats-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.3rem;
+    }
+
+    .home-stat-number {
+      font-size: clamp(18px, 5vw, 24px);
+    }
+
+    .home-stat-label {
+      font-size: 6px;
+    }
+
+    .home-ctas {
+      flex-direction: column;
+    }
+
+    .home-cta {
+      text-align: center;
+    }
+
+    .home-contributors-scroll {
+      gap: 0.75rem;
+    }
+
+    .home-contributor-card {
+      min-width: 56px;
+    }
+
+    .home-contributor-avatar {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  /* ─── TOC Metrics ─── */
+.home-toc-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+  border-bottom: 1px solid var(--rule);
+}
+
+.home-toc-metrics {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  gap: 0.05rem;
+}
+
+.home-toc-words {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--ash);
+  letter-spacing: 0.04em;
+}
+
+.home-toc-time {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  color: var(--ash);
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+}
+</style>
