@@ -37,13 +37,13 @@ body::before {
 }
 
 /* ─── Links ─── */
-a:link,
+/* a:link,
 a:visited {
   color: var(--muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: color 0.2s, border-color 0.2s;
-}
+} */
 
 a:hover,
 a:focus {

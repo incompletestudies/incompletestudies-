@@ -1,5 +1,144 @@
 /* ─── utilities.css ─── */
 
+/* ─── utilities.css ─── */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+/* ============================================ */
+/* FLUID FONT SIZE UTILITIES                   */
+/* ============================================ */
+
+/* Small text */
+.text-fluid-xs { 
+  font-size: clamp(0.625rem, 1vw, 0.75rem); 
+}  /* 10-12px */
+
+.text-fluid-sm { 
+  font-size: clamp(0.75rem, 1.2vw, 0.875rem); 
+}  /* 12-14px */
+
+.text-fluid-base { 
+  font-size: clamp(0.875rem, 1.5vw, 1rem); 
+}  /* 14-16px */
+
+.text-fluid-md { 
+  font-size: clamp(1rem, 1.8vw, 1.125rem); 
+}  /* 16-18px */
+
+.text-fluid-lg { 
+  font-size: clamp(1.125rem, 2.2vw, 1.25rem); 
+}  /* 18-20px */
+
+.text-fluid-xl { 
+  font-size: clamp(1.25rem, 2.8vw, 1.5rem); 
+}  /* 20-24px */
+
+.text-fluid-2xl { 
+  font-size: clamp(1.5rem, 3.5vw, 2rem); 
+}  /* 24-32px */
+
+.text-fluid-3xl { 
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem); 
+}  /* 28-40px */
+
+.text-fluid-4xl { 
+  font-size: clamp(2rem, 5.5vw, 3rem); 
+}  /* 32-48px */
+
+.text-fluid-5xl { 
+  font-size: clamp(2.5rem, 7vw, 4rem); 
+}  /* 40-64px */
+
+.text-fluid-6xl { 
+  font-size: clamp(3rem, 9vw, 5rem); 
+}  /* 48-80px */
+
+.text-fluid-hero { 
+  font-size: clamp(3.5rem, 12vw, 7rem); 
+}  /* 56-112px */
+
+/* ============================================ */
+/* FIXED SIZE UTILITIES (use sparingly)       */
+/* ============================================ */
+
+.text-fixed-xs   { font-size: 0.75rem; }   /* 12px */
+.text-fixed-sm   { font-size: 0.875rem; }  /* 14px */
+.text-fixed-base { font-size: 1rem; }      /* 16px */
+.text-fixed-md   { font-size: 1.125rem; }  /* 18px */
+.text-fixed-lg   { font-size: 1.25rem; }   /* 20px */
+.text-fixed-xl   { font-size: 1.5rem; }    /* 24px */
+.text-fixed-2xl  { font-size: 1.75rem; }   /* 28px */
+.text-fixed-3xl  { font-size: 2rem; }      /* 32px */
+.text-fixed-4xl  { font-size: 2.5rem; }    /* 40px */
+.text-fixed-5xl  { font-size: 3rem; }      /* 48px */
+.text-fixed-6xl  { font-size: 3.5rem; }    /* 56px */
+
+/* ============================================ */
+/* WEIGHT UTILITIES                            */
+/* ============================================ */
+
+.font-light   { font-weight: 300; }
+.font-normal  { font-weight: 400; }
+.font-medium  { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold    { font-weight: 700; }
+.font-extrabold { font-weight: 900; }
+
+/* ============================================ */
+/* TEXT STYLE UTILITIES                        */
+/* ============================================ */
+
+.text-italic { font-style: italic; }
+.text-normal { font-style: normal; }
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+
+/* ============================================ */
+/* TEXT COLOR UTILITIES                        */
+/* ============================================ */
+
+.text-cream { color: var(--cream); }
+.text-gold { color: var(--gold); }
+.text-gold-dim { color: var(--gold-dim); }
+.text-sage { color: var(--sage); }
+.text-muted { color: var(--muted); }
+.text-ash { color: var(--ash); }
+.text-mid { color: var(--mid); }
+.text-pale { color: var(--pale); }
+
+/* ============================================ */
+/* TEXT ALIGNMENT UTILITIES                    */
+/* ============================================ */
+
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+/* ============================================ */
+/* LINE HEIGHT UTILITIES                       */
+/* ============================================ */
+
+.leading-none { line-height: 1; }
+.leading-tight { line-height: 1.25; }
+.leading-normal { line-height: 1.5; }
+.leading-relaxed { line-height: 1.625; }
+.leading-loose { line-height: 2; }
+
+/* ============================================ */
+/* LETTER SPACING UTILITIES                    */
+/* ============================================ */
+
+.tracking-none { letter-spacing: 0; }
+.tracking-tight { letter-spacing: -0.02em; }
+.tracking-normal { letter-spacing: 0.04em; }
+.tracking-wide { letter-spacing: 0.08em; }
+.tracking-wider { letter-spacing: 0.12em; }
+.tracking-widest { letter-spacing: 0.18em; }
+
 /* ─── Spacing ─── */
 .mt-sm {
   margin-top: var(--space-sm);
@@ -49,6 +188,10 @@
 }
 .text-left {
   text-align: left;
+}
+
+.text-text {
+  font-family: var(--text);
 }
 
 .text-mono {

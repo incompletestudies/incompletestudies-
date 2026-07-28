@@ -65,7 +65,7 @@ permalink: /authors/
                 </div>
                 <p class="author-card-role">{{ person.role }}</p>
                 <p class="author-card-discipline">{{ person.discipline | downcase }}</p>
-                <div class="author-card-stats">
+                <div class="card-stats">
                   <span class="stat">
                     <span class="stat-number">{{ author_projects.size }}</span>
                     <span class="stat-label">projects</span>
@@ -249,42 +249,7 @@ permalink: /authors/
     margin: 0 0 0.8rem 0;
   }
 
-  .author-card-stats {
-    display: flex;
-    gap: 1.5rem;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .stat {
-    display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
-  }
-
-  .stat::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--gold-dim);
-    margin-right: 0.25rem;
-  }
-
-  .stat-number {
-    font-family: var(--mono);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cream);
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-  }
+  
 
   /* ─── AUTHOR CARD "LATEST" ─── */
   .author-card-latest {

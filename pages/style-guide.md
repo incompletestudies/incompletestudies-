@@ -24,6 +24,9 @@ permalink: /style-guide/
     <a href="#grids">Grids</a>
     <a href="#spacing">Spacing</a>
     <a href="#interactive">Interactive</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#links">Links</a>  
+    <a href="#universal-lists">Universal Lists</a>  
   </div>
 
   <div class="style-guide-body">
@@ -131,33 +134,42 @@ permalink: /style-guide/
         <div class="style-item">
           <h3 class="style-label">Project Status (from main.css)</h3>
           <div class="style-badge-row">
-            <span class="badge badge-new">New</span>
-            <span class="badge badge-active">Active</span>
-            <span class="badge badge-on-hold">On Hold</span>
-            <span class="badge badge-archived">Archived</span>
+            <span class="badge ongoing">Ongoing</span>
+            <span class="badge on-hold">On Hold</span>
+            <span class="badge archived">Archived</span>
           </div>
-          <p class="style-code">.badge .badge-{status}</p>
+          <p class="style-code">.badge {status}</p>
         </div>
         
         <div class="style-item">
           <h3 class="style-label">Installment Status (from main.css)</h3>
           <div class="style-badge-row">
-            <span class="badge badge-first">First Inst.</span>
-            <span class="badge badge-revised">Revised</span>
-            <span class="badge badge-last">Last Inst.</span>
+            <span class="badge first">First Inst.</span>
+            <span class="badge revised">Revised</span>
+            <span class="badge last">Last Inst.</span>
           </div>
-          <p class="style-code">.badge .badge-{type}</p>
+          <p class="style-code">.badge {type}</p>
         </div>
         
+        <div class="style-item">
+          <h3 class="style-label">Cohort Status (from main.css)</h3>
+          <div class="style-badge-row">
+            <span class="badge active">Active</span>
+            <span class="badge on-leave">On Leave</span>
+            <span class="badge alumni">Alumni</span>
+          </div>
+          <p class="style-code">.badge {type}</p>
+        </div>
+
         <div class="style-item">
           <h3 class="style-label">Pills (from main.css)</h3>
           <div class="style-badge-row">
             <span class="pill live">● Live</span>
-            <span class="pill new-p">✦ New</span>
+            <span class="pill new">✦ New</span>
             <span class="pill upcoming">Upcoming</span>
             <span class="pill draft">Draft</span>
           </div>
-          <p class="style-code">.pill .pill-{variant}</p>
+          <p class="style-code">.pill {variant}</p>
         </div>
       </div>
     </section>
@@ -171,7 +183,7 @@ permalink: /style-guide/
         <div class="card">
           <div class="card-header">
             <span class="card-id">P–01</span>
-            <span class="badge badge-active">Active</span>
+            <span class="badge ongoing">Ongoing</span>
           </div>
           <h3 class="card-title">Digital Archives Initiative</h3>
           <p class="card-subtitle">Dr. Jane Smith + 3 others</p>
@@ -185,7 +197,7 @@ permalink: /style-guide/
         <div class="card">
           <div class="card-header">
             <span class="card-id">P–02</span>
-            <span class="badge badge-new">New</span>
+            <span class="pill new">✦ New</span>
           </div>
           <h3 class="card-title">Incomplete Manuscripts</h3>
           <p class="card-subtitle">Dr. John Doe</p>
@@ -378,7 +390,7 @@ permalink: /style-guide/
           <div class="card interactive-demo">
             <div class="card-header">
               <span class="card-id">P–01</span>
-              <span class="badge badge-active">Active</span>
+              <span class="badge active">Active</span>
             </div>
             <h3 class="card-title">Hover me</h3>
             <p class="card-subtitle">Dr. Jane Smith</p>
@@ -390,6 +402,7 @@ permalink: /style-guide/
           <p class="style-code">.card:hover → border-color: var(--gold-dim) · transform: translateY(-3px)</p>
         </div>
 
+        
         <!-- Buttons -->
         <div class="style-item">
           <h3 class="style-label">Buttons</h3>
@@ -450,6 +463,414 @@ permalink: /style-guide/
             <span class="tag demo-tag">Memory Studies</span>
           </div>
           <p class="style-code">.tag:hover → border-color: var(--gold-dim)</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ─── BUTTONS ─── -->
+    <section class="style-section" id="buttons">
+      <h2 class="style-section-title">Buttons</h2>
+      
+      <div class="style-grid">
+        <!-- Primary -->
+        <div class="style-item">
+          <h3 class="style-label">Primary</h3>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+          </div>
+          <p class="style-code">.btn .btn-primary</p>
+        </div>
+
+        <!-- Secondary -->
+        <div class="style-item">
+          <h3 class="style-label">Secondary</h3>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-secondary btn-sm">Small</button>
+            <button class="btn btn-secondary btn-lg">Large</button>
+          </div>
+          <p class="style-code">.btn .btn-secondary</p>
+        </div>
+
+        <!-- Outline -->
+        <div class="style-item">
+          <h3 class="style-label">Outline</h3>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-outline">Outline</button>
+            <button class="btn btn-outline btn-sm">Small</button>
+            <button class="btn btn-outline btn-lg">Large</button>
+          </div>
+          <p class="style-code">.btn .btn-outline</p>
+        </div>
+
+        <!-- Ghost -->
+        <div class="style-item">
+          <h3 class="style-label">Ghost</h3>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-ghost">Ghost</button>
+            <button class="btn btn-ghost btn-sm">Small</button>
+            <button class="btn btn-ghost btn-lg">Large</button>
+          </div>
+          <p class="style-code">.btn .btn-ghost</p>
+        </div>
+
+        <!-- Block -->
+        <div class="style-item">
+          <h3 class="style-label">Block (Full Width)</h3>
+          <button class="btn btn-primary btn-block">Full Width Button</button>
+          <p class="style-code">.btn .btn-primary .btn-block</p>
+        </div>
+
+        <!-- Icon -->
+        <div class="style-item">
+          <h3 class="style-label">Icon Buttons</h3>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-primary btn-icon">✕</button>
+            <button class="btn btn-secondary btn-icon">✕</button>
+            <button class="btn btn-outline btn-icon">✕</button>
+            <button class="btn btn-primary btn-icon btn-sm">✕</button>
+            <button class="btn btn-primary btn-icon btn-lg">✕</button>
+          </div>
+          <p class="style-code">.btn .btn-primary .btn-icon</p>
+        </div>
+
+        <!-- Link as Button -->
+        <div class="style-item">
+          <h3 class="style-label">Link as Button</h3>
+          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn-link">← Back</button>
+            <button class="btn-link">View All →</button>
+            <button class="btn-link">Apply now</button>
+          </div>
+          <p class="style-code">.btn-link</p>
+        </div>
+
+        <!-- Disabled States -->
+        <div class="style-item">
+          <h3 class="style-label">Disabled States</h3>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-primary" disabled>Primary</button>
+            <button class="btn btn-secondary" disabled>Secondary</button>
+            <button class="btn btn-outline" disabled>Outline</button>
+          </div>
+          <p class="style-code">Add <code>disabled</code> attribute</p>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- ─── LINKS ─── -->
+    <section class="style-section" id="links">
+      <h2 class="style-section-title">Links</h2>
+      
+      <div class="style-grid">
+        <!-- 1. Mono Link -->
+        <div class="style-item">
+          <h3 class="style-label">Mono Link</h3>
+          <a href="#" class="link-mono">View all installments →</a>
+          <p class="style-code">.link-mono</p>
+        </div>
+
+        <!-- 2. Underline Link -->
+        <div class="style-item">
+          <h3 class="style-label">Underline Link</h3>
+          <a href="#" class="link-underline">Read more about this project</a>
+          <p class="style-code">.link-underline</p>
+        </div>
+
+        <!-- 3. Gold Fade Link -->
+        <div class="style-item">
+          <h3 class="style-label">Gold Fade Link</h3>
+          <a href="#" class="link-gold-fade">Learn about this project</a>
+          <p class="style-code">.link-gold-fade</p>
+        </div>
+
+        <!-- 4. Glow Link -->
+        <div class="style-item">
+          <h3 class="style-label">Glow Link</h3>
+          <a href="#" class="link-glow">Hover to see the glow</a>
+          <p class="style-code">.link-glow</p>
+        </div>
+
+        <!-- 5. Slide Link -->
+        <div class="style-item">
+          <h3 class="style-label">Slide Underline Link</h3>
+          <a href="#" class="link-slide">Slide underline on hover</a>
+          <p class="style-code">.link-slide</p>
+        </div>
+
+        <!-- 6. Double Underline Link -->
+        <div class="style-item">
+          <h3 class="style-label">Double Underline Link</h3>
+          <a href="#" class="link-double">Double underline effect</a>
+          <p class="style-code">.link-double</p>
+        </div>
+
+        <!-- 7. Arrow Link -->
+        <div class="style-item">
+          <h3 class="style-label">Arrow Link</h3>
+          <a href="#" class="link-arrow">Continue reading</a>
+          <p class="style-code">.link-arrow</p>
+        </div>
+
+        <!-- 8. Reverse Arrow Link -->
+        <div class="style-item">
+          <h3 class="style-label">Reverse Arrow Link</h3>
+          <a href="#" class="link-arrow-reverse">Back to all seasons</a>
+          <p class="style-code">.link-arrow-reverse</p>
+        </div>
+
+        <!-- 9. Scale Link -->
+        <div class="style-item">
+          <h3 class="style-label">Scale Link</h3>
+          <a href="#" class="link-scale">Grow on hover</a>
+          <p class="style-code">.link-scale</p>
+        </div>
+
+        <!-- 10. Color Shift Link -->
+        <div class="style-item">
+          <h3 class="style-label">Color Shift Link</h3>
+          <a href="#" class="link-shift">Shift color on hover</a>
+          <p class="style-code">.link-shift</p>
+        </div>
+
+        <!-- 11. Dot Link -->
+        <div class="style-item">
+          <h3 class="style-label">Dot Link</h3>
+          <a href="#" class="link-dot">Dot appears below</a>
+          <p class="style-code">.link-dot</p>
+        </div>
+
+        <!-- 12. Pulsing Link -->
+        <div class="style-item">
+          <h3 class="style-label">Pulsing Link</h3>
+          <a href="#" class="link-pulse">Pulsing gold on hover</a>
+          <p class="style-code">.link-pulse</p>
+        </div>
+      </div>
+
+      <!-- ─── COMPARISON TABLE ─── -->
+      <div class="style-item" style="margin-top: 2rem;">
+        <h3 class="style-label">Quick Reference</h3>
+        <div style="overflow-x: auto; font-size: 12px;">
+          <table style="width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 10px; color: var(--muted);">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--rule);">
+                <th style="text-align: left; padding: 0.5rem 0.75rem;">Class</th>
+                <th style="text-align: left; padding: 0.5rem 0.75rem;">Effect</th>
+                <th style="text-align: left; padding: 0.5rem 0.75rem;">Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-mono</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Mono + gold underline</td>
+                <td style="padding: 0.4rem 0.75rem;">Navigation, CTAs</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-underline</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Simple underline</td>
+                <td style="padding: 0.4rem 0.75rem;">Body text links</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-gold-fade</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Underline expands from left</td>
+                <td style="padding: 0.4rem 0.75rem;">Subtle emphasis</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-glow</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Gold glow + underline</td>
+                <td style="padding: 0.4rem 0.75rem;">Highlighting</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-slide</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Underline slides in</td>
+                <td style="padding: 0.4rem 0.75rem;">Clean, modern</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-double</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Underline draws in</td>
+                <td style="padding: 0.4rem 0.75rem;">Elegant</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-arrow</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Arrow appears on hover</td>
+                <td style="padding: 0.4rem 0.75rem;">"Read more" links</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-arrow-reverse</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Arrow appears on left</td>
+                <td style="padding: 0.4rem 0.75rem;">"Back" links</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-scale</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Slight scale + gold</td>
+                <td style="padding: 0.4rem 0.75rem;">Buttons, prominent links</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-shift</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Color shifts</td>
+                <td style="padding: 0.4rem 0.75rem;">Smooth transitions</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--rule);">
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-dot</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Dot appears below</td>
+                <td style="padding: 0.4rem 0.75rem;">Playful, creative</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.4rem 0.75rem;"><code>.link-pulse</code></td>
+                <td style="padding: 0.4rem 0.75rem;">Pulsing gold</td>
+                <td style="padding: 0.4rem 0.75rem;">Emphasis, active state</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <!-- ─── UNIVERSAL LISTS ─── -->
+    <section class="style-section" id="universal-lists">
+      <h2 class="style-section-title">Universal Lists</h2>
+      
+      <div class="style-grid">
+        <!-- Standard List -->
+        <div class="style-item">
+          <h3 class="style-label">Standard List</h3>
+          <div class="list-container">
+            <div class="list-item">
+              <span class="list-item-left">01</span>
+              <div class="list-item-content">
+                <span class="list-item-title">List Item Title</span>
+                <span class="list-item-meta">Meta information · Category</span>
+              </div>
+              <div class="list-item-right metrics-horizontal">
+                <span class="metric metric-words">120 words</span>
+                <span class="metric metric-sep">·</span>
+                <span class="metric metric-time">~3 min</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <span class="list-item-left">02</span>
+              <div class="list-item-content">
+                <span class="list-item-title">Another List Item</span>
+                <span class="list-item-meta">More info · Another category</span>
+              </div>
+              <div class="list-item-right">
+                <span class="badge badge-active">Active</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <span class="list-item-left">03</span>
+              <div class="list-item-content">
+                <span class="list-item-title">Third Item</span>
+                <span class="list-item-meta">With description</span>
+              </div>
+            </div>
+          </div>
+          <p class="style-code">.list-container .list-item .list-item-left .list-item-content .list-item-title .list-item-meta .list-item-right</p>
+        </div>
+
+        <!-- Compact List -->
+        <div class="style-item">
+          <h3 class="style-label">Compact List</h3>
+          <div class="list-container">
+            <a href="#" class="list-item list-item-compact">
+              <div class="list-item-content">
+                <span class="list-item-title">Compact Item</span>
+                <span class="list-item-meta">With smaller padding</span>
+              </div>
+            </a>
+            <a href="#" class="list-item list-item-compact">
+              <div class="list-item-content">
+                <span class="list-item-title">Another Compact Item</span>
+                <span class="list-item-meta">Great for dense lists</span>
+              </div>
+            </a>
+          </div>
+          <p class="style-code">.list-item .list-item-compact</p>
+        </div>
+
+        <!-- Grid List -->
+        <div class="style-item">
+          <h3 class="style-label">Grid List</h3>
+          <div class="list-grid">
+            <a href="#" class="list-item">
+              <div class="list-item-content">
+                <span class="list-item-title">Project Alpha</span>
+                <span class="list-item-meta">3 contributors</span>
+              </div>
+            </a>
+            <a href="#" class="list-item">
+              <div class="list-item-content">
+                <span class="list-item-title">Project Beta</span>
+                <span class="list-item-meta">5 contributors</span>
+              </div>
+            </a>
+            <a href="#" class="list-item">
+              <div class="list-item-content">
+                <span class="list-item-title">Project Gamma</span>
+                <span class="list-item-meta">2 contributors</span>
+              </div>
+            </a>
+            <a href="#" class="list-item">
+              <div class="list-item-content">
+                <span class="list-item-title">Project Delta</span>
+                <span class="list-item-meta">4 contributors</span>
+              </div>
+            </a>
+          </div>
+          <p class="style-code">.list-grid .list-item</p>
+        </div>
+
+        <!-- Bordered List -->
+        <div class="style-item">
+          <h3 class="style-label">Bordered List</h3>
+          <div class="list-container">
+            <div class="list-item list-item-bordered">
+              <div class="list-item-content">
+                <span class="list-item-title">Bordered Item</span>
+                <span class="list-item-meta">With visible border</span>
+              </div>
+            </div>
+            <div class="list-item list-item-bordered">
+              <div class="list-item-content">
+                <span class="list-item-title">Another Bordered Item</span>
+                <span class="list-item-meta">Hover to see effect</span>
+              </div>
+            </div>
+          </div>
+          <p class="style-code">.list-item .list-item-bordered</p>
+        </div>
+
+        <!-- With Badges -->
+        <div class="style-item">
+          <h3 class="style-label">With Badges</h3>
+          <div class="list-container">
+            <div class="list-item">
+              <div class="list-item-content">
+                <span class="list-item-title">Item with Badge</span>
+                <span class="list-item-meta">Status indicator</span>
+              </div>
+              <div class="list-item-right">
+                <span class="badge badge-new">New</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-item-content">
+                <span class="list-item-title">Another Item</span>
+                <span class="list-item-meta">With different status</span>
+              </div>
+              <div class="list-item-right">
+                <span class="badge badge-active">Active</span>
+              </div>
+            </div>
+          </div>
+          <p class="style-code">.list-item .list-item-right .badge</p>
         </div>
       </div>
     </section>

@@ -9,8 +9,7 @@ projects:
 installment: 1
 season: S01
 excerpt: "An opening salvo: why the pressure to conclude is not intellectual but institutional, and what it costs us."
-badge: New project
-badge_class: new-p
+badge: Revised
 ---
 
 An opening salvo: why the pressure to conclude is not intellectual but institutional, and what it costs us. The first installment of a new project, setting out its polemical stakes.

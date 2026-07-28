@@ -9,8 +9,7 @@ projects:
 installment: 7
 season: S01
 excerpt: "Attempting to name what this project has been doing all along — aware that naming may close it prematurely."
-badge: Ongoing
-badge_class: live
+badge: First Inst.
 tags: [grammar, unresolved, methodology]
 ---
 

@@ -9,6 +9,10 @@ start_date: '2025-10-10'
 id: P–02
 status: Ongoing
 status_class: live
+tags:
+- interval 
+- form 
+- reflection
 abstract: |
   What happens in the silence between movements, between arguments, between
   publications? A sustained examination of the interval not as absence but

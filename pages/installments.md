@@ -15,11 +15,11 @@ permalink: /installments/
     </span>
   </div>
 
-  <div class="feed-wrap">
+  <div class="list-container" style="padding: 0 var(--gutter);">
     {% assign sorted_posts = site.posts | sort: "date" | reverse %}
     
     {% if sorted_posts.size == 0 %}
-      <div style="padding: 3rem 0; font-family: var(--text); font-size: 14px; font-style: italic; color: var(--mid); text-align: center;">
+      <div class="empty-state">
         No installments published yet.
       </div>
     {% else %}
@@ -49,144 +49,105 @@ permalink: /installments/
             {% endif %}
           {% endfor %}
           
-          <div class="month-divider">
-            <span>{{ post_month }}</span>
-            <span class="count">{{ month_count }} installment{% if month_count > 1 %}s{% endif %}</span>
+          <div class="month-divider text-display font-extrabold text-italic text-fixed-xl">
+            {{ post_month }}
+            
+            <span class="section-meta">
+              {{ month_count }} installment{% if month_count > 1 %}s{% endif %}
+            </span>
           </div>
+
+          
         {% endif %}
         
-        <div class="feed-entry" data-project="{{ project_slug }}">
+        <div class="list-item" style="align-items: flex-start; padding: 1.5rem 0; border-bottom: 1px solid var(--rule); gap: 2rem;">
           
           <!-- ─── LEFT COLUMN (sticky) ─── -->
-          <div class="feed-date-col">
-            <div class="feed-month">{{ post.date | date: "%b" }}</div>
-            <div class="feed-year">{{ post.date | date: "%Y" }}</div>
+          <div class="list-item-left" style="min-width: 60px; display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; position: sticky; top: 80px; align-self: start;">
+            <span class="text-display" style="font-size: 24px; font-weight: 900; font-style: italic; color: var(--void3); line-height: 1; letter-spacing: -0.02em;">
+              {{ post.date | date: "%b" }}
+            </span>
+            <span class="text-mono" style="font-size: 8px; color: var(--ash); letter-spacing: 0.1em;">
+              {{ post.date | date: "%Y" }}
+            </span>
+            {% if post.badge %}
+              {% assign badge_class = post.badge | downcase | replace: ' ', '-' %}
+              {% if badge_class == "first-inst." %}
+                {% assign badge_class = "first" %}
+              {% elsif badge_class == "last-inst." %}
+                {% assign badge_class = "last" %}
+              {% endif %}
+              <span class="badge {{ badge_class }}" style="font-size: 7px; padding: 0.05rem 0.25rem; letter-spacing: 0.04em;">
+                {{ post.badge }}
+              </span>
+            {% endif %}
           </div>
           
           <!-- ─── CONTENT ─── -->
-          <div>
+          <div class="list-item-content">
             
             <!-- ─── TOP ROW: Installment + Info ─── -->
-            <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.3rem;">
-              <div class="feed-inst-tag" style="margin-bottom: 0;">
+            <div class="flex flex-wrap" style="gap: 0.5rem; margin-bottom: 0.3rem; align-items: baseline; justify-content: space-between;">
+              <div class="text-mono" style="font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0;">
                 Inst. {% if post.installment < 10 %}0{% endif %}{{ post.installment | default: "?" }}
-                <span style="color: var(--ash); font-weight: 300; margin: 0 0.25rem;">·</span>
+                <span class="text-ash" style="font-weight: 300; margin: 0 0.25rem;">·</span>
                 {{ post.date | date: "%B %d, %Y" }}
               </div>
               
-              <div style="font-family: var(--mono); font-size: 9px; color: var(--ash); letter-spacing: 0.05em; text-transform: uppercase; text-align: right; flex-shrink: 0;">
-                <span>{{ word_count }} words</span>
-                <span style="color: var(--void3); margin: 0 0.25rem;">·</span>
-                <span>~{{ reading_time }} min read</span>
+              <div class="metrics-horizontal" style="flex-shrink: 0;">
+                <span class="metric metric-words">{{ word_count }} words</span>
+                <span class="metric metric-sep">·</span>
+                <span class="metric metric-time">~{{ reading_time }} min read</span>
               </div>
             </div>
             
-            <div class="feed-title">
-              <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-            </div>
+            <span class="list-item-title" >
+              <a href="{{ site.baseurl }}{{ post.url }}" class="link-scale text-fluid-2xl">{{ post.title }}</a>
+            </span>
             
-            <!-- ─── AUTHOR + PROJECT (with clickable authors) ─── -->
-            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+            
+            <div class="flex flex-wrap" style="gap: 0.5rem; margin-bottom: 0.6rem; align-items: center;">
               
-
               {% if project %}
-                <span class="feed-proj-tag" style="margin-top: 0; margin-bottom: 0;">
-                  <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
+                <span class="text-mono" style="font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid);">
+                  <a href="{{ site.baseurl }}/projects/{{ project.slug }}/" class="link-underline" style="color: var(--mid);">
+                    {{ project.title }}
+                  </a>
                 </span>
               {% else %}
-                <span class="feed-proj-tag" style="margin-top: 0; margin-bottom: 0; color: var(--mid);">
+                <span class="text-mono" style="font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid);">
                   {% if post.projects %}{{ post.projects | first }}{% else %}Uncategorized{% endif %}
                 </span>
               {% endif %}
 
-              <span style="color: var(--ash);">·</span>
+              <span class="text-ash">·</span>
               
               {% if post.authors and post.authors.size > 0 %}
-                <span class="feed-author" style="margin-bottom: 0;">
+                <span class="text-mono" style="font-size: 9px; color: var(--muted);">
                   {% for slug in post.authors %}
                     {% assign person = site.people | where: "slug", slug | first %}
                     {% if person %}
-                      <a href="{{ site.baseurl }}/authors/{{ person.slug }}/" style="color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s;">
+                      <a href="{{ site.baseurl }}/authors/{{ person.slug }}/" class="link-underline" style="color: var(--muted);">
                         {{ person.name | default: person.title }}
-                      </a>{% unless forloop.last %}+ {% endunless %}
+                      </a>{% unless forloop.last %}<span class="text-ash"> + </span>{% endunless %}
                     {% else %}
-                      <span style="color: var(--muted);">{{ slug }}</span>{% unless forloop.last %}, {% endunless %}
+                      <span class="text-muted">{{ slug }}</span>{% unless forloop.last %}<span class="text-ash">, </span>{% endunless %}
                     {% endif %}
                   {% endfor %}
                 </span>
               {% else %}
-                <span class="feed-author" style="margin-bottom: 0; color: var(--ash);">Anonymous</span>
+                <span class="text-mono" style="font-size: 9px; color: var(--ash);">Anonymous</span>
               {% endif %}
-
-
             </div>
             
-            <div class="feed-excerpt">
+            
+            <div class="list-item-meta text-text text-fluid-base text-italic " >
               {{ post.excerpt | strip_html | truncatewords: 25 }}
             </div>
-            
-            {% if post.badge %}
-              {% assign badge_class = post.badge | downcase | replace: ' ', '-' %}
-          
-              {% comment %}─── Fix for "First Inst." and "Last Inst." ───{% endcomment %}
 
-              {% if badge_class == "first-inst." %}  <!-- Note the period -->
-                {% assign badge_class = "first" %}
-              {% elsif badge_class == "last-inst." %}  <!-- Note the period -->
-                {% assign badge_class = "last" %}
-              {% endif %}
-
-              
-              <span class="installment-badge {{ badge_class }}">
-                {{ post.badge }}
-              </span>
-              
-            {% endif %}
-
-            
-            
           </div>
         </div>
       {% endfor %}
     {% endif %}
   </div>
 </div>
-
-
-
-
-
-<style>
-  /* ─── Installment Status ─── */
-  .installment-badge {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 0.1rem 0.4rem;
-    border-radius: 2px;
-  }
-
-  /* ─── First Inst. ─── */
-  .installment-badge.first {
-    color: #64B5F6;
-    background: rgba(100, 181, 246, 0.08);
-    border: 1px solid rgba(100, 181, 246, 0.2);
-  }
-
-  /* ─── Revised ─── */
-  .installment-badge.revised {
-    color: #CE93D8;
-    background: rgba(206, 147, 216, 0.08);
-    border: 1px solid rgba(206, 147, 216, 0.2);
-  }
-
-  /* ─── Last Inst. ─── */
-  .installment-badge.last {
-    color: #FF8A65;
-    background: rgba(255, 138, 101, 0.08);
-    border: 1px solid rgba(255, 138, 101, 0.2);
-  }
-
-</style>
