@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Second Test
-date: 2026-07-16
+season: S02
+created: 2026-07-16
 authors:
 - r-okonkwo
 projects:

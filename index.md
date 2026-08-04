@@ -83,7 +83,7 @@ permalink: /
                       {{ post.projects | first | default: "Uncategorized" }}
                     {% endif %}
                   </span>
-                  ·
+                  
                   <span class="feed-author">
                     {% if post_author %}
                       {{ post_author.name | default: post_author.title }}
@@ -113,8 +113,8 @@ permalink: /
         </div>
       {% endif %}
 
-      <a href="{{ "/installments/" | relative_url }}" class="link-mono mt-lg">
-        View all installments →
+      <a href="{{ "/installments/" | relative_url }}" class="link-arrow text-mono text-gold-dim text-fluid-sm text-left"> 
+        View all installments
       </a>
 
     </div>
@@ -208,6 +208,10 @@ permalink: /
 
     {% comment %}─── Current Cohort ───{% endcomment %}
     {% if site.people and site.people.size > 0 %}
+      {% comment %}─── Find the newest author once ───{% endcomment %}
+      {% assign sorted_by_date = site.people | sort: "date" | reverse %}
+      {% assign newest_author = sorted_by_date | first %}
+
       <div class="section-header">
         <span class="section-title">Current Cohort</span>
         <span class="section-meta">{{ site.people | size }} contributors</span>
@@ -218,8 +222,8 @@ permalink: /
           {% for person in site.people %}
             <a href="{{ person.url | relative_url }}" class="contributor-card">
               <div class="contributor-avatar">
-                {% if person.avatar %}
-                  {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.avatar %}
+                {% if person.profile_image %}
+                  {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.profile_image %}
                   <img src="{{ avatar_path | relative_url }}" alt="{{ person.name | default: person.title }}">
                 {% else %}
                   <span class="contributor-initial">{{ person.name | default: person.title | slice: 0 }}</span>
@@ -229,6 +233,9 @@ permalink: /
               <span class="contributor-role">{{ person.role | default: "Contributor" }}</span>
               {% if person.discipline %}
                 <span class="contributor-discipline">{{ person.discipline }}</span>
+              {% endif %}
+              {% if person.slug == newest_author.slug %}
+                <span class="new-badge mt-sm">✦ New</span>
               {% endif %}
             </a>
           {% endfor %}
@@ -262,21 +269,34 @@ permalink: /
       <span class="section-title">About the Journal</span>
     </div>
 
-    <div class="content" style="max-width: 680px;">
+    <div class="content">
       <p>
         The Journal of Incomplete Studies is a serial research publication
         dedicated to thought still in motion. It embraces the unfinished,
         the provisional, and the ongoing — publishing installments across
         disciplines without requiring closure.
       </p>
-      <a href="{{ "/about/" | relative_url }}" class="link-mono">
-        Read more about the publication →
+      <a href="{{ "/about/" | relative_url }}" class="link-arrow text-mono text-gold-dim text-fluid-sm">
+        Read more about the publication
       </a>
     </div>
   </div>
 </div>
 
 <style>
+  .new-badge {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.12);
+    padding: 0.1rem 0.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    flex-shrink: 0;
+  }
+
   /* ─── MINIMAL HOMEPAGE STYLES ─── */
 
   .home-tagline-revision {

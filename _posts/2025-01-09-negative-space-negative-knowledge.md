@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Negative space, negative knowledge"
-date: 2025-01-09
+created: 2025-01-09
 authors: 
 - e-marchetti
 projects: 

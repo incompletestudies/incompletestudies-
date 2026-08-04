@@ -6,7 +6,7 @@ authors:
 - bob-jones
 projects:
 - digital-archives-initiative
-date: '2026-07-12'
+created: '2026-07-12'
 keywords: school;paper;archive
 ---
 

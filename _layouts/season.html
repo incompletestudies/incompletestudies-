@@ -40,7 +40,7 @@ layout: default
     <span class="section-title">About</span>
   </div>
 
-  <div class="content">
+  <div class="content-left">
     {{ content }}
   </div>
 
@@ -134,8 +134,8 @@ layout: default
             {% if person %}
               <a href="{{ person.url | relative_url }}" class="contributor-card">
                 <div class="contributor-avatar">
-                  {% if person.avatar %}
-                    {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.avatar %}
+                  {% if person.profile_image %}
+                    {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.profile_image %}
                     <img src="{{ avatar_path | relative_url }}" alt="{{ person.name | default: person.title }}">
                   {% else %}
                     <span class="contributor-initial">{{ person.name | default: person.title | slice: 0 }}</span>
@@ -217,7 +217,7 @@ layout: default
                 {% if post_authors.size > 0 %}
                   <span class="text-mono" >
                     {% for person in post_authors %}
-                      —
+                      
                       <a href="{{ person.url | relative_url }}" class="link-glow" >
                         {{ person.name }}
                       </a>{% unless forloop.last %}<span class="text-ash"> + </span>{% endunless %}

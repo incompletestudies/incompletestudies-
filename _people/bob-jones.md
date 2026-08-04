@@ -12,7 +12,7 @@ github: bob-jones
 linkedin: https://linkedin.com/in/bobjones
 email: bob@example.com
 status: On Leave
-profile_image: bob-jones.jpg
+profile_image: 
 active_: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Return without repetition"
-date: 2025-08-20
+created: 2025-08-20
 authors: 
 - r-okonkwo
 projects: 

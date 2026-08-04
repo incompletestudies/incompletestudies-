@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Serial and series: a distinction"
-date: 2025-09-25
+created: 2025-09-25
 authors: 
 - r-okonkwo
 projects: 

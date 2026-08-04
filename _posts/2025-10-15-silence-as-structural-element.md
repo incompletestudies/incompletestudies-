@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Silence as structural element"
-date: 2025-10-15
+created: 2025-10-15
 authors: 
 - a-sorensen
 projects: 

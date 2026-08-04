@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Legibility against the grain"
-date: 2024-10-01
+created:: 2024-10-01
 authors: 
 - e-marchetti
 projects: 

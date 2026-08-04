@@ -89,7 +89,12 @@ permalink: /installments/
             <!-- ─── TOP ROW: Installment + Info ─── -->
             <div class="flex flex-wrap" style="gap: 0.5rem; margin-bottom: 0.3rem; align-items: baseline; justify-content: space-between;">
               <div class="text-mono" style="font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0;">
-                Inst. {% if post.installment < 10 %}0{% endif %}{{ post.installment | default: "?" }}
+                {% if post.installment %}
+                  {% assign inst_num = post.installment | plus: 0 %}
+                  Inst. {% if inst_num < 10 %}0{% endif %}{{ inst_num }}
+                {% else %}
+                  Inst. ?
+                {% endif %}
                 <span class="text-ash" style="font-weight: 300; margin: 0 0.25rem;">·</span>
                 {{ post.date | date: "%B %d, %Y" }}
               </div>

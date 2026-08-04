@@ -6,7 +6,7 @@ people:
 installments: 4
 total_installments: 6
 start_date: '2025-10-10'
-id: P–02
+season: S01
 status: Ongoing
 status_class: live
 tags:

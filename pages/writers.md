@@ -35,8 +35,8 @@ permalink: /authors/
           <div class="author-card {% if person.slug == newest_author.slug %}new-author{% endif %}">
             <a href="{{ site.baseurl }}{{ person.url }}" class="author-card-link">
               <div class="author-card-avatar">
-                {% if person.avatar %}
-                  {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.avatar %}
+                {% if person.profile_image %}
+                  {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.profile_image %}
                   <img src="{{ avatar_path | relative_url }}" alt="{{ person.name | default: person.title }}">
                 {% else %}
                   <div class="avatar-placeholder">{{ person.name | default: person.title | slice: 0 }}</div>
@@ -47,9 +47,9 @@ permalink: /authors/
                 <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                   <h3 class="author-card-name">{{ person.name | default: person.title }}</h3>
 
-                  <!-- {% if person.slug == newest_author.slug %}
+                  {% if person.slug == newest_author.slug %}
                     <span class="new-badge">✦ New</span>
-                  {% endif %} -->
+                  {% endif %}
                   
                   {% if person.status %}
                     {% assign status_class = person.status | downcase | replace: ' ', '-' %}

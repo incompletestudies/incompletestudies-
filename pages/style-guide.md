@@ -25,7 +25,7 @@ permalink: /style-guide/
     <a href="#spacing">Spacing</a>
     <a href="#interactive">Interactive</a>
     <a href="#buttons">Buttons</a>
-    <a href="#links">Links</a>  
+    <a href="#links-in-detail">Links in detail</a>  
     <a href="#universal-lists">Universal Lists</a>  
   </div>
 
@@ -563,7 +563,7 @@ permalink: /style-guide/
 
     
     <!-- ─── LINKS ─── -->
-    <section class="style-section" id="links">
+    <section class="style-section" id="links-in-detail">
       <h2 class="style-section-title">Links</h2>
       
       <div class="style-grid">

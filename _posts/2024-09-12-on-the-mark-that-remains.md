@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "On the mark that remains after the hand"
-date: 2024-09-12
+created: 2024-09-12
 authors: 
 - e-marchetti
 projects: 

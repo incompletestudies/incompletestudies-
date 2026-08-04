@@ -21,7 +21,8 @@ CONTENT_TYPES = {
         "required_columns": [
             "title",
             "authors",
-            "projects"
+            "projects",
+            "season"
         ],
 
         "relationships": {
@@ -78,7 +79,8 @@ CONTENT_TYPES = {
 
         "required_columns": [
             "title",
-            "people"
+            "people",
+            "season"
         ],
         
         "relationships": {
@@ -87,6 +89,26 @@ CONTENT_TYPES = {
 
         "identifier": "title",
         "body_field": "Description"
+    },
+
+
+    "seasons": {
+
+        "incoming": Path("drafts/incoming/seasons"),
+        "processed": Path("drafts/processed/seasons"),
+        "output": Path("_seasons"),
+
+        "layout": "season",
+
+        "image_root": "/assets/images/seasons",
+
+        "required_columns": [
+            "title",
+            "code"
+        ],
+
+        "identifier": "title",
+        "body_field": "Overview"
     }
 
 }

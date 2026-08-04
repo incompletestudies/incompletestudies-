@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The pause as unit of thought"
-date: 2025-07-01
+created: 2025-07-01
 authors: 
 - a-sorensen
 projects: 

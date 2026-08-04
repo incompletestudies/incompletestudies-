@@ -4,9 +4,7 @@ title: What Incompletion Does
 people:
 - t-lindqvist
 status: 
-season: S01
-installments: 1
-total_installments: 6
+season: S02
 start_date: '2025-11-03'
 last_updated: '2026-03-11'
 id: P–04

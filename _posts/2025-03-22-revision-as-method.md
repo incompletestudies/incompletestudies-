@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Revision as method, not failure"
-date: 2025-03-22
+created: 2025-03-22
 authors: 
 - e-marchetti
 projects: 

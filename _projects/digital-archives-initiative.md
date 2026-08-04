@@ -2,6 +2,7 @@
 layout: project
 title: Digital Archives Initiative
 status: On Hold
+season: S01
 people:
 - alice-smith
 - bob-jones

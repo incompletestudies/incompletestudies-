@@ -13,10 +13,7 @@ layout: default
 {% assign season = site.seasons | where: "code", page.season | first %}
 
 {% comment %}─── Get all posts in this project ───{% endcomment %}
-{% assign project_posts = site.posts | where: "project_slug", project_slug | sort: "date" %}
-{% if project_posts.size == 0 %}
-  {% assign project_posts = site.posts | where: "project", project_slug | sort: "date" %}
-{% endif %}
+{% assign project_posts = site.posts | where_exp: "post", "post.projects contains project_slug" | sort: "date" %}
 
 {% assign current_index = 0 %}
 {% for p in project_posts %}
@@ -36,19 +33,6 @@ layout: default
   {% assign next_post = project_posts[next_index] %}
 {% endif %}
 
-{% assign same_month = page.date | date: "%Y-%m" %}
-{% assign resonant_posts = site.posts | where_exp: "p", "p.url != page.url" | where_exp: "p", "p.project_slug != project_slug" %}
-{% if resonant_posts.size == 0 %}
-  {% assign resonant_posts = site.posts | where_exp: "p", "p.url != page.url" | where_exp: "p", "p.project != project_slug" %}
-{% endif %}
-{% assign resonant_month_posts = "" | split: "" %}
-{% for p in resonant_posts %}
-  {% assign p_month = p.date | date: "%Y-%m" %}
-  {% if p_month == same_month %}
-    {% assign resonant_month_posts = resonant_month_posts | push: p %}
-  {% endif %}
-{% endfor %}
-
 <div class="section-wrap">
 
   {% include breadcrumb.html %}
@@ -63,9 +47,7 @@ layout: default
           </span>
         {% endif %}
       </div>
-
-
-  </div>
+    </div>
     <span class="col-head-meta" style="align-self:flex-start;text-align:right;line-height:1.6;">
       {% if season %}
         <span class="feed-author" style="margin:0;">
@@ -80,8 +62,6 @@ layout: default
           <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
         </span>
       {% endif %}
-      
-      
       <br>
       <span style="font-size:7px;color:var(--ash);letter-spacing:0.04em;line-height:1.8;">
         <span style="color:var(--muted);">Created:</span>
@@ -93,15 +73,23 @@ layout: default
         {% endif %}
         <br>
         {% if page.badge %}
-          <span class="pill {{ page.badge_class }}" style="font-size:7px;padding:2px 8px;margin-top:0.2rem;display:inline-block;">{{ page.badge }}</span>
+          {% assign badge_class = page.badge | downcase | replace: ' ', '-' %}
+          {% if badge_class == "first-inst." %}
+            {% assign badge_class = "first" %}
+          {% elsif badge_class == "last-inst." %}
+            {% assign badge_class = "last" %}
+          {% endif %}
+          <span class="badge {{ badge_class }} mt-sm">
+            {{ page.badge }}
+          </span>
         {% endif %}
       </span>
-    
+    </span>
   </div>
 
   {% comment %}─── CONTENT WRAPPER ───{% endcomment %}
   <div class="feed-wrap">
-    <div class="post-content">
+    <div class="content">
       {{ content }}
     </div>
 
@@ -122,24 +110,103 @@ layout: default
       </div>
     {% endif %}
 
-    <!-- {% if resonant_month_posts.size > 0 %}
-      <div class="resonant-posts">
-        <div class="cr-block-title">Also published {{ page.date | date: "%B %Y" }}</div>
-        <ul class="cr-list">
-          {% for p in resonant_month_posts limit:3 %}
-            {% assign p_project = site.projects | where: "slug", p.project_slug | first %}
-            {% if p_project == nil %}
-              {% assign p_project = site.projects | where: "slug", p.project | first %}
-            {% endif %}
-            <li>
-              <a href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a>
-              {% if p_project %}
-                — <a href="{{ site.baseurl }}/projects/{{ p_project.slug }}/">{{ p_project.title }}</a>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %} -->
   </div>
 </div>
+
+<style>
+  /* ─── POST NAVIGATION ─── */
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .post-nav-prev,
+  .post-nav-next {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .post-nav-next {
+    text-align: right;
+  }
+
+  .post-nav-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-bottom: 0.3rem;
+  }
+
+  .post-nav a {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+    line-height: 1.4;
+  }
+
+  .post-nav a:hover {
+    color: var(--cream);
+    border-bottom-color: var(--gold-dim);
+  }
+
+  .post-nav-prev a::before {
+    content: '← ';
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .post-nav-prev a:hover::before {
+    opacity: 1;
+  }
+
+  .post-nav-next a::after {
+    content: ' →';
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .post-nav-next a:hover::after {
+    opacity: 1;
+  }
+
+  /* ─── Responsive ─── */
+
+  @media (max-width: 768px) {
+    .post-nav {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .post-nav-prev,
+    .post-nav-next {
+      text-align: left;
+    }
+    
+    .post-nav a {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .post-nav a {
+      font-size: 12px;
+    }
+    
+    .post-nav-label {
+      font-size: 7px;
+    }
+  }
+</style>

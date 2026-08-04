@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Duration and the document"
-date: 2025-07-18
+created: 2025-07-18
 authors: 
 - e-marchetti
 projects: 

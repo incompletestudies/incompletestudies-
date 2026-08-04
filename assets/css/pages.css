@@ -4,22 +4,32 @@
 
 /* ─── UNIVERSAL CONTENT STYLES ─── */
 .content {
-  max-width: 680px;
+  max-width: 720px;
   font-family: var(--text);
-  font-size: 16px;
-  color: var(--pale);
+  font-size: 14px;
+  color: var(--muted);
   line-height: 1.9;
+  margin: 0 auto;
 }
 
-.content p {
-  margin-bottom: 1.5rem;
+
+.content-left {
+  max-width: 680px;
+  font-family: var(--text);
+  font-size: 14px;
+  color: var(--pale);
+  line-height: 1.9;
+  margin: 0;  /* ← Remove centering */
+  padding: 0.5rem 0 1rem 0;
 }
+
+.content p { margin-bottom: 1.5rem; }
 
 .content h1 {
   font-family: var(--display);
   font-size: 2.2rem;
   font-weight: 700;
-  color: var(--bright);
+  color: var(--pale);
   margin: 2.5rem 0 1rem 0;
   font-style: normal;
 }
@@ -28,7 +38,7 @@
   font-family: var(--display);
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--bright);
+  color: var(--pale);
   margin: 2rem 0 0.8rem 0;
   font-style: normal;
   border-bottom: 1px solid var(--rule);
@@ -39,7 +49,7 @@
   font-family: var(--display);
   font-size: 1.4rem;
   font-weight: 600;
-  color: var(--cream);
+  color: var(--pale);
   margin: 1.5rem 0 0.6rem 0;
   font-style: normal;
 }
@@ -48,7 +58,7 @@
   font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--cream);
+  color: var(--pale);
   margin: 1.5rem 0 0.5rem 0;
   font-style: normal;
 }
@@ -58,7 +68,7 @@
   font-family: var(--display);
   font-size: 1rem;
   font-weight: 600;
-  color: var(--cream);
+  color: var(--pale);
   margin: 1.2rem 0 0.4rem 0;
   font-style: normal;
 }
@@ -80,7 +90,7 @@
 }
 
 .content strong {
-  color: var(--cream);
+  color: var(--pale);
   font-weight: 700;
 }
 
@@ -98,7 +108,7 @@
 }
 
 .content a:hover {
-  color: var(--bright);
+  color: var(--pale);
   text-decoration-color: var(--gold);
 }
 
@@ -106,13 +116,11 @@
   border-left: 3px solid var(--gold-dim);
   padding: 0.5rem 0 0.5rem 1.5rem;
   margin: 1.5rem 0;
-  color: var(--muted);
+  color: var(--mid);
   font-style: italic;
 }
 
-.content blockquote p {
-  margin-bottom: 0.5rem;
-}
+.content blockquote p { margin-bottom: 0.5rem; }
 
 .content code {
   font-family: var(--mono);
@@ -120,7 +128,7 @@
   background: var(--void2);
   padding: 0.1rem 0.4rem;
   border-radius: 3px;
-  color: var(--cream);
+  color: var(--pale);
 }
 
 .content pre {
@@ -136,7 +144,7 @@
   background: transparent;
   padding: 0;
   font-size: 0.85rem;
-  color: var(--pale);
+  color: var(--muted);
 }
 
 .content table {
@@ -155,12 +163,12 @@
 
 .content th {
   background: var(--void2);
-  color: var(--cream);
+  color: var(--pale);
   font-weight: 700;
 }
 
-.content td {
-  color: var(--pale);
+.content td { 
+  color: var(--muted);
 }
 
 .content hr {
@@ -182,17 +190,11 @@
   padding-top: 1.5rem;
   border-top: 1px solid var(--rule);
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--mid);
 }
 
-.content .footnotes ol {
-  margin-left: 1.5rem;
-}
-
-.content .footnotes li {
-  margin-bottom: 0.5rem;
-}
-
+.content .footnotes ol { margin-left: 1.5rem; }
+.content .footnotes li { margin-bottom: 0.5rem; }
 .content .footnotes .reversefootnote {
   color: var(--gold-dim);
   text-decoration: none;
@@ -211,58 +213,17 @@
 
 /* ─── Keep .post-content for backward compatibility ─── */
 .post-content {
-  @extend .content;
+  @extend .content;  /* Or just duplicate if @extend not supported */
 }
 
-/* ─── RESPONSIVE CONTENT ─── */
 @media (max-width: 768px) {
-  .content {
-    font-size: 14px;
-  }
-  
-  .content h1 {
-    font-size: 1.8rem;
-  }
-  
-  .content h2 {
-    font-size: 1.5rem;
-  }
-  
-  .content h3 {
-    font-size: 1.2rem;
-  }
-  
-  .content table {
-    font-size: 0.8rem;
-  }
-  
+  .content { font-size: 13px; padding: 0 0.5rem; }
+  .content h1 { font-size: 1.8rem; }
+  .content h2 { font-size: 1.5rem; }
+  .content h3 { font-size: 1.2rem; }
+  .content table { font-size: 0.8rem; }
   .content th,
-  .content td {
-    padding: 0.3rem 0.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .content {
-    font-size: 13px;
-  }
-  
-  .content h1 {
-    font-size: 1.5rem;
-  }
-  
-  .content h2 {
-    font-size: 1.3rem;
-  }
-  
-  .content h3 {
-    font-size: 1.1rem;
-  }
-  
-  .content ul,
-  .content ol {
-    margin-left: 1rem;
-  }
+  .content td { padding: 0.3rem 0.5rem; }
 }
 
 /* ─── HOME / LANDING ─── */

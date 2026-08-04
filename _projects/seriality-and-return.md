@@ -1,12 +1,9 @@
 ---
 layout: project
 title: Seriality and Return
-order: 3
 people:
 - r-okonkwo
-season: S01
-installments: 2
-total_installments: 6
+season: S02
 start_date: '2025-09-09'
 status: Archived
 abstract: |
