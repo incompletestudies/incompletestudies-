@@ -6,7 +6,8 @@ affiliation: University of Essex
 discipline: Digital Humanities
 website: https://example.com/svenia-peter
 email: svenia.peter@example.com
-projects: []
+projects:
+- paper-cut
 profile_image: svenia_peter.jpg
 join_date: '2026-05-15'
 last_updated: '2026-07-20'

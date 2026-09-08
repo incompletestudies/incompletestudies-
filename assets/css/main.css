@@ -17,10 +17,11 @@
 /* Cards, badges, pills, tags, links, breadcrumbs */
 @import "components.css";
 
-/* ───5. Utilities─── */
-/* Spacing, text, display, responsive utilities */
-@import "utilities.css";
 
 /* ───6. Page-Specific Styles─── */
 /* All page-specific styles (home, projects, feed, seasons, etc.) */
 @import "pages.css";
+
+/* ───5. Utilities─── */
+/* Spacing, text, display, responsive utilities */
+@import "utilities.css";

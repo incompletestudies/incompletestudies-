@@ -1078,6 +1078,7 @@
 
 
 /* ─── 11. SECTION HEADERS ─── */
+
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -1108,6 +1109,7 @@
 
 .col-head {
   padding: 1.5rem var(--gutter) 1rem;
+  padding-top: calc(1rem + var(--topbar-height, 60px));
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -1145,6 +1147,12 @@
 .grid-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: var(--space-lg);
 }
 

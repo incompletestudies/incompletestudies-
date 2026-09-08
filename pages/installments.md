@@ -146,8 +146,8 @@ permalink: /installments/
             </div>
             
             
-            <div class="list-item-meta text-text text-fluid-base text-italic " >
-              {{ post.excerpt | strip_html | truncatewords: 25 }}
+            <div class="list-item-meta text-text text-fluid-sm  " >
+              {{ post.content | strip_html | truncatewords: 50 }}
             </div>
 
           </div>

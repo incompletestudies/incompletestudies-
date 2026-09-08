@@ -109,6 +109,7 @@
 .text-ash { color: var(--ash); }
 .text-mid { color: var(--mid); }
 .text-pale { color: var(--pale); }
+.text-rupture { color: var(--rupture); }
 
 /* ============================================ */
 /* TEXT ALIGNMENT UTILITIES                    */

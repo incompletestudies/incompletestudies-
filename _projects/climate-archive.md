@@ -2,10 +2,11 @@
 layout: project
 title: Climate Archive
 short_title: Climate Archive
-status:
+status: Archived
 pill: New
 start_date: '2025-01-01'
-season: S01
+seasons: 
+- S01
 people:
 - alice-smith
 institution: University of Amsterdam

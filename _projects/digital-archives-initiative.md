@@ -2,7 +2,8 @@
 layout: project
 title: Digital Archives Initiative
 status: On Hold
-season: S01
+seasons: 
+- S01
 people:
 - alice-smith
 - bob-jones
@@ -11,8 +12,6 @@ keywords: archive;digitisation
 image: project.jpg
 start_date: '2026-07-18'
 ---
-
-# Overview
 
 The Digital Archives Initiative investigates long-term preservation of incomplete archival collections.
 

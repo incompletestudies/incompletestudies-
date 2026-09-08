@@ -3,15 +3,11 @@ layout: project
 title: Seriality and Return
 people:
 - r-okonkwo
-season: S02
+seasons:
+- S02
 start_date: '2025-09-09'
 status: Archived
-abstract: |
-  On the difference between repetition and return — how serial form creates
-  conditions for thinking that loop without closing.
 ---
-
-## About This Project
 
 This project asks what distinguishes a return from a repetition, and argues
 that serial publication — where a project comes back to its own questions at

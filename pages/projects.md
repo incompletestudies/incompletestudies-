@@ -90,7 +90,10 @@ div class="section-wrap">
                 </div>
                 <h3 class="card-title">{{ project.title }}</h3>
                 <p class="card-subtitle">{{ author_string | default: "No contributors listed" }}</p>
-                <p class="card-excerpt">{{ project.abstract | truncate: 120 | default: "No abstract available." }}</p>
+                <p class="card-excerpt">
+                  {{ project.content | strip_html | truncatewords: 17 | default: "No description available." }}
+                </p>
+                
                 
                 
                 {% if project.tags and project.tags.size > 0 %}
@@ -157,7 +160,7 @@ div class="section-wrap">
         title: {{ project.title | jsonify }},
         author: "{{ author_string }}",
         status: "{{ project.status | default: 'Ongoing' }}",
-        abstract: {{ project.abstract | default: "No abstract yet." | jsonify }},
+        abstract: {{ project.content | strip_html | truncatewords: 50 | default: "No description available." | jsonify }},
         installments: {{ post_count }},
         slug: "{{ project.slug }}",
         index: {{ forloop.index }}

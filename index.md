@@ -170,9 +170,10 @@ permalink: /
                 <div class="card-subtitle">{{ author_string }}</div>
               {% endif %}
               
-              {% if project.abstract %}
-                <p class="card-excerpt">{{ project.abstract | truncate: 120 }}</p>
-              {% endif %}
+              <div class="list-item-meta text-text text-fluid-sm mb-sm" >
+                {{ project.content | strip_html | truncatewords: 20 }}
+              </div>
+              
 
               <div class="card-meta">
                 <span>
@@ -184,9 +185,6 @@ permalink: /
                     {% for tag in project.tags limit: 3 %}
                       <span class="tag">{{ tag }}</span>
                     {% endfor %}
-                    {% if project.tags.size > 2 %}
-                      <span class="tag-more">+{{ project.tags.size | minus: 2 }}</span>
-                    {% endif %}
                   {% endif %}
                 </span>
               </div>

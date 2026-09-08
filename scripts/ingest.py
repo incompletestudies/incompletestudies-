@@ -118,6 +118,18 @@ if "projects" in metadata:
         for item in metadata["projects"].split(";")
     ]
 
+if "seasons" in metadata:
+    metadata["seasons"] = [
+        item.strip().upper()
+        for item in metadata["seasons"].split(";")
+    ]
+
+if "tags" in metadata:
+    metadata["tags"] = [
+        make_slug(item)
+        for item in metadata["tags"].split(";")
+    ]
+
 #############################################
 # Create a required list
 required = (

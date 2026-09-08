@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign season_projects = site.projects | where: "season", page.code %}
+{% assign season_projects = site.projects | where_exp: "project", "project.seasons contains page.code" %}
 {% assign season_posts = site.posts | where: "season", page.code | sort: "date" | reverse %}
 
 {% comment %}─── Get unique authors from posts ───{% endcomment %}
@@ -40,7 +40,7 @@ layout: default
     <span class="section-title">About</span>
   </div>
 
-  <div class="content-left">
+  <div class="content">
     {{ content }}
   </div>
 
@@ -94,8 +94,8 @@ layout: default
                 <div class="card-subtitle">{{ author_string }}</div>
               {% endif %}
               
-              {% if project.abstract %}
-                <p class="card-excerpt">{{ project.abstract | truncate: 120 }}</p>
+              {% if project.content %}
+                <p class="card-excerpt">{{ project.content | strip_html | truncatewords: 25 }}</p>
               {% endif %}
 
               <div class="card-meta">
@@ -230,7 +230,7 @@ layout: default
               
               {% comment %}─── Excerpt ───{% endcomment %}
               <span class="list-item-meta" style="font-size: 13px; color: var(--pale); font-family: var(--text);font-style: italic; opacity: 0.8;">
-                {{ post.excerpt | strip_html | truncatewords: 20 }}
+                {{ post.content | strip_html | truncatewords: 20 }}
               </span>
             </div>
 

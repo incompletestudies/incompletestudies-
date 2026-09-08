@@ -188,8 +188,8 @@ layout: default
                 </div>
               {% endif %}
               
-              <span  class="list-item-meta text-text text-fluid-base text-italic mt-md" >
-                {{ post.excerpt | strip_html | truncatewords: 25 }}
+              <span  class="list-item-meta text-text text-fluid-sm mt-sm" >
+                {{ post.content | strip_html | truncatewords: 35 }}
               </span>
             </div>
 

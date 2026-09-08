@@ -132,7 +132,7 @@ identifier = CONTENT_TYPES[content_type]["identifier"]
 record_name = metadata[identifier]
 
 publish_date = metadata.get(
-    "date",
+    "created",
     str(date.today())
 )
 

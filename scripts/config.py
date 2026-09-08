@@ -74,13 +74,14 @@ CONTENT_TYPES = {
 
         "list_fields": [
             "Tags",
-            "People"
+            "People",
+            "Seasons"
         ],
 
         "required_columns": [
             "title",
             "people",
-            "season"
+            "seasons"
         ],
         
         "relationships": {
@@ -107,7 +108,7 @@ CONTENT_TYPES = {
             "code"
         ],
 
-        "identifier": "title",
+        "identifier": "code",
         "body_field": "Overview"
     }
 

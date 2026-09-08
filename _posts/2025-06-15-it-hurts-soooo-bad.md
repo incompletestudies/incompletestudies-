@@ -6,14 +6,16 @@ authors:
 - svenia-peter
 projects:
 - paper-cut
-tags: archive;infrastructure;digital preservation
-season: S01
+tags:
+- archive
+- infrastructure
+- digital-preservation
+season: S03
 created: '2025-06-15'
 updated: '2025-08-04'
 badge: Revised
 ---
 
-Overview:
 
 What does it mean to approach the archive as infrastructure? This installment argues that digital archives are not simply repositories of content, but active infrastructures that shape how knowledge is produced, accessed, and contested. Drawing on media theory, infrastructure studies, and archival practice, it outlines a framework for understanding digital archives as material, political, and temporal systems.
 

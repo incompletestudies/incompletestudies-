@@ -7,7 +7,7 @@ authors:
 projects: 
 - trace-and-legibility
 installment: 5
-season: S01
+season: S04
 excerpt: "Returning to Inst. 01 with different hands. <span class=\"struck\">The original argument stands.</span> It does not."
 ---
 

@@ -13,20 +13,20 @@
 - title: Authors
   url: /authors/
 
-- title: How It Works
-  url: /how/
-
 - title: About
   url: /about/
-
-# - title: For Contributors
-#   url: /contributors/
-
-# - title: For Readers
-#   url: /readers/
 
 # - title: Second Form
 #   url: /editions/
 
 # - title: Style Guide
 #   url: /style-guide/
+
+# - title: EXTRA Style Guide 
+#   url: /extra-style-guide/
+
+# - title: Under Construction
+#   url: /under-construction/
+
+# - title: Logo & Branding Guide
+#   url: /logo-guide/

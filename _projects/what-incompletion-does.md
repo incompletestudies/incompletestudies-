@@ -3,18 +3,12 @@ layout: project
 title: What Incompletion Does
 people:
 - t-lindqvist
-status: 
-season: S02
+status: Ongoing
+seasons: 
+- S02
 start_date: '2025-11-03'
 last_updated: '2026-03-11'
-id: P–04
-abstract: |
-  A polemical project against the ideology of completion in academic
-  writing. Not a celebration of the unfinished — an examination of what
-  finishing forecloses.
 ---
-
-## About This Project
 
 This project argues that the pressure to conclude is institutional rather
 than intellectual, and traces what gets foreclosed when scholarly writing is

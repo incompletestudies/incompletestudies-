@@ -21,6 +21,7 @@
   --sage: #8aaa7a;
   --sage-dim: #5a7a4a;
   --rust: #c06a4a;
+  --rupture: #D6311C;
 
   /* ─── Rules/borders ─── */
   --rule: rgba(200, 194, 182, 0.15);
@@ -30,6 +31,7 @@
   /* ─── Typography ─── */
   --display: 'Fraunces', Georgia, serif;
   --text: 'Literata', Georgia, serif;
+  --text-italic: 'Georgia', serif;
   --mono: 'IBM Plex Mono', 'Courier New', monospace;
   --script: 'Caveat', cursive;
 

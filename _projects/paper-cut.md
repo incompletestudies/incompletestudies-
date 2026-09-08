@@ -1,9 +1,15 @@
 ---
 layout: project
 title: Paper Cut
-people: []
-tags: Pain; digital preservation; memory studies
-season: S04
+people:
+- svenia-peter
+tags:
+- pain
+- digital-preservation
+- memory-studies
+seasons:
+- S04
+- S03
 image: paper_cut.jpg
 created: '2026-06-01'
 updated: '2026-07-20'

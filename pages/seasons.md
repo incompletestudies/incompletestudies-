@@ -24,7 +24,7 @@ permalink: /seasons/
       {% assign sorted_seasons = site.seasons | sort: "code" %}
       {% for season in sorted_seasons %}
         {% assign season_posts = site.posts | where: "season", season.code %}
-        {% assign season_projects = site.projects | where: "season", season.code %}
+        {% assign season_projects = site.projects | where_exp: "project", "project.seasons contains season.code" %}
 
         <a href="{{ site.baseurl }}/seasons/{{ season.slug }}/" 
         class="list-item list-item-bordered" 
