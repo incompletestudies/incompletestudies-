@@ -2,6 +2,8 @@
 layout: default
 title: Journal of Incomplete Studies
 permalink: /
+description: "An open-access online publication for research that remains incomplete."
+image: "/assets/images/logo/logo_1200x630.jpg" 
 ---
 
 <div class="home-hero">

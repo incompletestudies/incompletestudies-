@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://incompletestudies.github.io/incompletestudies-/sitemap.xml
+
+# Prevent crawling of drafts or internal files
+Disallow: /drafts/
+Disallow: /metadata/
+Disallow: /scripts/

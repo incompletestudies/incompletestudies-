@@ -2,6 +2,7 @@
 layout: default
 title: Seasons
 permalink: /seasons/
+description: "Browse seasons of The Journal of Incomplete Studies — each season brings together a cohort of researchers exploring incompletion in their work."
 ---
 
 <div class="section-wrap">

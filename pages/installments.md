@@ -2,6 +2,7 @@
 layout: default
 title: Installments
 permalink: /installments/
+description: "Installments are the basic publishing unit of The Journal of Incomplete Studies — research made public at a particular moment, carrying traces of what came before and the possibility of what might follow."
 ---
 
 <div class="section-wrap">

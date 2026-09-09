@@ -2,6 +2,7 @@
 layout: default
 title: Projects
 permalink: /projects/
+description: "Each project in The Journal of Incomplete Studies represents a sustained inquiry — research that unfolds over time through multiple installments, tracking the evolution of an argument, a method, or a question."
 ---
 
 div class="section-wrap">

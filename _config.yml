@@ -21,19 +21,30 @@
 title: Journal of Incomplete Studies
 email: incompletestudies@proton.me
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  An open-access online publication for research that remains incomplete — work in progress, provisional arguments, uncertain findings, and unresolved questions.
 baseurl: "/incompletestudies-"  # Your repository name with the hyphen
 url: "https://incompletestudies.github.io"
-twitter_username: jekyllrb
 github_username:  incompletestudies
+
+# SEO: Author information
+author:
+  name: "Journal of Incomplete Studies"
+
+# SEO: Social media (optional)
+social:
+  name: "Journal of Incomplete Studies"
+  links:
+    - "https://github.com/incompletestudies"
+
+# SEO: Default image for social sharing (create this image)
+og_image: "/assets/images/logo/logo_1200x630.jpg"  # 1200x630px recommended
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
-
+  - jekyll-seo-tag    # ← ADD THIS
+  - jekyll-sitemap    # ← ADD THIS
 
 # Markdown settings
 markdown: kramdown
@@ -45,16 +56,15 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
-  parse_block_html: false      # ← CHANGE to false
-  parse_span_html: false       # ← CHANGE to false
+  parse_block_html: false
+  parse_span_html: false
   footnotes: true
   enable_coderay: false
   syntax_highlighter: none
   transliterated_header_ids: true
-  html_to_native: false        # ← ADD THIS
+  html_to_native: false
 
-
-# ... other settings ...
+# Collections
 collections:
   people:
     output: true
@@ -66,15 +76,76 @@ collections:
     output: true
     permalink: /seasons/:slug/
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
+# ─── DEFAULT FRONT MATTER FOR COLLECTIONS ───
+defaults:
+  # Fallback for all pages
+  - scope:
+      path: ""
+    values:
+      description: "An open-access online publication for research that remains incomplete — work in progress, provisional arguments, uncertain findings, and unresolved questions."
+      image: "/assets/images/logo/logo_1200x630.jpg"
 
+  # ─── PAGES IN pages/ (NO type: needed) ───
+
+  # Projects collection index (/projects/)
+  - scope:
+      path: "pages/projects.md"
+    values:
+      layout: "default"
+      description: "Each project in The Journal of Incomplete Studies represents a sustained inquiry — research that unfolds over time through multiple installments."
+      # image: "/assets/images/og-projects.jpg"
+
+  # Seasons collection index (/seasons/)
+  - scope:
+      path: "pages/seasons.md"
+    values:
+      layout: "default"
+      description: "A season brings together a cohort of researchers exploring incompletion in their work."
+      # image: "/assets/images/og-seasons.jpg"
+
+  # People collection index (/authors/)
+  - scope:
+      path: "pages/writers.md"
+    values:
+      layout: "default"
+      description: "Meet the researchers, writers, and thinkers whose work appears in The Journal of Incomplete Studies."
+      # image: "/assets/images/og-authors.jpg"
+
+  # ─── COLLECTION ITEMS (type: REQUIRED) ───
+
+  # Individual projects (_projects/*.md)
+  - scope:
+      path: "_projects"
+      type: "projects"
+    values:
+      layout: "project"           # ← Fixed: just "project", not "_layouts/project.html"
+
+  # Individual seasons (_seasons/*.md)
+  - scope:
+      path: "_seasons"
+      type: "seasons"
+    values:
+      layout: "season"            # ← Fixed: just "season", not "_layouts/season.html"
+
+  # Individual authors (_people/*.md)
+  - scope:
+      path: "_people"
+      type: "people"
+    values:
+      layout: "person"            # ← Fixed: just "person" (since you're using person.html)
+
+  # ─── INSTALLMENTS (posts in _posts/) ───
+
+  # All posts (installments)
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"              # ← Fixed: just "post", not "_layouts/post.html"
+      description: "An installment from The Journal of Incomplete Studies — research in progress, provisional arguments, and unresolved questions."
+      # image: "/assets/images/og-installment-default.jpg"
+    
+# Exclude from processing.
 exclude:
   - drafts/
   - metadata/
@@ -88,32 +159,8 @@ exclude:
   - .gitignore
   - _site/
 
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
-
-
-
 # New design settings
 current_season: "01"
 version: "v2.1.4"
 footer_left: "The Unfinished Archive · Serial Research Publication · Est. 2026"
 footer_right: "v2.1.4 · 2026-07-16 · Season 01 ongoing"
-
-# Project data now lives in the `_projects` collection (see /_projects/*.md)
-# and is resolved via Liquid wherever it is needed, instead of being
-# duplicated here.
-
-# Navigation
-# Canonical navigation lives in _data/navigation.yml (used by _includes/navigation.html
-# via site.data.navigation). This duplicate site.navigation key previously drifted out
-# of sync with it (e.g. "Authors" was listed here but missing from _data/navigation.yml,
-# leaving /authors/ unreachable from the nav) and was never read by any template, so it
-# has been removed to keep a single source of truth for the top nav.

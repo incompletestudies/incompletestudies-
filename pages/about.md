@@ -2,6 +2,7 @@
 layout: default
 title: About
 permalink: /about/
+description: "The Journal of Incomplete Studies is an open-access publication for research that remains incomplete — work in progress, provisional arguments, uncertain findings, and unresolved questions."
 ---
 
 <div class="container-wide">

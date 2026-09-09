@@ -2,6 +2,7 @@
 layout: default
 title: Authors
 permalink: /authors/
+description: "Meet the contributors and editorial team behind The Journal of Incomplete Studies — researchers working at the edges of completion."
 ---
 
 <div class="section-wrap">
