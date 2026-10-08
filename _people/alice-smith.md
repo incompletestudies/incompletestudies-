@@ -16,7 +16,6 @@ join_date: '2026-01-01'
 last_updated: '2026-07-18'
 ---
 
-# Biography
 
 Alice Smith is a researcher working on digital archives, incomplete collections, and long-term preservation.
 

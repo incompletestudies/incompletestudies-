@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Authors
-permalink: /authors/
+title: Cohort
+permalink: /cohort/
 description: "Meet the contributors and editorial team behind The Journal of Incomplete Studies — researchers working at the edges of completion."
 ---
 

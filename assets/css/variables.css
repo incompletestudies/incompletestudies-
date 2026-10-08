@@ -1,4 +1,24 @@
 :root {
+  --paper: #eeeadf;
+  --paper2: #e4dfd3;
+  --ink: #171715;
+  --muted: #77736a;
+  --line: #bcb7aa;
+  --red: #df4b2f;
+  --blue: #465f82;
+  --green: #596c58;
+  --black: #11110f;
+  --serif: "Libre Baskerville", Georgia, serif;
+  --sans: Inter, Arial, sans-serif;
+  --mono: "DM Mono", monospace;
+
+  .kicker { font: 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  a { text-decoration: none; color: inherit; cursor: pointer; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
+  h1 { font-size: clamp(52px, 8vw, 112px); line-height: .9; letter-spacing: -.045em; }
+  h2 { font-size: clamp(42px, 6vw, 76px); line-height: .94; letter-spacing: -.035em; }
+  h3 { font-size: 25px; line-height: 1.1; }
   /* ─── Backgrounds (more depth) ─── */
   --void: #0c0b09;
   --void2: #1a1714;
@@ -9,10 +29,10 @@
   /* ─── Grays (more contrast) ─── */
   --ash: #5a4f44;
   --mid: #7a6e60;
-  --muted: #9e9282;
+  /* --muted: #9e9282; */
   --pale: #c8bfae;
   --cream: #e8dfd0;
-  --paper: #f2ede4;
+  /* --paper: #f2ede4; */
   --bright: #faf6ef;
 
   /* ─── Accents ─── */
@@ -32,11 +52,11 @@
   --display: 'Fraunces', Georgia, serif;
   --text: 'Literata', Georgia, serif;
   --text-italic: 'Georgia', serif;
-  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  /* --mono: 'IBM Plex Mono', 'Courier New', monospace; */
   --script: 'Caveat', cursive;
 
   /* ─── Semantic roles ─── */
-  --ink: var(--void);
+  /* --ink: var(--void); */
   --bone: var(--cream);
   --graphite: var(--mid);
   --moss: var(--sage);

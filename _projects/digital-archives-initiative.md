@@ -8,7 +8,9 @@ people:
 - alice-smith
 - bob-jones
 website: https://example.org
-keywords: archive;digitisation
+tags: 
+- archive
+- digitisation
 image: project.jpg
 start_date: '2026-07-18'
 ---

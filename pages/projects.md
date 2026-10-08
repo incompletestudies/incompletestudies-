@@ -5,7 +5,8 @@ permalink: /projects/
 description: "Each project in The Journal of Incomplete Studies represents a sustained inquiry — research that unfolds over time through multiple installments, tracking the evolution of an argument, a method, or a question."
 ---
 
-div class="section-wrap">
+<div class="section-wrap">
+  {% include breadcrumb.html %}
   <div class="col-head">
     <span class="col-head-title">Projects</span>
     <span class="col-head-meta">
@@ -15,10 +16,7 @@ div class="section-wrap">
     </span>
   </div>
 
-
-  
   <div class="projects-layout">
-    
     <!-- ─── SIDEBAR ─── -->
     <aside class="proj-sidebar">
       <details class="accordion" id="sidebar-accordion">

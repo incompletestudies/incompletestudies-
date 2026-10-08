@@ -8,11 +8,11 @@ tags:
 - digital-preservation
 - memory-studies
 seasons:
-- S04
 - S03
+- S04
 image: paper_cut.jpg
-created: '2026-06-01'
-updated: '2026-07-20'
+start_date: '2026-06-01'
+last_updated: '2026-07-20'
 status: Ongoing
 pill: New
 ---

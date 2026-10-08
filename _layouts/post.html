@@ -2,17 +2,20 @@
 layout: default
 ---
 
-{% comment %}─── Get author from array ───{% endcomment %}
+{% comment %}─── Resolve author / project / season from front matter ───{% endcomment %}
 {% assign author_slug = page.authors | first %}
 {% assign author = site.people | where: "slug", author_slug | first %}
 
-{% comment %}─── Get project from array ───{% endcomment %}
 {% assign project_slug = page.projects | first %}
 {% assign project = site.projects | where: "slug", project_slug | first %}
 
 {% assign season = site.seasons | where: "code", page.season | first %}
 
-{% comment %}─── Get all posts in this project ───{% endcomment %}
+{% assign word_count = page.content | strip_html | number_of_words %}
+{% assign reading_time = word_count | divided_by: 200 %}
+{% if reading_time < 1 %}{% assign reading_time = 1 %}{% endif %}
+
+{% comment %}─── Compute prev / next within the project ───{% endcomment %}
 {% assign project_posts = site.posts | where_exp: "post", "post.projects contains project_slug" | sort: "date" %}
 
 {% assign current_index = 0 %}
@@ -33,180 +36,134 @@ layout: default
   {% assign next_post = project_posts[next_index] %}
 {% endif %}
 
-<div class="section-wrap">
+<div class="reading">
 
+  {% comment %}─── Breadcrumb strip ───{% endcomment %}
   {% include breadcrumb.html %}
 
-  <div class="col-head">
-    <div>
-      <span class="col-head-title">{{ page.title }}</span>
-      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.3rem 0.75rem;margin-top:0.3rem;">
-        {% if author %}
-          <span class="feed-author" style="margin:0;">
-            <a href="{{ site.baseurl }}/authors/{{ author.slug }}/"> — {{ author.name | default: author.title }}</a>
-          </span>
-        {% endif %}
-      </div>
+  {% comment %}─── Title block ───{% endcomment %}
+  <header class="read-head">
+    <!-- <div class="kicker">
+      {% if season %}Season {{ season.code }} / {% endif %}
+      {% if project %}{{ project.title }} / {% endif %}
+      {% if author %}{{ author.name | default: author.title }}{% endif %}
+    </div> -->
+    <h1>{{ page.title }}</h1>
+    <div class="read-meta">
+      <span>{{ word_count }} words</span>
+      <span class="sep"> </span>
+      <span>~{{ reading_time }} min</span>
+      <span class="sep"> </span>
+      {% if page.badge %}<span>State: {{ page.badge }}</span>{% endif %}
     </div>
-    <span class="col-head-meta" style="align-self:flex-start;text-align:right;line-height:1.6;">
-      {% if season %}
-        <span class="feed-author" style="margin:0;">
-          <a href="{{ site.baseurl }}/seasons/{{ season.slug }}/">{{ season.title }}</a>
-        </span>
-        <span style="color:var(--ash);">·</span>
-      {% endif %}
-      Inst. {{ page.installment }}
-      <br>
-      {% if project %}
-        <span class="feed-proj-tag" style="margin:0;">
-          <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
-        </span>
-      {% endif %}
-      <br>
-      <span style="font-size:7px;color:var(--ash);letter-spacing:0.04em;line-height:1.8;">
-        <span style="color:var(--muted);">Created:</span>
-        {{ page.created | date: "%B %d, %Y" }}
-        {% if page.updated and page.updated != '' %}
-          <br>
-          <span style="color:var(--muted);">Updated:</span>
-          {{ page.updated | date: "%B %d, %Y" }}
-        {% endif %}
-        <br>
-        {% if page.badge %}
-          {% assign badge_class = page.badge | downcase | replace: ' ', '-' %}
-          {% if badge_class == "first-inst." %}
-            {% assign badge_class = "first" %}
-          {% elsif badge_class == "last-inst." %}
-            {% assign badge_class = "last" %}
-          {% endif %}
-          <span class="badge {{ badge_class }} mt-sm">
-            {{ page.badge }}
-          </span>
-        {% endif %}
-      </span>
-    </span>
-  </div>
+  </header>
 
-  {% comment %}─── CONTENT WRAPPER ───{% endcomment %}
-  <div class="feed-wrap">
-    <div class="content">
+  {% comment %}─── 3-column body ───{% endcomment %}
+  <div class="reading-body">
+
+    {% comment %}─── LEFT RAIL: auto-built from essay H2s ───{% endcomment %}
+    <aside class="read-rail">
+      <div class="rail-progress">
+        <div class="rail-progress-fill" id="railFill"></div>
+      </div>
+      <nav class="rail-sections" id="railSections">
+        <!-- populated by JS from .essay h2 elements -->
+      </nav>
+    </aside>
+
+    {% comment %}─── ESSAY ───{% endcomment %}
+    <article class="content" id="essayBody">
       {{ content }}
-    </div>
+    </article>
 
-    {% if prev_post or next_post %}
-      <div class="post-nav">
-        <div class="post-nav-prev">
-          {% if prev_post %}
-            <div class="post-nav-label">← Previous in {{ project.title }}</div>
-            <a href="{{ site.baseurl }}{{ prev_post.url }}">Inst. {{ prev_post.installment }} · {{ prev_post.title }}</a>
-          {% endif %}
+    {% comment %}─── RIGHT META COLUMN ───{% endcomment %}
+    <aside class="read-meta-col">
+      {% if project %}
+        <div class="meta-block">
+          <div class="kicker">Project</div>
+          <a href="{{ site.baseurl }}/projects/{{ project.slug }}/">{{ project.title }}</a>
         </div>
-        <div class="post-nav-next">
-          {% if next_post %}
-            <div class="post-nav-label">Next in {{ project.title }} →</div>
-            <a href="{{ site.baseurl }}{{ next_post.url }}">Inst. {{ next_post.installment }} · {{ next_post.title }}</a>
-          {% endif %}
+      {% endif %}
+
+      {% if author %}
+        <div class="meta-block">
+          <div class="kicker">Researcher</div>
+          <a href="{{ site.baseurl }}/authors/{{ author.slug }}/">{{ author.name | default: author.title }}</a>
         </div>
-      </div>
-    {% endif %}
+      {% endif %}
+
+      {% if page.cohort %}
+        <div class="meta-block">
+          <div class="kicker">Cohort</div>
+          <div class="meta-value">{{ page.cohort }}</div>
+        </div>
+      {% endif %}
+
+      {% if page.question %}
+        <div class="meta-block">
+          <div class="kicker">Question</div>
+          <a href="{{ site.baseurl }}/questions/#q{{ page.question }}">
+            {{ page.question }}{% if page.question_title %} · {{ page.question_title }}{% endif %}
+          </a>
+        </div>
+      {% endif %}
+
+      {% if page.created %}
+        <div class="meta-block">
+          <div class="kicker">First published</div>
+          <div class="meta-value">{{ page.created | date: "%B %d, %Y" }}</div>
+        </div>
+      {% endif %}
+
+      {% if page.updated and page.updated != '' %}
+        <div class="meta-block">
+          <div class="kicker">Last revised</div>
+          <div class="meta-value">{{ page.updated | date: "%B %d, %Y" }}</div>
+        </div>
+      {% endif %}
+
+      {% if season %}
+        <div class="meta-block">
+          <div class="kicker">Season</div>
+          <a href="{{ site.baseurl }}/seasons/{{ season.slug }}/">{{ season.title }}</a>
+        </div>
+      {% endif %}
+    </aside>
 
   </div>
+
+  {% comment %}─── Post navigation ───{% endcomment %}
+  {% if prev_post or next_post %}
+    <nav class="read-nav">
+      <div class="read-nav-item">
+        {% if prev_post %}
+          <div class="read-nav-meta">← Installment {{ prev_post.installment }}</div>
+          <a class="read-nav-title" href="{{ site.baseurl }}{{ prev_post.url }}">{{ prev_post.title }}</a>
+        {% endif %}
+      </div>
+      <div class="read-nav-item" style="align-items:center;text-align:center;">
+        <div class="read-nav-meta">In {{ project.title }}</div>
+        <a class="read-nav-title" href="{{ site.baseurl }}/projects/{{ project.slug }}/">All installments</a>
+      </div>
+      <div class="read-nav-item next">
+        {% if next_post %}
+          <div class="read-nav-meta">Installment {{ next_post.installment }} →</div>
+          <a class="read-nav-title" href="{{ site.baseurl }}{{ next_post.url }}">{{ next_post.title }}</a>
+        {% endif %}
+      </div>
+    </nav>
+  {% endif %}
+
 </div>
 
 <style>
-  /* ─── POST NAVIGATION ─── */
+  button { font: inherit; color: inherit; }
+  a { text-decoration: none; color: inherit; cursor: pointer; }
 
-  .post-nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .post-nav-prev,
-  .post-nav-next {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .post-nav-next {
-    text-align: right;
-  }
-
-  .post-nav-label {
-    font-family: var(--mono);
-    font-size: 8px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ash);
-    margin-bottom: 0.3rem;
-  }
-
-  .post-nav a {
-    display: inline-block;
-    font-family: var(--display);
-    font-size: 14px;
-    font-style: italic;
-    font-weight: 600;
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s ease;
-    line-height: 1.4;
-  }
-
-  .post-nav a:hover {
-    color: var(--cream);
-    border-bottom-color: var(--gold-dim);
-  }
-
-  .post-nav-prev a::before {
-    content: '← ';
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .post-nav-prev a:hover::before {
-    opacity: 1;
-  }
-
-  .post-nav-next a::after {
-    content: ' →';
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .post-nav-next a:hover::after {
-    opacity: 1;
-  }
-
-  /* ─── Responsive ─── */
-
-  @media (max-width: 768px) {
-    .post-nav {
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .post-nav-prev,
-    .post-nav-next {
-      text-align: left;
-    }
-    
-    .post-nav a {
-      font-size: 13px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .post-nav a {
-      font-size: 12px;
-    }
-    
-    .post-nav-label {
-      font-size: 7px;
-    }
-  }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
+  h1 { font-size: clamp(52px, 8vw, 112px); line-height: .9; letter-spacing: -.045em; }
+  h2 { font-size: clamp(42px, 6vw, 76px); line-height: .94; letter-spacing: -.035em; }
+  h3 { font-size: 25px; line-height: 1.1; }
+  .kicker { font: 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  
 </style>

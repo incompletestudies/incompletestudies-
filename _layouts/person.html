@@ -4,6 +4,7 @@ layout: default
 
 {% comment %}─── Projects authored (using people array) ───{% endcomment %}
 {% assign authored_projects = site.projects | where_exp: "project", "project.people contains page.slug" %}
+{% assign name_parts = page.title | split: " " %}
 
 {% comment %}─── Get posts where this person is in the authors array ───{% endcomment %}
 {% assign author_posts = "" | split: "" %}
@@ -22,58 +23,107 @@ layout: default
   {% include breadcrumb.html %}
 
   {% comment %}─── HEADER ───{% endcomment %}
-  <div class="col-head">
-    <div>
-      <span class="col-head-title">{{ page.name | default: page.title | default: "Untitled Author" }}</span>
-      
-      <div class="flex flex-wrap flex-center" style="gap: 0.3rem 0.75rem; margin-top: 0.3rem;">
-        <span class="text-mono" style="font-size: 9px; color: var(--muted); letter-spacing: 0.04em;">
-          {{ page.role | default: "Contributor" }}
-          {% if page.discipline %}
-            · {{ page.discipline | downcase }}
-          {% endif %}
-          {% if page.institution %}
-            · {{ page.institution }}
-          {% endif %}
-        </span>
+  <header class="author-opening">
+    <div class="author-opening-left">
+      <h1>
+        {{ name_parts[0] }}<br>{{ name_parts | slice: 1, name_parts.size | join: " " }}
+      </h1>
+      <div class="author-opening-meta">
+        <span class="mono">{{ page.role | default: "Contributor" }}</span>
       </div>
     </div>
-    
-    <span class="col-head-meta" style="align-self: flex-start; text-align: right; line-height: 1.6;">
-      <div class="text-mono" style="font-size: 9px; color: var(--muted); letter-spacing: 0.04em;">
-        <span style="color: var(--cream); font-weight: 700;">{{ authored_projects.size }}</span> projects
-        <span class="text-ash">·</span>
-        <span style="color: var(--cream); font-weight: 700;">{{ author_posts.size }}</span> installments
+    <div class="author-opening-right">
+      <div class="quote">
+        I am interested in what measurements leave behind when they fail.
       </div>
-      
-      <span style="font-size: 7px; color: var(--ash); letter-spacing: 0.04em; line-height: 1.8;">
-        <span class="text-muted">Joined:</span>
-        {% if page.join_date %}
-          {{ page.join_date | date: "%B %d, %Y" }}
-        {% else %}
-          {{ page.date | date: "%B %d, %Y" }}
-        {% endif %}
-        {% if page.last_updated and page.last_updated != '' %}
-          <br>
-          <span class="text-muted">Updated:</span>
-          {{ page.last_updated | date: "%B %d, %Y" }}
-        {% endif %}
-      </span>
-    </span>
-  </div>
+      <div class="author-opening-stats">
+        <div><b>{{ authored_projects.size }}</b><span>projects</span></div>
+        <div><b>{{ author_posts.size }}</b><span>installments</span></div>
+        <!-- <div><b>1</b><span>contradicted</span></div>
+        <div><b>1</b><span>returned</span></div> -->
+      </div>
+    </div>
+  </header>
 
   {% comment %}─── BIO ───{% endcomment %}
   {% if content and content != "" %}
-    
-  <div class="content mt-md">
-    {{ content }}
-  </div>
+    <div class="reading-body">
+
+      {% comment %}─── LEFT RAIL: auto-built from essay H2s ───{% endcomment %}
+      <aside class="read-rail">
+        <div class="rail-progress">
+          <div class="rail-progress-fill" id="railFill"></div>
+        </div>
+        <nav class="rail-sections">
+          <a href="#bio" class="rail-item active">
+            <span class="rail-num">01</span>
+            <span class="rail-label">Bio</span>
+          </a>
+          {% if authored_projects.size > 0 %}
+            <a href="#projects" class="rail-item">
+              <span class="rail-num">02</span>
+              <span class="rail-label">Projects</span>
+            </a>
+          {% endif %}
+          {% if author_posts.size > 0 %}
+            <a href="#installments" class="rail-item">
+              <span class="rail-num">03</span>
+              <span class="rail-label">Installments</span>
+            </a>
+          {% endif %}
+        </nav>
+      </aside>
+
+      <div id="essayBody">
+        <div class="content" id="bio">{{ content }}</div>
+      </div>
+
+      <aside class="read-meta-col">
+        <div class="meta-block">
+          <div class="kicker">Role</div>
+          <div class="meta-value">{{ page.role | default: "Contributor" }}</div>
+        </div>
+
+        {% if page.discipline %}
+          <div class="meta-block">
+            <div class="kicker">Discipline</div>
+            <div class="meta-value">{{ page.discipline }}</div>
+          </div>
+        {% endif %}
+
+        {% if page.institution %}
+          <div class="meta-block">
+            <div class="kicker">Institution</div>
+            <div class="meta-value">{{ page.institution }}</div>
+          </div>
+        {% endif %}
+
+        <div class="meta-block">
+          <div class="kicker">Joined</div>
+          <div class="meta-value">
+            {% if page.join_date %}
+              {{ page.join_date | date: "%B %d, %Y" }}
+            {% else %}
+              {{ page.date | date: "%B %d, %Y" }}
+            {% endif %}
+          </div>
+        </div>
+
+        {% if page.last_updated and page.last_updated != '' %}
+          <div class="meta-block">
+            <div class="kicker">Last updated</div>
+            <div class="meta-value">{{ page.last_updated | date: "%B %d, %Y" }}</div>
+          </div>
+        {% endif %}
+      </aside>
+    </div>
   {% endif %}
+  
 
   {% comment %}─── PROJECTS ───{% endcomment %}
   
   {% if authored_projects.size > 0 %}
-    <div class="section-header">
+    <div class="section-header" id="projects">
       <span class="section-title">Projects</span>
       <span class="section-meta">{{ authored_projects.size }} Projects</span>
     </div>
@@ -146,7 +196,7 @@ layout: default
 
   {% comment %}─── INSTALLMENTS ───{% endcomment %}
   {% if author_posts.size > 0 %}
-    <div class="section-header">
+    <div class="section-header" id="installments">
       <span class="section-title">Installments</span>
       <span class="section-meta">{{ author_posts.size }} Installments</span>
     </div>
@@ -237,3 +287,62 @@ layout: default
   </div>
 
 </div>
+
+
+
+<style>
+  .author-opening {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    padding: 40px 0 70px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 80px;
+  }
+  .author-opening-left { display: flex; flex-direction: column; gap: 20px; }
+  .author-opening-left h1 {
+    font-size: clamp(64px, 9vw, 128px);
+    line-height: .88;
+    letter-spacing: -.045em;
+    margin: 6px 0 0;
+  }
+  .author-opening-meta { display: flex; flex-direction: column; gap: 8px; }
+  .author-opening-meta .mono {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .author-opening-right { display: flex; flex-direction: column; gap: 40px; padding-top: 30px; }
+  .author-opening-right .quote {
+    font: italic 26px/1.4 var(--serif);
+    color: var(--ink);
+    letter-spacing: -.015em;
+    border-left: 2px solid var(--red);
+    padding-left: 26px;
+  }
+  .author-opening-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .author-opening-stats > div { background: var(--paper); padding: 18px 14px; }
+  .author-opening-stats b {
+    display: block;
+    font: 28px var(--mono);
+    font-weight: 400;
+    letter-spacing: -.02em;
+  }
+  .author-opening-stats span {
+    display: block;
+    margin-top: 6px;
+    font: 9px var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  
+</style>

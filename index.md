@@ -208,6 +208,22 @@ image: "/assets/images/logo/logo_1200x630.jpg"
 
     {% comment %}─── Current Cohort ───{% endcomment %}
     {% if site.people and site.people.size > 0 %}
+
+      <div class="section-header">
+        <span class="section-title">Current Cohort</span>
+        <span class="section-meta">{{ site.people | size }} contributors</span>
+      </div>
+
+      <p class="data-names">
+        {% for person in site.people %}
+          <a href="{{ person.url | relative_url }}" class="season-name">{{ person.name | default: person.title }}</a>{% unless forloop.last %} ·{% endunless %}
+        {% endfor %}
+      </p>
+
+    {% endif %}
+
+    {% comment %}─── Current Cohort ───{% endcomment %}
+    {% if site.people and site.people.size > 0 %}
       {% comment %}─── Find the newest author once ───{% endcomment %}
       {% assign sorted_by_date = site.people | sort: "date" | reverse %}
       {% assign newest_author = sorted_by_date | first %}
@@ -281,9 +297,106 @@ image: "/assets/images/logo/logo_1200x630.jpg"
       </a>
     </div>
   </div>
+
+  <footer class="home-footer">
+    <div class="home-footer-col">
+      <div class="kicker">The journal</div>
+      <p class="home-footer-text">
+        {% assign season_count = site.seasons | size %}
+        {% assign project_count = site.projects | size %}
+        {% assign post_count = site.posts | size %}
+        {{ season_count }} seasons so far. {{ project_count }} projects. {{ post_count }} installments.
+      </p>
+    </div>
+    <div class="home-footer-col">
+      <div class="kicker">About</div>
+      <p class="home-footer-text">
+        <a href="{{ site.baseurl }}/constitution/">The constitution</a> ·
+        <a href="{{ site.baseurl }}/manifesto/">The manifesto</a> ·
+        <a href="{{ site.baseurl }}/contributors/">For Contributors</a> ·
+      </p>
+    </div>
+    <div class="home-footer-col">
+      <div class="kicker">Colophon</div>
+      <p class="home-footer-text">Text in Libre Baskerville. Mono in DM Mono. Nothing disappears merely because something newer has happened.</p>
+    </div>
+  </footer>
 </div>
 
 <style>
+  .kicker { font: 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  .data-names {
+    font: italic 24px/1.55 var(--serif);
+    letter-spacing: -.015em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .season-name {
+    color: var(--ink);
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: border-color .15s, color .15s;
+    padding-bottom: 1px;
+    text-decoration: none;      /* ← add this — anchors default to underline */
+  }
+
+  .season-name:hover {
+    border-bottom-color: var(--ink);
+    color: var(--red);
+  }
+
+
+  .home-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    padding-top: 34px;
+    padding-bottom: 80px;
+    margin: 80px auto 0;
+    max-width: 1180px;
+    border-top: 1px solid var(--line);
+  }
+
+  .home-footer .kicker {
+    display: block;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .home-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;   /* prevents overflow if a child is wider than the column */
+  }
+  .home-footer-text {
+    font: 13px/1.7 var(--sans);
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .home-footer-text a {
+    color: var(--ink);
+    /* border-bottom: 1px solid var(--ink); */
+    cursor: pointer;
+    transition: color .15s ease, border-color .15s ease;
+  }
+
+  .home-footer-text a:hover {
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  @media (max-width: 700px) {
+    .home-footer {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding: 24px 20px 50px;   /* ← side padding on mobile so text doesn't touch the edges */
+      margin-top: 60px;
+    }
+  }
   .new-badge {
     font-family: var(--mono);
     font-size: 0.6rem;

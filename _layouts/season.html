@@ -17,252 +17,426 @@ layout: default
 
   {% include breadcrumb.html %}
 
-  <div class="col-head">
-    <span class="col-head-title">{{ page.title }}</span>
-    <span class="col-head-meta">
-      {% comment %}─── Time Period ───{% endcomment %}
-      {{ page.range }}
-      
-      {% comment %}─── STATUS PILL ───{% endcomment %}
-      {% if page.pill %}
-        {% assign pill_class = page.pill | downcase | replace: ' ', '-' | default: "upcoming" %}
-        <span style="color: var(--ash); margin: 0 0.4rem;">·</span>
-        <span class="pill {{ pill_class }}">{{ page.pill }}</span>
-      {% endif %}
+  <header class="proj-head">
 
-      
-    </span>
-
-  </div>
-
-  {% comment %}─── INTRO ───{% endcomment %}
-  <div class="section-header">
-    <span class="section-title">About</span>
-  </div>
-
-  <div class="content">
-    {{ content }}
-  </div>
-
-  
-    
-
-    {% comment %}─── PROJECTS ───{% endcomment %}
-    {% if season_projects.size > 0 %}
-      <div>
-        <div class="section-header">
-          <span class="section-title">Projects This Season</span>
-          <span class="section-meta">{{ season_projects.size }} Projects</span>
-        </div>
-
-        <div class="grid-2">
-          {% for project in season_projects %}
-            {% assign status_class = project.status | downcase | replace: ' ', '-' | default: "ongoing" %}
-            {% assign pill_class = project.pill | downcase | replace: ' ', '-' | default: "new" %}
-            
-            {% assign project_posts = site.posts | where_exp: "post", "post.projects contains project.slug" %}
-            {% assign post_count = project_posts.size %}
-            
-            {% assign author_names = "" | split: "" %}
-            {% if project.people %}
-              {% for slug in project.people %}
-                {% assign person = site.people | where: "slug", slug | first %}
-                {% if person %}
-                  {% assign author_names = author_names | push: person.name | default: person.title %}
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-            {% assign author_string = author_names | join: " + " %}
-            
-            <a href="{{ project.url | relative_url }}" class="card">
-              <div class="card-header">
-                <span class="card-id">P–{{ forloop.index }}</span>
-                {% if project.pill %}
-                  <span class="pill {{ pill_class }}">
-                    {{ project.pill | default: "New" }}
-                  </span>
-                {% else %}
-                  <span class="badge {{ status_class }}">
-                    {{ project.status | default: "Ongoing" }}
-                  </span>
-                {% endif %}
-              </div>
-              
-              <h3 class="card-title">{{ project.title }}</h3>
-              
-              {% if author_string != "" %}
-                <div class="card-subtitle">{{ author_string }}</div>
-              {% endif %}
-              
-              {% if project.content %}
-                <p class="card-excerpt">{{ project.content | strip_html | truncatewords: 25 }}</p>
-              {% endif %}
-
-              <div class="card-meta">
-                <span>
-                  <span class="card-meta-number">{{ post_count }}</span> installment{% if post_count != 1 %}s{% endif %}
-                </span>
-
-                <span style="margin-left: auto;">
-                  {% if project.tags %}
-                    {% for tag in project.tags limit: 3 %}
-                      <span class="tag">{{ tag }}</span>
-                    {% endfor %}
-                    {% if project.tags.size > 2 %}
-                      <span class="tag-more">+{{ project.tags.size | minus: 2 }}</span>
-                    {% endif %}
-                  {% endif %}
-                </span>
-              </div>
-            </a>
-          {% endfor %}
-        </div>
+    <div class="proj-head-left">
+      <h1 class="proj-title">{{ page.title | default: "Untitled Season" }}</h1>
+      <div class="proj-head-meta">
+        {% comment %}─── Time Period ───{% endcomment %}
+        <span>{{ page.range }}</span>
       </div>
-    {% endif %}
-
-    {% comment %}─── CONTRIBUTORS (scroll) ───{% endcomment %}
-    {% if unique_author_slugs.size > 0 %}
-      <div class="section-header" style="margin-top: 2.5rem;">
-        <span class="section-title">Contributors</span>
-        <span class="section-meta">{{ unique_author_slugs.size }} contributors</span>
-      </div>
-
-      <div class="scroll-wrapper">
-        <div class="scroll-container">
-          {% for slug in unique_author_slugs %}
-            {% assign person = site.people | where: "slug", slug | first %}
-            {% if person %}
-              <a href="{{ person.url | relative_url }}" class="contributor-card">
-                <div class="contributor-avatar">
-                  {% if person.profile_image %}
-                    {% assign avatar_path = "/assets/images/people/" | append: person.slug | append: "/" | append: person.profile_image %}
-                    <img src="{{ avatar_path | relative_url }}" alt="{{ person.name | default: person.title }}">
-                  {% else %}
-                    <span class="contributor-initial">{{ person.name | default: person.title | slice: 0 }}</span>
-                  {% endif %}
-                </div>
-                <span class="contributor-name">{{ person.name | default: person.title }}</span>
-                <span class="contributor-role">{{ person.role | default: "Contributor" }}</span>
-                {% if person.discipline %}
-                  <span class="contributor-discipline">{{ person.discipline }}</span>
-                {% endif %}
-              </a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %}
-
- 
-    {% comment %}─── INSTALLMENTS ───{% endcomment %}
-    {% if season_posts.size > 0 %}
-      <div class="section-header" style="margin-top: 2.5rem;">
-        <span class="section-title">Installments</span>
-        <span class="section-meta">{{ season_posts.size }} Installments</span>
-      </div>
-
-      <div class="list-container">
-        {% for post in season_posts %}
-          {% assign word_count = post.content | strip_html | number_of_words %}
-          {% assign reading_time = word_count | divided_by: 200 | default: 1 %}
-          
-          {% comment %}─── Get project for this post (FIXED) ───{% endcomment %}
-          {% assign project_slug = post.projects | first %}
-          {% assign post_project = site.projects | where: "slug", project_slug | first %}
-          
-          {% comment %}─── Get authors for this post ───{% endcomment %}
-          {% assign post_authors = "" | split: "" %}
-          {% for slug in post.authors %}
-            {% assign person = site.people | where: "slug", slug | first %}
-            {% if person %}
-              {% assign post_authors = post_authors | push: person %}
-            {% endif %}
-          {% endfor %}
-          
-          <div class="list-item list-item-bordered" style="align-items: flex-start; gap: 1.5rem;">
-            
-            {% comment %}─── LEFT: Date ───{% endcomment %}
-            <div class="list-item-left" style="min-width: 70px; display: flex; flex-direction: column; gap: 0.1rem;">
-              <span class="text-mono" style="font-size: 14px; color: var(--gold-dim); font-weight: 700; line-height: 1;">
-                {{ post.date | date: "%b %d" }}
-              </span>
-              <span class="text-mono" style="font-size: 8px; color: var(--ash);">
-                {{ post.date | date: "%Y" }}
-              </span>
-            </div>
-
-            {% comment %}─── CONTENT ───{% endcomment %}
-            <div class="list-item-content">
-              
-              {% comment %}─── Meta: Project ───{% endcomment %}
-              <div class="feed-inst-tag" >
-                {% if post_project %}
-                  <a href="{{ post_project.url | relative_url }}" class="link-underline" style="color: var(--gold-dim); font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;">
-                    {{ post_project.title }}
-                  </a>
-                {% else %}
-                  <span class="text-ash" style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;">No project</span>
-                {% endif %}
-              </div>
-              
-              {% comment %}─── Title ───{% endcomment %}
-              <span class="list-item-title" style="font-size: 20px; margin-bottom: 0.2rem;">
-                <a href="{{ post.url | relative_url }}" class="link-scale">{{ post.title }}</a>
-              </span>
-              
-              {% comment %}─── Meta: Authors ───{% endcomment %}
-              <div class="list-item-meta" >
-                
-                {% comment %}─── AUTHORS (linked) ───{% endcomment %}
-                {% if post_authors.size > 0 %}
-                  <span class="text-mono" >
-                    {% for person in post_authors %}
-                      
-                      <a href="{{ person.url | relative_url }}" class="link-glow" >
-                        {{ person.name }}
-                      </a>{% unless forloop.last %}<span class="text-ash"> + </span>{% endunless %}
-                    {% endfor %}
-                  </span>
-                {% else %}
-                  <span class="text-mono" style="font-size: 9px; color: var(--ash);">Anonymous</span>
-                {% endif %}
-              </div>
-              
-              {% comment %}─── Excerpt ───{% endcomment %}
-              <span class="list-item-meta" style="font-size: 13px; color: var(--pale); font-family: var(--text);font-style: italic; opacity: 0.8;">
-                {{ post.content | strip_html | truncatewords: 20 }}
-              </span>
-            </div>
-
-            {% comment %}─── RIGHT: Badge + Metrics ───{% endcomment %}
-            <div class="list-item-right" style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;">
-              <div class="metrics-horizontal" style="font-size: 8px; color: var(--ash);">
-                <span class="metric metric-words">{{ word_count }} words</span>
-                <span class="metric metric-sep">·</span>
-                <span class="metric metric-time">~{{ reading_time }} min</span>
-              </div>
-              {% if post.badge %}
-                {% assign badge_class = post.badge | downcase | replace: ' ', '-' %}
-                {% if badge_class == "first-inst." %}
-                  {% assign badge_class = "first" %}
-                {% elsif badge_class == "last-inst." %}
-                  {% assign badge_class = "last" %}
-                {% endif %}
-                <span class="badge {{ badge_class }}">
-                  {{ post.badge }}
-                </span>
-              {% endif %}
-            </div>
-            
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% comment %}─── BACK LINK ───{% endcomment %}
-    <div style="margin-top:2.5rem;">
-      <a href="{{ site.baseurl }}/seasons/" class="link-mono">← Back to all seasons</a>
     </div>
 
+    <div class="proj-head-right">
+      <div class="season-key">
+        <div class="key-cell">
+          <span class="key-label">Season</span>
+          <span class="key-value">{{ page.code | remove: 'S'}}</span>
+        </div>
+        <div class="key-cell">
+          <span class="key-label">Contributors</span>
+          <span class="key-value">{{ unique_author_slugs.size }}</span>
+        </div>
+        <div class="key-cell">
+          <span class="key-label">Projects</span>
+          <span class="key-value">{{ season_projects.size }} </span>
+        </div>
+        <div class="key-cell">
+          <span class="key-label">Installments</span>
+          <span class="key-value">{{season_posts.size}}</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  {% comment %}─── About ───{% endcomment %}
+  {% if content and content != "" %}
+    <div class="reading-body">
+
+      {% comment %}─── LEFT RAIL: auto-built from essay H2s ───{% endcomment %}
+      <aside class="read-rail">
+        <div class="rail-progress">
+          <div class="rail-progress-fill" id="railFill"></div>
+        </div>
+        <nav class="rail-sections">
+          <a href="#about" class="rail-item active">
+            <span class="rail-num">01</span>
+            <span class="rail-label">About</span>
+          </a>
+          {% if season_projects.size > 0 %}
+            <a href="#projects" class="rail-item">
+              <span class="rail-num">02</span>
+              <span class="rail-label">Projects</span>
+            </a>
+          {% endif %}
+          {% if unique_author_slugs.size > 0 %}
+            <a href="#cohort" class="rail-item">
+              <span class="rail-num">03</span>
+              <span class="rail-label">Cohort</span>
+            </a>
+          {% endif %}
+          {% if season_posts.size > 0 %}
+            <a href="#installments" class="rail-item">
+              <span class="rail-num">04</span>
+              <span class="rail-label">Installments</span>
+            </a>
+          {% endif %}
+        </nav>
+      </aside>
+
+      <div id="essayBody">
+        <div class="content" id="about">{{ content }}</div>
+      </div>
+
+      <aside class="read-meta-col">
+        {% comment %}─── STATUS PILL ───{% endcomment %}
+        {% if page.pill %}
+          {% assign pill_class = page.pill | downcase | replace: ' ', '-' | default: "upcoming" %}
+          <div class="meta-block">
+            <div class="kicker">Status</div>
+            <span class="pill {{ pill_class }}">{{ page.pill }}</span>
+          </div>
+        {% endif %}
+      </aside>
+    </div>
+  {% endif %}
+
+
+  {% comment %}─── PROJECTS ───{% endcomment %}
+  {% if season_projects.size > 0 %}
+    <div>
+      <div class="section-header" id="projects">
+        <span class="section-title">Projects This Season</span>
+        <span class="section-meta">{{ season_projects.size }} Projects</span>
+      </div>
+
+      <div class="grid-2">
+        {% for project in season_projects %}
+          {% assign status_class = project.status | downcase | replace: ' ', '-' | default: "ongoing" %}
+          {% assign pill_class = project.pill | downcase | replace: ' ', '-' | default: "new" %}
+          
+          {% assign project_posts = site.posts | where_exp: "post", "post.projects contains project.slug" %}
+          {% assign post_count = project_posts.size %}
+          
+          {% assign author_names = "" | split: "" %}
+          {% if project.people %}
+            {% for slug in project.people %}
+              {% assign person = site.people | where: "slug", slug | first %}
+              {% if person %}
+                {% assign author_names = author_names | push: person.name | default: person.title %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% assign author_string = author_names | join: " + " %}
+          
+          <a href="{{ project.url | relative_url }}" class="card">
+            <div class="card-header">
+              <span class="card-id">P–{{ forloop.index }}</span>
+              {% if project.pill %}
+                <span class="pill {{ pill_class }}">
+                  {{ project.pill | default: "New" }}
+                </span>
+              {% else %}
+                <span class="badge {{ status_class }}">
+                  {{ project.status | default: "Ongoing" }}
+                </span>
+              {% endif %}
+            </div>
+            
+            <h3 class="card-title">{{ project.title }}</h3>
+            
+            {% if author_string != "" %}
+              <div class="card-subtitle">{{ author_string }}</div>
+            {% endif %}
+            
+            {% if project.content %}
+              <p class="card-excerpt">{{ project.content | strip_html | truncatewords: 25 }}</p>
+            {% endif %}
+
+            <div class="card-meta">
+              <span>
+                <span class="card-meta-number">{{ post_count }}</span> installment{% if post_count != 1 %}s{% endif %}
+              </span>
+
+              <span style="margin-left: auto;">
+                {% if project.tags %}
+                  {% for tag in project.tags limit: 3 %}
+                    <span class="tag">{{ tag }}</span>
+                  {% endfor %}
+                  {% if project.tags.size > 2 %}
+                    <span class="tag-more">+{{ project.tags.size | minus: 2 }}</span>
+                  {% endif %}
+                {% endif %}
+              </span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% comment %}─── CONTRIBUTORS (scroll) ───{% endcomment %}
+  {% if unique_author_slugs.size > 0 %}
+    <div class="section-header" style="margin-top: 2.5rem;" id="cohort">
+      <span class="section-title">Cohort</span>
+      <span class="section-meta">{{ unique_author_slugs.size }} contributors</span>
+    </div>
+
+    <p class="data-names">
+      {% for slug in unique_author_slugs %}
+        {% assign person = site.people | where: "slug", slug | first %}
+        {% if person %}
+          <a href="{{ person.url | relative_url }}" class="season-name">{{ person.name | default: person.title }}</a>{% unless forloop.last %} ·{% endunless %}
+        {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+
+
+  {% comment %}─── INSTALLMENTS ───{% endcomment %}
+  {% if season_posts.size > 0 %}
+    <div class="section-header" style="margin-top: 2.5rem;" id="installments">
+      <span class="section-title">Installments</span>
+      <span class="section-meta">{{ season_posts.size }} Installments</span>
+    </div>
+
+    <div class="list-container">
+      {% for post in season_posts %}
+        {% assign word_count = post.content | strip_html | number_of_words %}
+        {% assign reading_time = word_count | divided_by: 200 | default: 1 %}
+        
+        {% comment %}─── Get project for this post (FIXED) ───{% endcomment %}
+        {% assign project_slug = post.projects | first %}
+        {% assign post_project = site.projects | where: "slug", project_slug | first %}
+        
+        {% comment %}─── Get authors for this post ───{% endcomment %}
+        {% assign post_authors = "" | split: "" %}
+        {% for slug in post.authors %}
+          {% assign person = site.people | where: "slug", slug | first %}
+          {% if person %}
+            {% assign post_authors = post_authors | push: person %}
+          {% endif %}
+        {% endfor %}
+        
+        <div class="list-item list-item-bordered" style="align-items: flex-start; gap: 1.5rem;">
+          
+          {% comment %}─── LEFT: Date ───{% endcomment %}
+          <div class="list-item-left" style="min-width: 70px; display: flex; flex-direction: column; gap: 0.1rem;">
+            <span class="text-mono" style="font-size: 14px; color: var(--gold-dim); font-weight: 700; line-height: 1;">
+              {{ post.date | date: "%b %d" }}
+            </span>
+            <span class="text-mono" style="font-size: 8px; color: var(--ash);">
+              {{ post.date | date: "%Y" }}
+            </span>
+          </div>
+
+          {% comment %}─── CONTENT ───{% endcomment %}
+          <div class="list-item-content">
+            
+            {% comment %}─── Meta: Project ───{% endcomment %}
+            <div class="feed-inst-tag" >
+              {% if post_project %}
+                <a href="{{ post_project.url | relative_url }}" class="link-underline" style="color: var(--gold-dim); font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;">
+                  {{ post_project.title }}
+                </a>
+              {% else %}
+                <span class="text-ash" style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;">No project</span>
+              {% endif %}
+            </div>
+            
+            {% comment %}─── Title ───{% endcomment %}
+            <span class="list-item-title" style="font-size: 20px; margin-bottom: 0.2rem;">
+              <a href="{{ post.url | relative_url }}" class="link-scale">{{ post.title }}</a>
+            </span>
+            
+            {% comment %}─── Meta: Authors ───{% endcomment %}
+            <div class="list-item-meta" >
+              
+              {% comment %}─── AUTHORS (linked) ───{% endcomment %}
+              {% if post_authors.size > 0 %}
+                <span class="text-mono" >
+                  {% for person in post_authors %}
+                    
+                    <a href="{{ person.url | relative_url }}" class="link-glow" >
+                      {{ person.name }}
+                    </a>{% unless forloop.last %}<span class="text-ash"> + </span>{% endunless %}
+                  {% endfor %}
+                </span>
+              {% else %}
+                <span class="text-mono" style="font-size: 9px; color: var(--ash);">Anonymous</span>
+              {% endif %}
+            </div>
+            
+            {% comment %}─── Excerpt ───{% endcomment %}
+            <span class="list-item-meta" style="font-size: 13px; color: var(--pale); font-family: var(--text);font-style: italic; opacity: 0.8;">
+              {{ post.content | strip_html | truncatewords: 20 }}
+            </span>
+          </div>
+
+          {% comment %}─── RIGHT: Badge + Metrics ───{% endcomment %}
+          <div class="list-item-right" style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;">
+            <div class="metrics-horizontal" style="font-size: 8px; color: var(--ash);">
+              <span class="metric metric-words">{{ word_count }} words</span>
+              <span class="metric metric-sep">·</span>
+              <span class="metric metric-time">~{{ reading_time }} min</span>
+            </div>
+            {% if post.badge %}
+              {% assign badge_class = post.badge | downcase | replace: ' ', '-' %}
+              {% if badge_class == "first-inst." %}
+                {% assign badge_class = "first" %}
+              {% elsif badge_class == "last-inst." %}
+                {% assign badge_class = "last" %}
+              {% endif %}
+              <span class="badge {{ badge_class }}">
+                {{ post.badge }}
+              </span>
+            {% endif %}
+          </div>
+          
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% comment %}─── BACK LINK ───{% endcomment %}
+  <div style="margin-top:2.5rem;">
+    <a href="{{ site.baseurl }}/seasons/" class="link-mono">← Back to all seasons</a>
   </div>
 </div>
+
+<style>
+  .small { font-size: 12px; line-height: 1.55; color: var(--muted); }
+  /* Project page — title strip */
+  .proj-head {
+    display: grid;
+    grid-template-columns: 7fr 4fr;
+    gap: 50px;
+    align-items: end;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 55px;
+  }
+  .proj-title {
+    font-size: clamp(56px, 8vw, 108px);
+    line-height: .9;
+    letter-spacing: -.04em;
+    margin: 14px 0 22px;
+  }
+  .proj-head-meta {
+    font: 10px var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .proj-head-meta .sep { margin: 0 10px; color: var(--line); }
+
+  .proj-head-right { display: flex; flex-direction: column; gap: 14px; }
+  .proj-state { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+  .state-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ink);
+    flex-shrink: 0;
+  }
+  .state-dot.drifting { background: var(--red); border-radius: 0; transform: rotate(45deg); }
+  .state-dot.active  { background: var(--ink); }
+  .state-dot.paused  { background: var(--muted); }
+  .state-dot.abandoned { background: transparent; border: 1px solid var(--muted); }
+  .proj-state-word { font: italic 34px/1 var(--serif); }
+  .proj-state-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    margin-top: 18px;
+  }
+  .proj-state-meta > div { background: var(--paper); padding: 12px 10px; }
+  .proj-state-meta b { display: block; font: 22px var(--mono); font-weight: 400; }
+  .proj-state-meta span {
+    display: block;
+    margin-top: 4px;
+    font: 8px var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .data-names {
+    font: italic 24px/1.55 var(--serif);
+    letter-spacing: -.015em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .season-name {
+    color: var(--ink);
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: border-color .15s, color .15s;
+    padding-bottom: 1px;
+    text-decoration: none;      /* ← add this — anchors default to underline */
+  }
+
+  .season-name:hover {
+    border-bottom-color: var(--ink);
+    color: var(--red);
+  }
+
+  /* ============================================================
+   04 — SEASONS
+   The collective moment
+   ============================================================ */
+
+  .season-intro {
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 70px;
+  }
+  .season-intro h1 {
+    font-size: clamp(52px, 8vw, 108px);
+    line-height: .92;
+    letter-spacing: -.04em;
+    margin: 14px 0 46px;
+    max-width: 1000px;
+  }
+  .season-intro-body {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .season-lede {
+    font: 16px/1.75 var(--serif);
+    color: var(--ink);
+    margin: 0;
+    max-width: 640px;
+  }
+  .season-key {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--ink);
+  }
+  .key-cell {
+    background: var(--paper);
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .key-label {
+    font: 9px var(--mono);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .key-value {
+    font: 44px var(--mono);
+    font-weight: 400;
+    letter-spacing: -.03em;
+    color: var(--ink);
+    line-height: 1;
+  }
+</style>

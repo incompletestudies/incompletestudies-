@@ -14,9 +14,6 @@ created: 2026-07-18
 updated: 2026-07-22
 image: image1.png
 ---
-
-# Heading 1
-
 This paragraph contains **bold**, *italic*, ***bold italic***, \`inline code\`, and a [<u>Brokeback Mountain - Wikipedia</u>] .
 
 ## Heading 2

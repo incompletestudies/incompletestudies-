@@ -55,10 +55,19 @@
     {{ content }}
   </main>
 
-  {% include footer.html %}
+  <!-- {% include footer.html %} -->
+
+  <div id="searchbox">
+    <span class="close" onclick="closeSearch()">ESC / CLOSE</span>
+    <div class="kicker" style="color:#aaa">Search the accumulated record</div>
+    <input class="searchinput" id="searchinput" placeholder="begin with a question…" oninput="filterResults(this.value)">
+    <div class="searchresults" id="results"></div>
+  </div>
 
   <!-- ─── JavaScript ─── -->
   <script src="{{ site.baseurl }}/assets/js/main.js"></script>
+  <!-- <script src="{{ '/assets/js/search.js' | relative_url }}" defer></script> -->
+  <script src="{{ '/assets/js/rail.js' | relative_url }}" defer></script>
   
   <!-- ─── Style Guide Specific JS ─── -->
   {% if page.url contains 'style-guide' %}
